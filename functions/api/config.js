@@ -16,14 +16,16 @@ export async function onRequestGet({ env }) {
     // Fallback default (first time before you save)
     const fallback = {
       currency: "INR",
-      banners: {
-  heroHeadline: "Clear Answers. Practical Remedies.",
-  heroSub: "Kundli-based guidance + simple remedies.",
-  heroKicker: "Vedic Guidance",
-  whatsappNumber: "91XXXXXXXXXX",
-  heroBannerDesktopUrl: "",
-  heroBannerMobileUrl: ""
-},
+     {
+  "hero": {
+    "desktopBanner": "https://cdn.apkajyotish.com/banners/hero-desktop.jpg",
+    "mobileBanner": "https://cdn.apkajyotish.com/banners/hero-mobile.jpg",
+    "headline": "Get Clarity. Get Direction.",
+    "subline": "Vedic guidance with practical remedies",
+    "kicker": "20+ Years Experience",
+    "whatsapp": "919999999999"
+  }
+}
       services: [
         { id: "love", name: "Love & Relationships", price: 351, badge: "Popular", active: true, sort: 10 },
         { id: "career", name: "Career & Money", price: 451, badge: "Best Value", active: true, sort: 20 },
