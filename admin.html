@@ -4,43 +4,308 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ApkaJyotish Admin</title>
+
   <style>
-    :root{--bg:#0b0f17;--card:#111827;--text:#e5e7eb;--muted:#9ca3af;--line:#1f2937;--accent:#f59e0b;--radius:16px;font-family:system-ui}
-    body{margin:0;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1100px;margin:0 auto;padding:22px}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .card{background:rgba(17,24,39,.8);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:16px;margin-top:14px}
-    input,textarea{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#0f172a;color:var(--text)}
-    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:13px}
-    .grid{display:grid;gap:12px;grid-template-columns:repeat(2,1fr)}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .btn{border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
-    .btn.primary{background:linear-gradient(135deg,#f59e0b,#fb7185);color:#0b0f17}
-    .btn.ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid rgba(255,255,255,.12)}
-    table{width:100%;border-collapse:collapse;margin-top:10px}
-    th,td{border-bottom:1px solid rgba(255,255,255,.08);padding:8px;text-align:left;font-size:13px}
-    th{color:var(--muted);font-weight:700}
-    .small{color:var(--muted);font-size:12px}
-    .danger{color:#fca5a5}
+    :root{
+      --bg:#0b0f17;
+      --panel:#0f172a;
+      --card:rgba(17,24,39,.78);
+      --card2:rgba(17,24,39,.92);
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --line:rgba(255,255,255,.10);
+      --line2:rgba(255,255,255,.08);
+      --accent:#f59e0b;
+      --accent2:#fb7185;
+      --ok:#22c55e;
+      --bad:#ef4444;
+
+      --radius:18px;
+      --radius2:26px;
+
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --shadow2: 0 10px 30px rgba(0,0,0,.35);
+
+      --h: 42px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(245,158,11,.18), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(251,113,133,.14), transparent 60%),
+        radial-gradient(800px 500px at 50% 90%, rgba(34,197,94,.10), transparent 60%),
+        var(--bg);
+    }
+
+    .wrap{max-width:1160px;margin:0 auto;padding:18px 18px 46px}
+
+    /* Sticky top bar */
+    .top{
+      position:sticky; top:0; z-index:50;
+      background: linear-gradient(180deg, rgba(11,15,23,.92), rgba(11,15,23,.65));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line2);
+      padding:14px 0 12px;
+      margin-bottom:14px;
+    }
+    .topInner{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;min-width:260px;
+    }
+    .logo{
+      width:38px;height:38px;border-radius:14px;
+      background: radial-gradient(circle at 30% 30%, rgba(245,158,11,.95), rgba(245,158,11,.20));
+      box-shadow: 0 10px 30px rgba(245,158,11,.16);
+      display:grid;place-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      flex:0 0 auto;
+    }
+    .logo svg{opacity:.95}
+    .brand h1{font-size:18px;line-height:1.1;margin:0}
+    .brand .sub{color:var(--muted);font-size:12px;margin-top:4px}
+
+    .actions{
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    .tokenWrap{
+      display:flex;align-items:center;gap:10px;
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius: 999px;
+      padding:6px 6px 6px 12px;
+      box-shadow: var(--shadow2);
+    }
+    .tokenWrap input{
+      width:min(360px, 54vw);
+      border:0;
+      background:transparent;
+      outline:none;
+      color:var(--text);
+      height:34px;
+      font-size:13px;
+    }
+    .tokenWrap input::placeholder{color:rgba(156,163,175,.8)}
+
+    /* Buttons */
+    .btn{
+      height:36px;
+      padding:0 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      font-weight:700;
+      cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.07)}
+    .btn:active{transform:translateY(0px)}
+    .btn.primary{
+      border:0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color:#0b0f17;
+      box-shadow: 0 12px 40px rgba(245,158,11,.18);
+    }
+    .btn.primary:hover{filter:brightness(1.03)}
+    .btn.icon{
+      width:36px;padding:0;border-radius:999px;
+    }
+
+    /* Save animation states */
+    .btn.primary[data-state="saving"]{pointer-events:none;opacity:.9}
+    .btn.primary[data-state="saved"]{background: linear-gradient(135deg, var(--ok), #86efac);}
+
+    .spinner{
+      width:14px;height:14px;border-radius:999px;
+      border:2px solid rgba(11,15,23,.25);
+      border-top-color: rgba(11,15,23,.85);
+      animation: spin .8s linear infinite;
+      display:none;
+    }
+    .tick{display:none}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* Cards */
+    .card{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      padding:16px;
+      box-shadow: var(--shadow);
+      animation: fadeUp .35s ease both;
+    }
+    .card + .card{margin-top:14px}
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .cardHead{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .cardHead h2{font-size:16px;margin:0}
+    .hint{color:var(--muted);font-size:12px;margin-top:4px}
+
+    /* Form fields */
+    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:12px}
+    input, textarea{
+      width:100%;
+      height: var(--h);
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(15,23,42,.85);
+      color:var(--text);
+      outline:none;
+      transition: border-color .12s ease, box-shadow .12s ease;
+      font-size:13px;
+    }
+    textarea{height:auto;min-height:90px;resize:vertical}
+    input:focus, textarea:focus{
+      border-color: rgba(245,158,11,.55);
+      box-shadow: 0 0 0 3px rgba(245,158,11,.16);
+    }
+    .grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    @media (max-width: 900px){
+      .grid{grid-template-columns: 1fr}
+      .tokenWrap input{width: min(420px, 70vw);}
+    }
+
+    /* Tables */
+    .tableWrap{
+      overflow:auto;
+      border-radius: 16px;
+      border:1px solid var(--line2);
+      background: rgba(255,255,255,.02);
+      margin-top:10px;
+    }
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      min-width: 860px; /* prevents overlap; makes horizontal scroll on mobile */
+    }
+    thead th{
+      position:sticky; top:0;
+      background: var(--card2);
+      backdrop-filter: blur(10px);
+      color: var(--muted);
+      font-size:12px;
+      text-align:left;
+      padding:10px 10px;
+      border-bottom:1px solid var(--line2);
+      z-index:2;
+    }
+    tbody td{
+      padding:10px 10px;
+      border-bottom:1px solid var(--line2);
+      vertical-align:middle;
+    }
+    tbody tr:hover td{background: rgba(255,255,255,.02)}
+    .cellInput input{height:36px;border-radius:12px}
+    .cellSmall{min-width:140px}
+    .cellMed{min-width:200px}
+    .cellWide{min-width:280px}
+    .cellBtn{width:120px}
+
+    .check{
+      width:18px;height:18px;
+      accent-color: var(--accent);
+      transform: translateY(2px);
+    }
+
+    .dangerText{color:#fca5a5}
+    .statusRow{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    }
+
+    /* Toast */
+    .toast{
+      position:fixed; right:18px; bottom:18px; z-index:9999;
+      background: rgba(17,24,39,.92);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      padding:12px 14px;
+      box-shadow: var(--shadow);
+      display:flex;align-items:center;gap:10px;
+      max-width:min(420px, calc(100vw - 36px));
+      transform: translateY(12px);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .toast.show{opacity:1;transform: translateY(0)}
+    .toastDot{
+      width:10px;height:10px;border-radius:999px;background:var(--ok);
+      box-shadow: 0 0 0 6px rgba(34,197,94,.14);
+      flex:0 0 auto;
+    }
+    .toast .t1{font-weight:800;font-size:13px}
+    .toast .t2{color:var(--muted);font-size:12px;margin-top:2px}
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <h2 style="margin:0">ApkaJyotish Admin</h2>
-        <div class="small">Edit values here → Save → website updates instantly</div>
-      </div>
-      <div class="row">
-        <input id="token" placeholder="Paste ADMIN_TOKEN here" style="width:280px" />
-        <button class="btn ghost" id="loadBtn">Load</button>
-        <button class="btn primary" id="saveBtn">Save</button>
+  <div class="top">
+    <div class="wrap">
+      <div class="topInner">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2v4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 18v4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4.93 4.93l2.83 2.83" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16.24 16.24l2.83 2.83" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M2 12h4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <path d="M18 12h4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2"/>
+            </svg>
+          </div>
+          <div>
+            <h1>ApkaJyotish Admin</h1>
+            <div class="sub">Edit values → Save → website updates instantly</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <div class="tokenWrap">
+            <input id="token" placeholder="Paste ADMIN_TOKEN here" />
+            <button class="btn" id="loadBtn" title="Load latest">Load</button>
+            <button class="btn primary" id="saveBtn" title="Save changes">
+              <span class="spinner" id="sp"></span>
+              <span class="tick" id="tk">✓</span>
+              <span id="saveText">Save</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
+  <div class="wrap">
     <div class="card">
-      <h3 style="margin:0 0 8px">Banners</h3>
+      <div class="cardHead">
+        <div>
+          <h2>Banners</h2>
+          <div class="hint">Controls hero text + WhatsApp number</div>
+        </div>
+      </div>
       <div class="grid">
         <div>
           <label>Hero Headline</label>
@@ -62,63 +327,111 @@
     </div>
 
     <div class="card">
-      <div class="row" style="justify-content:space-between">
-        <h3 style="margin:0">Services (Pricing)</h3>
-        <button class="btn ghost" id="addService">+ Add Service</button>
+      <div class="cardHead">
+        <div>
+          <h2>Services (Pricing)</h2>
+          <div class="hint">Fields: id, name, price, badge, active, sort</div>
+        </div>
+        <button class="btn" id="addService">+ Add Service</button>
       </div>
-      <div class="small">Fields: id, name, price, badge, active, sort</div>
-      <table id="servicesTable"></table>
+      <div class="tableWrap">
+        <table id="servicesTable"></table>
+      </div>
     </div>
 
     <div class="card">
-      <div class="row" style="justify-content:space-between">
-        <h3 style="margin:0">FAQ</h3>
-        <button class="btn ghost" id="addFaq">+ Add FAQ</button>
+      <div class="cardHead">
+        <div>
+          <h2>FAQ</h2>
+          <div class="hint">Quick answers shown on website</div>
+        </div>
+        <button class="btn" id="addFaq">+ Add FAQ</button>
       </div>
-      <table id="faqTable"></table>
+      <div class="tableWrap">
+        <table id="faqTable"></table>
+      </div>
     </div>
 
     <div class="card">
-      <div class="row" style="justify-content:space-between">
-        <h3 style="margin:0">Testimonials</h3>
-        <button class="btn ghost" id="addTestimonial">+ Add Review</button>
+      <div class="cardHead">
+        <div>
+          <h2>Testimonials</h2>
+          <div class="hint">Social proof (name, city, text)</div>
+        </div>
+        <button class="btn" id="addTestimonial">+ Add Review</button>
       </div>
-      <table id="tTable"></table>
+      <div class="tableWrap">
+        <table id="tTable"></table>
+      </div>
     </div>
 
     <div class="card">
-      <h3 style="margin:0 0 8px">Status</h3>
-      <div id="status" class="small">Not loaded yet.</div>
-      <div class="small danger" style="margin-top:8px">
-        Tip: Keep this admin link private. Anyone with your token can edit site data.
+      <div class="statusRow">
+        <div>
+          <h2 style="margin:0 0 6px">Status</h2>
+          <div id="status" class="hint">Not loaded yet.</div>
+        </div>
+        <div class="hint dangerText">
+          Keep /admin.html private. Anyone with token can edit site data.
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <div class="toastDot"></div>
+    <div>
+      <div class="t1" id="toastTitle">Saved</div>
+      <div class="t2" id="toastMsg">Website updated. Refresh home page.</div>
     </div>
   </div>
 
 <script>
   let state = null;
-
   const $ = (id) => document.getElementById(id);
 
   const setStatus = (msg) => $("status").textContent = msg;
+
+  function toast(title, msg, ok=true){
+    $("toastTitle").textContent = title;
+    $("toastMsg").textContent = msg;
+    $("toast").querySelector(".toastDot").style.background = ok ? "var(--ok)" : "var(--bad)";
+    $("toast").classList.add("show");
+    clearTimeout(window.__t);
+    window.__t = setTimeout(()=> $("toast").classList.remove("show"), 2200);
+  }
+
+  function splitCsvLine(line) {
+    return line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+  }
 
   function renderTables(){
     // Services
     const s = state.services || [];
     $("servicesTable").innerHTML = `
       <thead>
-        <tr><th>id</th><th>name</th><th>price</th><th>badge</th><th>active</th><th>sort</th><th></th></tr>
+        <tr>
+          <th class="cellSmall">id</th>
+          <th class="cellMed">name</th>
+          <th class="cellSmall">price</th>
+          <th class="cellMed">badge</th>
+          <th class="cellSmall">active</th>
+          <th class="cellSmall">sort</th>
+          <th class="cellBtn"></th>
+        </tr>
       </thead>
       <tbody>
         ${s.map((x,i)=>`
           <tr>
-            <td><input value="${x.id||""}" oninput="state.services[${i}].id=this.value"></td>
-            <td><input value="${x.name||""}" oninput="state.services[${i}].name=this.value"></td>
-            <td><input value="${x.price||""}" oninput="state.services[${i}].price=this.value"></td>
-            <td><input value="${x.badge||""}" oninput="state.services[${i}].badge=this.value"></td>
-            <td><input type="checkbox" ${x.active? "checked":""} onchange="state.services[${i}].active=this.checked"></td>
-            <td><input value="${x.sort??""}" oninput="state.services[${i}].sort=this.value"></td>
-            <td><button class="btn ghost" onclick="state.services.splice(${i},1); renderTables()">Delete</button></td>
+            <td class="cellInput"><input value="${escapeHtml(x.id||"")}" oninput="state.services[${i}].id=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.name||"")}" oninput="state.services[${i}].name=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.price??"")}" inputmode="numeric" oninput="state.services[${i}].price=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.badge||"")}" oninput="state.services[${i}].badge=this.value"></td>
+            <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.services[${i}].active=this.checked"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.services[${i}].sort=this.value"></td>
+            <td>
+              <button class="btn" onclick="state.services.splice(${i},1); renderTables()">Delete</button>
+            </td>
           </tr>
         `).join("")}
       </tbody>
@@ -128,16 +441,24 @@
     const f = state.faq || [];
     $("faqTable").innerHTML = `
       <thead>
-        <tr><th>q</th><th>a</th><th>active</th><th>sort</th><th></th></tr>
+        <tr>
+          <th class="cellWide">q</th>
+          <th class="cellWide">a</th>
+          <th class="cellSmall">active</th>
+          <th class="cellSmall">sort</th>
+          <th class="cellBtn"></th>
+        </tr>
       </thead>
       <tbody>
         ${f.map((x,i)=>`
           <tr>
-            <td><input value="${x.q||""}" oninput="state.faq[${i}].q=this.value"></td>
-            <td><input value="${x.a||""}" oninput="state.faq[${i}].a=this.value"></td>
-            <td><input type="checkbox" ${x.active? "checked":""} onchange="state.faq[${i}].active=this.checked"></td>
-            <td><input value="${x.sort??""}" oninput="state.faq[${i}].sort=this.value"></td>
-            <td><button class="btn ghost" onclick="state.faq.splice(${i},1); renderTables()">Delete</button></td>
+            <td class="cellInput"><input value="${escapeHtml(x.q||"")}" oninput="state.faq[${i}].q=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.a||"")}" oninput="state.faq[${i}].a=this.value"></td>
+            <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.faq[${i}].active=this.checked"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.faq[${i}].sort=this.value"></td>
+            <td>
+              <button class="btn" onclick="state.faq.splice(${i},1); renderTables()">Delete</button>
+            </td>
           </tr>
         `).join("")}
       </tbody>
@@ -147,42 +468,87 @@
     const t = state.testimonials || [];
     $("tTable").innerHTML = `
       <thead>
-        <tr><th>name</th><th>city</th><th>text</th><th>active</th><th>sort</th><th></th></tr>
+        <tr>
+          <th class="cellMed">name</th>
+          <th class="cellMed">city</th>
+          <th class="cellWide">text</th>
+          <th class="cellSmall">active</th>
+          <th class="cellSmall">sort</th>
+          <th class="cellBtn"></th>
+        </tr>
       </thead>
       <tbody>
         ${t.map((x,i)=>`
           <tr>
-            <td><input value="${x.name||""}" oninput="state.testimonials[${i}].name=this.value"></td>
-            <td><input value="${x.city||""}" oninput="state.testimonials[${i}].city=this.value"></td>
-            <td><input value="${x.text||""}" oninput="state.testimonials[${i}].text=this.value"></td>
-            <td><input type="checkbox" ${x.active? "checked":""} onchange="state.testimonials[${i}].active=this.checked"></td>
-            <td><input value="${x.sort??""}" oninput="state.testimonials[${i}].sort=this.value"></td>
-            <td><button class="btn ghost" onclick="state.testimonials.splice(${i},1); renderTables()">Delete</button></td>
+            <td class="cellInput"><input value="${escapeHtml(x.name||"")}" oninput="state.testimonials[${i}].name=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.city||"")}" oninput="state.testimonials[${i}].city=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.text||"")}" oninput="state.testimonials[${i}].text=this.value"></td>
+            <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.testimonials[${i}].active=this.checked"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.testimonials[${i}].sort=this.value"></td>
+            <td>
+              <button class="btn" onclick="state.testimonials.splice(${i},1); renderTables()">Delete</button>
+            </td>
           </tr>
         `).join("")}
       </tbody>
     `;
   }
 
+  function escapeHtml(str){
+    return String(str ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
   async function load(){
     setStatus("Loading from /api/config ...");
-    const res = await fetch("/api/config", { cache:"no-store" });
-    const cfg = await res.json();
-    state = cfg;
+    try{
+      const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
+      const cfg = await res.json();
+      if(!res.ok) throw new Error(cfg?.error || "Load failed");
+      state = cfg;
 
-    $("heroHeadline").value = state.banners?.heroHeadline || "";
-    $("heroSub").value = state.banners?.heroSub || "";
-    $("heroKicker").value = state.banners?.heroKicker || "";
-    $("whatsappNumber").value = state.banners?.whatsappNumber || "";
+      $("heroHeadline").value = state.banners?.heroHeadline || "";
+      $("heroSub").value = state.banners?.heroSub || "";
+      $("heroKicker").value = state.banners?.heroKicker || "";
+      $("whatsappNumber").value = state.banners?.whatsappNumber || "";
 
-    renderTables();
-    setStatus("Loaded ✅");
+      renderTables();
+      setStatus("Loaded ✅");
+      toast("Loaded", "Latest data loaded from server.");
+    }catch(e){
+      setStatus("Load failed: " + e.message);
+      toast("Load failed", e.message, false);
+    }
+  }
+
+  function setSaveState(st){
+    const btn = $("saveBtn");
+    btn.dataset.state = st || "";
+    $("sp").style.display = (st==="saving") ? "inline-block" : "none";
+    $("tk").style.display = (st==="saved") ? "inline-block" : "none";
+    $("saveText").textContent = (st==="saving") ? "Saving..." : "Save";
+    if(st==="saved"){
+      $("saveText").textContent = "Saved";
+      setTimeout(()=> {
+        btn.dataset.state="";
+        $("tk").style.display="none";
+        $("saveText").textContent="Save";
+      }, 1200);
+    }
   }
 
   async function save(){
     if(!state) return;
     const token = $("token").value.trim();
-    if(!token) return setStatus("Paste ADMIN_TOKEN first.");
+    if(!token){
+      setStatus("Paste ADMIN_TOKEN first.");
+      toast("Token missing", "Paste ADMIN_TOKEN first.", false);
+      return;
+    }
 
     // update banners from inputs
     state.banners = state.banners || {};
@@ -191,22 +557,32 @@
     state.banners.heroKicker = $("heroKicker").value.trim();
     state.banners.whatsappNumber = $("whatsappNumber").value.trim();
 
+    setSaveState("saving");
     setStatus("Saving...");
-    const res = await fetch("/api/admin/save", {
-      method:"POST",
-      headers:{
-        "content-type":"application/json",
-        "x-admin-token": token
-      },
-      body: JSON.stringify(state)
-    });
+    try{
+      const res = await fetch("/api/admin/save", {
+        method:"POST",
+        headers:{
+          "content-type":"application/json",
+          "x-admin-token": token
+        },
+        body: JSON.stringify(state)
+      });
 
-    const out = await res.json();
-    if(!res.ok){
-      setStatus("Save failed: " + (out.error || res.status));
-      return;
+      const out = await res.json().catch(()=> ({}));
+
+      if(!res.ok){
+        throw new Error(out?.error || ("HTTP " + res.status));
+      }
+
+      setSaveState("saved");
+      setStatus("Saved ✅ Website updated instantly. (Refresh main site)");
+      toast("Saved ✅", "Website updated. Refresh main site.");
+    }catch(e){
+      setSaveState("");
+      setStatus("Save failed: " + e.message);
+      toast("Save failed", e.message, false);
     }
-    setStatus("Saved ✅ Website updated instantly. (Refresh main site)");
   }
 
   $("loadBtn").addEventListener("click", load);
@@ -216,18 +592,21 @@
     state.services = state.services || [];
     state.services.push({ id:"new", name:"New Service", price:0, badge:"", active:true, sort:999 });
     renderTables();
+    toast("Added", "New service row added.");
   });
 
   $("addFaq").addEventListener("click", ()=>{
     state.faq = state.faq || [];
     state.faq.push({ q:"Question?", a:"Answer.", active:true, sort:999 });
     renderTables();
+    toast("Added", "New FAQ row added.");
   });
 
   $("addTestimonial").addEventListener("click", ()=>{
     state.testimonials = state.testimonials || [];
     state.testimonials.push({ name:"Name", city:"City", text:"Review text", active:true, sort:999 });
     renderTables();
+    toast("Added", "New testimonial row added.");
   });
 
   // auto-load
