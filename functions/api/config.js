@@ -2,7 +2,7 @@ export async function onRequestGet(context) {
   const backendsheet = context.env.backendsheet;
 
   const fetchCsv = async (sheet) => {
-    const url = `https://docs.google.com/spreadsheets/d/${backendsheet}/gviz/tq?tqx=out:csv&sheet=${sheet}`;
+    const url = `https://docs.google.com/spreadsheets/d/backendsheet/gviz/tq?tqx=out:csv&sheet=services`;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`Failed to fetch ${sheet}`);
     return await res.text();
