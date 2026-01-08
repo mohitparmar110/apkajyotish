@@ -1,10 +1,23 @@
 export async function onRequestGet(context) {
-  const 1xaxPN93fX8nH2igr_7YFFtspyBhxRycCLTw_C7zwWe0 = context.env.1xaxPN93fX8nH2igr_7YFFtspyBhxRycCLTw_C7zwWe0;
+  const SHEET_ID = context.env.SHEET_ID;
 
-  const fetchCsv = async (sheet) => {
-    const url = `https://docs.google.com/spreadsheets/d/1xaxPN93fX8nH2igr_7YFFtspyBhxRycCLTw_C7zwWe0/gviz/tq?tqx=out:csv&sheet=services`;
+  if (!SHEET_ID) {
+    return new Response(JSON.stringify({ error: "SHEET_ID missing in env vars" }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  const fetchCsv = async (sheetName) => {
+    const url =
+      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq` +
+      `?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed to fetch ${sheet}`);
+    if (!res.ok) {
+      const txt = await res.text().catch(() => "");
+      throw new Error(`Failed to fetch "${sheetName}" (${res.status}): ${txt.slice(0, 120)}`);
+    }
     return await res.text();
   };
 
@@ -25,19 +38,17 @@ export async function onRequestGet(context) {
     const faq = csvToObjects(await fetchCsv("faq"));
     const testimonials = csvToObjects(await fetchCsv("testimonials"));
 
-    return new Response(JSON.stringify({
-      currency: "INR",
-      services,
-      banners,
-      faq,
-      testimonials
-    }), {
+    return new Response(JSON.stringify({ currency: "INR", services, banners, faq, testimonials }), {
       headers: {
-        "content-type": "application/json",
-        "cache-control": "public, max-age=60"
-      }
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=60",
+      },
     });
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+    return new Response(JSON.stringify({ error: err.message }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
   }
 }
+
