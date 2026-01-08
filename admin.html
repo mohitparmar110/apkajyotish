@@ -7,24 +7,25 @@
 
   <style>
     :root{
-      --bg:#0b0f17;
-      --panel:#0f172a;
-      --card:rgba(17,24,39,.78);
-      --card2:rgba(17,24,39,.92);
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --line:rgba(255,255,255,.10);
-      --line2:rgba(255,255,255,.08);
-      --accent:#f59e0b;
-      --accent2:#fb7185;
-      --ok:#22c55e;
-      --bad:#ef4444;
+      /* Light + calming palette */
+      --bg: #f7f8fb;
+      --surface: rgba(255,255,255,.86);
+      --surface2: rgba(255,255,255,.96);
+      --text: #0f172a;     /* slate-900 */
+      --muted: #64748b;    /* slate-500 */
+      --line: rgba(15,23,42,.10);
+      --line2: rgba(15,23,42,.08);
 
-      --radius:18px;
-      --radius2:26px;
+      --accent: #2563eb;   /* blue-600 */
+      --accent2:#22c55e;   /* green-500 */
+      --warn: #f59e0b;     /* amber-500 */
+      --bad:  #ef4444;     /* red-500 */
+      --ok:   #16a34a;     /* green-600 */
 
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --shadow2: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius2: 22px;
+      --shadow: 0 18px 50px rgba(15,23,42,.08);
+      --shadow2: 0 8px 26px rgba(15,23,42,.06);
 
       --h: 42px;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -32,67 +33,64 @@
 
     *{box-sizing:border-box}
     html,body{height:100%}
+
     body{
       margin:0;
       font-family:var(--font);
       color:var(--text);
       background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(245,158,11,.18), transparent 60%),
-        radial-gradient(900px 500px at 80% 20%, rgba(251,113,133,.14), transparent 60%),
-        radial-gradient(800px 500px at 50% 90%, rgba(34,197,94,.10), transparent 60%),
+        radial-gradient(900px 500px at 15% 10%, rgba(37,99,235,.10), transparent 60%),
+        radial-gradient(900px 500px at 85% 20%, rgba(34,197,94,.10), transparent 60%),
+        radial-gradient(900px 500px at 50% 110%, rgba(245,158,11,.08), transparent 60%),
         var(--bg);
     }
 
-    .wrap{max-width:1160px;margin:0 auto;padding:18px 18px 46px}
+    .wrap{max-width:1180px;margin:0 auto;padding:18px 18px 54px}
 
     /* Sticky top bar */
     .top{
       position:sticky; top:0; z-index:50;
-      background: linear-gradient(180deg, rgba(11,15,23,.92), rgba(11,15,23,.65));
+      background: rgba(247,248,251,.78);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line2);
       padding:14px 0 12px;
-      margin-bottom:14px;
+      margin-bottom:16px;
     }
     .topInner{
-      display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:14px;flex-wrap:wrap;
     }
-    .brand{
-      display:flex;align-items:center;gap:12px;min-width:260px;
-    }
+
+    .brand{display:flex;align-items:center;gap:12px;min-width:260px}
     .logo{
-      width:38px;height:38px;border-radius:14px;
-      background: radial-gradient(circle at 30% 30%, rgba(245,158,11,.95), rgba(245,158,11,.20));
-      box-shadow: 0 10px 30px rgba(245,158,11,.16);
+      width:40px;height:40px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(37,99,235,.16), rgba(34,197,94,.12));
+      border:1px solid var(--line);
+      box-shadow: var(--shadow2);
       display:grid;place-items:center;
-      border:1px solid rgba(255,255,255,.10);
       flex:0 0 auto;
     }
-    .logo svg{opacity:.95}
+    .logo svg{opacity:.8}
     .brand h1{font-size:18px;line-height:1.1;margin:0}
     .brand .sub{color:var(--muted);font-size:12px;margin-top:4px}
 
-    .actions{
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-    }
+    /* Token + actions */
+    .actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
     .tokenWrap{
       display:flex;align-items:center;gap:10px;
-      background: rgba(255,255,255,.04);
+      background: var(--surface);
       border:1px solid var(--line);
       border-radius: 999px;
-      padding:6px 6px 6px 12px;
+      padding:8px 8px 8px 12px;
       box-shadow: var(--shadow2);
     }
     .tokenWrap input{
       width:min(360px, 54vw);
-      border:0;
-      background:transparent;
-      outline:none;
+      border:0;background:transparent;outline:none;
       color:var(--text);
-      height:34px;
-      font-size:13px;
+      height:34px;font-size:13px;
     }
-    .tokenWrap input::placeholder{color:rgba(156,163,175,.8)}
+    .tokenWrap input::placeholder{color:rgba(100,116,139,.9)}
 
     /* Buttons */
     .btn{
@@ -100,7 +98,7 @@
       padding:0 14px;
       border-radius:999px;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
+      background: rgba(15,23,42,.03);
       color:var(--text);
       font-weight:700;
       cursor:pointer;
@@ -109,27 +107,27 @@
       user-select:none;
       white-space:nowrap;
     }
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.07)}
+    .btn:hover{transform:translateY(-1px);background:rgba(15,23,42,.05)}
     .btn:active{transform:translateY(0px)}
+
     .btn.primary{
       border:0;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#0b0f17;
-      box-shadow: 0 12px 40px rgba(245,158,11,.18);
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      color:white;
+      box-shadow: 0 10px 26px rgba(37,99,235,.18);
     }
-    .btn.primary:hover{filter:brightness(1.03)}
-    .btn.icon{
-      width:36px;padding:0;border-radius:999px;
+    .btn.primary:hover{filter:brightness(1.02)}
+    .btn.primary[data-state="saving"]{pointer-events:none;opacity:.92}
+    .btn.primary[data-state="saved"]{
+      background: linear-gradient(135deg, var(--ok), #86efac);
+      box-shadow: 0 10px 26px rgba(22,163,74,.18);
     }
 
-    /* Save animation states */
-    .btn.primary[data-state="saving"]{pointer-events:none;opacity:.9}
-    .btn.primary[data-state="saved"]{background: linear-gradient(135deg, var(--ok), #86efac);}
-
+    /* Save spinner */
     .spinner{
       width:14px;height:14px;border-radius:999px;
-      border:2px solid rgba(11,15,23,.25);
-      border-top-color: rgba(11,15,23,.85);
+      border:2px solid rgba(255,255,255,.35);
+      border-top-color: rgba(255,255,255,.95);
       animation: spin .8s linear infinite;
       display:none;
     }
@@ -138,21 +136,22 @@
 
     /* Cards */
     .card{
-      background: var(--card);
+      background: var(--surface);
       border:1px solid var(--line);
       border-radius: var(--radius2);
       padding:16px;
       box-shadow: var(--shadow);
-      animation: fadeUp .35s ease both;
+      animation: fadeUp .28s ease both;
     }
     .card + .card{margin-top:14px}
     @keyframes fadeUp{
-      from{opacity:0;transform:translateY(10px)}
+      from{opacity:0;transform:translateY(8px)}
       to{opacity:1;transform:translateY(0)}
     }
 
     .cardHead{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+      display:flex;align-items:center;justify-content:space-between;
+      gap:12px;flex-wrap:wrap;
       margin-bottom:10px;
     }
     .cardHead h2{font-size:16px;margin:0}
@@ -165,8 +164,8 @@
       height: var(--h);
       padding:10px 12px;
       border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(15,23,42,.85);
+      border:1px solid var(--line);
+      background: var(--surface2);
       color:var(--text);
       outline:none;
       transition: border-color .12s ease, box-shadow .12s ease;
@@ -174,9 +173,10 @@
     }
     textarea{height:auto;min-height:90px;resize:vertical}
     input:focus, textarea:focus{
-      border-color: rgba(245,158,11,.55);
-      box-shadow: 0 0 0 3px rgba(245,158,11,.16);
+      border-color: rgba(37,99,235,.40);
+      box-shadow: 0 0 0 4px rgba(37,99,235,.10);
     }
+
     .grid{
       display:grid;
       gap:12px;
@@ -192,18 +192,18 @@
       overflow:auto;
       border-radius: 16px;
       border:1px solid var(--line2);
-      background: rgba(255,255,255,.02);
+      background: rgba(15,23,42,.02);
       margin-top:10px;
     }
     table{
       width:100%;
       border-collapse:separate;
       border-spacing:0;
-      min-width: 860px; /* prevents overlap; makes horizontal scroll on mobile */
+      min-width: 880px; /* keeps layout stable; scroll on mobile */
     }
     thead th{
       position:sticky; top:0;
-      background: var(--card2);
+      background: rgba(247,248,251,.92);
       backdrop-filter: blur(10px);
       color: var(--muted);
       font-size:12px;
@@ -217,11 +217,12 @@
       border-bottom:1px solid var(--line2);
       vertical-align:middle;
     }
-    tbody tr:hover td{background: rgba(255,255,255,.02)}
+    tbody tr:hover td{background: rgba(37,99,235,.03)}
+
     .cellInput input{height:36px;border-radius:12px}
     .cellSmall{min-width:140px}
-    .cellMed{min-width:200px}
-    .cellWide{min-width:280px}
+    .cellMed{min-width:220px}
+    .cellWide{min-width:320px}
     .cellBtn{width:120px}
 
     .check{
@@ -230,16 +231,14 @@
       transform: translateY(2px);
     }
 
-    .dangerText{color:#fca5a5}
-    .statusRow{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-    }
+    .statusRow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .dangerText{color: rgba(239,68,68,.85); font-weight:600}
 
     /* Toast */
     .toast{
       position:fixed; right:18px; bottom:18px; z-index:9999;
-      background: rgba(17,24,39,.92);
-      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.92);
+      border:1px solid var(--line);
       border-radius: 16px;
       padding:12px 14px;
       box-shadow: var(--shadow);
@@ -253,11 +252,17 @@
     .toast.show{opacity:1;transform: translateY(0)}
     .toastDot{
       width:10px;height:10px;border-radius:999px;background:var(--ok);
-      box-shadow: 0 0 0 6px rgba(34,197,94,.14);
+      box-shadow: 0 0 0 6px rgba(22,163,74,.10);
       flex:0 0 auto;
     }
-    .toast .t1{font-weight:800;font-size:13px}
+    .toast .t1{font-weight:900;font-size:13px}
     .toast .t2{color:var(--muted);font-size:12px;margin-top:2px}
+
+    /* Extra nice: subtle section divider */
+    .divider{
+      height:1px;background:linear-gradient(90deg, transparent, rgba(15,23,42,.10), transparent);
+      margin:10px 0 4px;
+    }
   </style>
 </head>
 
@@ -268,18 +273,18 @@
         <div class="brand">
           <div class="logo" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2v4" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <path d="M12 18v4" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <path d="M4.93 4.93l2.83 2.83" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <path d="M16.24 16.24l2.83 2.83" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <path d="M2 12h4" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <path d="M18 12h4" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="2"/>
+              <path d="M12 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 18v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4.93 4.93l2.83 2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M16.24 16.24l2.83 2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M2 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
           <div>
             <h1>ApkaJyotish Admin</h1>
-            <div class="sub">Edit values → Save → website updates instantly</div>
+            <div class="sub">Calm, clean editor → Save → website updates</div>
           </div>
         </div>
 
@@ -294,16 +299,18 @@
             </button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
   <div class="wrap">
+
     <div class="card">
       <div class="cardHead">
         <div>
           <h2>Banners</h2>
-          <div class="hint">Controls hero text + WhatsApp number</div>
+          <div class="hint">Hero headline + kicker + WhatsApp</div>
         </div>
       </div>
       <div class="grid">
@@ -330,10 +337,11 @@
       <div class="cardHead">
         <div>
           <h2>Services (Pricing)</h2>
-          <div class="hint">Fields: id, name, price, badge, active, sort</div>
+          <div class="hint">id, name, price, badge, active, sort</div>
         </div>
         <button class="btn" id="addService">+ Add Service</button>
       </div>
+      <div class="divider"></div>
       <div class="tableWrap">
         <table id="servicesTable"></table>
       </div>
@@ -343,10 +351,11 @@
       <div class="cardHead">
         <div>
           <h2>FAQ</h2>
-          <div class="hint">Quick answers shown on website</div>
+          <div class="hint">Quick answers shown on site</div>
         </div>
         <button class="btn" id="addFaq">+ Add FAQ</button>
       </div>
+      <div class="divider"></div>
       <div class="tableWrap">
         <table id="faqTable"></table>
       </div>
@@ -356,10 +365,11 @@
       <div class="cardHead">
         <div>
           <h2>Testimonials</h2>
-          <div class="hint">Social proof (name, city, text)</div>
+          <div class="hint">name, city, text, active, sort</div>
         </div>
         <button class="btn" id="addTestimonial">+ Add Review</button>
       </div>
+      <div class="divider"></div>
       <div class="tableWrap">
         <table id="tTable"></table>
       </div>
@@ -372,10 +382,11 @@
           <div id="status" class="hint">Not loaded yet.</div>
         </div>
         <div class="hint dangerText">
-          Keep /admin.html private. Anyone with token can edit site data.
+          Keep /admin.html private. Token = full control.
         </div>
       </div>
     </div>
+
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite">
@@ -389,7 +400,6 @@
 <script>
   let state = null;
   const $ = (id) => document.getElementById(id);
-
   const setStatus = (msg) => $("status").textContent = msg;
 
   function toast(title, msg, ok=true){
@@ -401,12 +411,7 @@
     window.__t = setTimeout(()=> $("toast").classList.remove("show"), 2200);
   }
 
-  function splitCsvLine(line) {
-    return line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
-  }
-
   function renderTables(){
-    // Services
     const s = state.services || [];
     $("servicesTable").innerHTML = `
       <thead>
@@ -429,15 +434,12 @@
             <td class="cellInput"><input value="${escapeHtml(x.badge||"")}" oninput="state.services[${i}].badge=this.value"></td>
             <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.services[${i}].active=this.checked"></td>
             <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.services[${i}].sort=this.value"></td>
-            <td>
-              <button class="btn" onclick="state.services.splice(${i},1); renderTables()">Delete</button>
-            </td>
+            <td><button class="btn" onclick="state.services.splice(${i},1); renderTables()">Delete</button></td>
           </tr>
         `).join("")}
       </tbody>
     `;
 
-    // FAQ
     const f = state.faq || [];
     $("faqTable").innerHTML = `
       <thead>
@@ -456,15 +458,12 @@
             <td class="cellInput"><input value="${escapeHtml(x.a||"")}" oninput="state.faq[${i}].a=this.value"></td>
             <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.faq[${i}].active=this.checked"></td>
             <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.faq[${i}].sort=this.value"></td>
-            <td>
-              <button class="btn" onclick="state.faq.splice(${i},1); renderTables()">Delete</button>
-            </td>
+            <td><button class="btn" onclick="state.faq.splice(${i},1); renderTables()">Delete</button></td>
           </tr>
         `).join("")}
       </tbody>
     `;
 
-    // Testimonials
     const t = state.testimonials || [];
     $("tTable").innerHTML = `
       <thead>
@@ -485,9 +484,7 @@
             <td class="cellInput"><input value="${escapeHtml(x.text||"")}" oninput="state.testimonials[${i}].text=this.value"></td>
             <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.testimonials[${i}].active=this.checked"></td>
             <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.testimonials[${i}].sort=this.value"></td>
-            <td>
-              <button class="btn" onclick="state.testimonials.splice(${i},1); renderTables()">Delete</button>
-            </td>
+            <td><button class="btn" onclick="state.testimonials.splice(${i},1); renderTables()">Delete</button></td>
           </tr>
         `).join("")}
       </tbody>
@@ -518,7 +515,7 @@
 
       renderTables();
       setStatus("Loaded ✅");
-      toast("Loaded", "Latest data loaded from server.");
+      toast("Loaded", "Latest data loaded.");
     }catch(e){
       setStatus("Load failed: " + e.message);
       toast("Load failed", e.message, false);
@@ -550,7 +547,6 @@
       return;
     }
 
-    // update banners from inputs
     state.banners = state.banners || {};
     state.banners.heroHeadline = $("heroHeadline").value.trim();
     state.banners.heroSub = $("heroSub").value.trim();
@@ -570,13 +566,10 @@
       });
 
       const out = await res.json().catch(()=> ({}));
-
-      if(!res.ok){
-        throw new Error(out?.error || ("HTTP " + res.status));
-      }
+      if(!res.ok) throw new Error(out?.error || ("HTTP " + res.status));
 
       setSaveState("saved");
-      setStatus("Saved ✅ Website updated instantly. (Refresh main site)");
+      setStatus("Saved ✅ Website updated. Refresh main site.");
       toast("Saved ✅", "Website updated. Refresh main site.");
     }catch(e){
       setSaveState("");
@@ -609,8 +602,8 @@
     toast("Added", "New testimonial row added.");
   });
 
-  // auto-load
   load();
 </script>
 </body>
 </html>
+
