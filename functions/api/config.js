@@ -21,14 +21,32 @@ export async function onRequestGet(context) {
   };
 
   // Basic CSV (works fine as long as your cells don't contain commas in text)
-  const csvToObjects = (csv) => {
-    const lines = csv.split("\n").map(l => l.trim()).filter(Boolean);
-    const headers = lines.shift().split(",").map(h => h.trim());
-    return lines.map(line => {
-      const values = line.split(",");
-      const obj = {};
-      headers.forEach((h, i) => obj[h] = (values[i] || "").trim());
-      return obj;
+  const splitCsvLine = (line) =>
+  line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/); // splits commas outside quotes
+
+const clean = (v) =>
+  String(v ?? "")
+    .trim()
+    .replace(/^\uFEFF/, "")          // remove BOM if any
+    .replace(/^"(.*)"$/, "$1")       // strip wrapping quotes
+    .replace(/""/g, '"');            // unescape double quotes
+
+const csvToObjects = (csv) => {
+  const lines = csv
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  const headers = splitCsvLine(lines.shift()).map(clean);
+
+  return lines.map((line) => {
+    const values = splitCsvLine(line).map(clean);
+    const obj = {};
+    headers.forEach((h, i) => (obj[h] = values[i] ?? ""));
+    return obj;
+  });
+};
+
     });
   };
 
