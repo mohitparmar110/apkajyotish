@@ -287,31 +287,6 @@
             <div class="sub">Calm, clean editor → Save → website updates</div>
           </div>
         </div>
-         <div style="margin-top:20px; padding:16px; border:1px solid #ddd; max-width:500px;">
-    
-    <h3>Hero Banner</h3>
-
-    <label>Desktop Banner URL</label><br>
-    <input id="heroDesktop" style="width:100%" /><br><br>
-
-    <label>Mobile Banner URL</label><br>
-    <input id="heroMobile" style="width:100%" /><br><br>
-
-    <label>Headline</label><br>
-    <input id="heroHeadline" style="width:100%" /><br><br>
-
-    <label>Subline</label><br>
-    <input id="heroSubline" style="width:100%" /><br><br>
-
-    <label>Kicker</label><br>
-    <input id="heroKicker" style="width:100%" /><br><br>
-
-    <label>WhatsApp Number</label><br>
-    <input id="heroWhatsapp" style="width:100%" /><br><br>
-
-    <button onclick="saveConfig()">Save</button>
-
-  </div
 
         <div class="actions">
           <div class="tokenWrap">
@@ -335,10 +310,20 @@
       <div class="cardHead">
         <div>
           <h2>Banners</h2>
-          <div class="hint">Hero headline + kicker + WhatsApp</div>
+          <div class="hint">Hero banner URLs + headline + kicker + WhatsApp</div>
         </div>
       </div>
+
       <div class="grid">
+        <div>
+          <label>Hero Banner Desktop URL</label>
+          <input id="heroBannerDesktopUrl" placeholder="https://cdn.../banners/hero-desktop.jpg" />
+        </div>
+        <div>
+          <label>Hero Banner Mobile URL</label>
+          <input id="heroBannerMobileUrl" placeholder="https://cdn.../banners/hero-mobile.jpg" />
+        </div>
+
         <div>
           <label>Hero Headline</label>
           <input id="heroHeadline" />
@@ -531,12 +516,20 @@
       const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
       const cfg = await res.json();
       if(!res.ok) throw new Error(cfg?.error || "Load failed");
-      state = cfg;
+      state = cfg || {};
 
-      $("heroHeadline").value = state.banners?.heroHeadline || "";
-      $("heroSub").value = state.banners?.heroSub || "";
-      $("heroKicker").value = state.banners?.heroKicker || "";
-      $("whatsappNumber").value = state.banners?.whatsappNumber || "";
+      // Ensure banners object exists
+      state.banners = state.banners || {};
+
+      // Banner URLs
+      $("heroBannerDesktopUrl").value = state.banners.heroBannerDesktopUrl || "";
+      $("heroBannerMobileUrl").value  = state.banners.heroBannerMobileUrl  || "";
+
+      // Existing banner fields
+      $("heroHeadline").value = state.banners.heroHeadline || "";
+      $("heroSub").value      = state.banners.heroSub || "";
+      $("heroKicker").value   = state.banners.heroKicker || "";
+      $("whatsappNumber").value = state.banners.whatsappNumber || "";
 
       renderTables();
       setStatus("Loaded ✅");
@@ -565,6 +558,7 @@
 
   async function save(){
     if(!state) return;
+
     const token = $("token").value.trim();
     if(!token){
       setStatus("Paste ADMIN_TOKEN first.");
@@ -573,9 +567,15 @@
     }
 
     state.banners = state.banners || {};
+
+    // Save banner URLs
+    state.banners.heroBannerDesktopUrl = $("heroBannerDesktopUrl").value.trim();
+    state.banners.heroBannerMobileUrl  = $("heroBannerMobileUrl").value.trim();
+
+    // Save existing banner fields
     state.banners.heroHeadline = $("heroHeadline").value.trim();
-    state.banners.heroSub = $("heroSub").value.trim();
-    state.banners.heroKicker = $("heroKicker").value.trim();
+    state.banners.heroSub      = $("heroSub").value.trim();
+    state.banners.heroKicker   = $("heroKicker").value.trim();
     state.banners.whatsappNumber = $("whatsappNumber").value.trim();
 
     setSaveState("saving");
@@ -631,4 +631,3 @@
 </script>
 </body>
 </html>
-
