@@ -12,7 +12,6 @@ export async function onRequestGet(context) {
     const url =
       `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq` +
       `?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
-
     const res = await fetch(url);
     if (!res.ok) {
       const txt = await res.text().catch(() => "");
@@ -21,6 +20,7 @@ export async function onRequestGet(context) {
     return await res.text();
   };
 
+  // Basic CSV (works fine as long as your cells don't contain commas in text)
   const csvToObjects = (csv) => {
     const lines = csv.split("\n").map(l => l.trim()).filter(Boolean);
     const headers = lines.shift().split(",").map(h => h.trim());
@@ -32,16 +32,61 @@ export async function onRequestGet(context) {
     });
   };
 
+  const toBool = (v) => String(v).trim().toLowerCase() === "true";
+  const toNum = (v) => {
+    const n = Number(String(v).trim());
+    return Number.isFinite(n) ? n : null;
+  };
+
   try {
-    const services = csvToObjects(await fetchCsv("services"));
-    const banners = csvToObjects(await fetchCsv("banners"));
-    const faq = csvToObjects(await fetchCsv("faq"));
-    const testimonials = csvToObjects(await fetchCsv("testimonials"));
+    const servicesRaw = csvToObjects(await fetchCsv("services"));
+    const bannersRaw = csvToObjects(await fetchCsv("banners"));
+    const faqRaw = csvToObjects(await fetchCsv("faq"));
+    const testimonialsRaw = csvToObjects(await fetchCsv("testimonials"));
+
+    const services = servicesRaw
+      .map(s => ({
+        id: s.id,
+        name: s.name,
+        price: toNum(s.price),
+        badge: s.badge || "",
+        active: toBool(s.active),
+        sort: toNum(s.sort) ?? 999,
+      }))
+      .filter(s => s.id && s.name && s.price != null && s.active)
+      .sort((a, b) => a.sort - b.sort);
+
+    const banners = {};
+    bannersRaw.forEach(b => {
+      if (b.key) banners[b.key] = b.value ?? "";
+    });
+
+    const faq = faqRaw
+      .map(f => ({
+        q: f.q,
+        a: f.a,
+        active: toBool(f.active),
+        sort: toNum(f.sort) ?? 999,
+      }))
+      .filter(f => f.q && f.a && f.active)
+      .sort((a, b) => a.sort - b.sort);
+
+    const testimonials = testimonialsRaw
+      .map(t => ({
+        name: t.name,
+        city: t.city,
+        text: t.text,
+        active: toBool(t.active),
+        sort: toNum(t.sort) ?? 999,
+      }))
+      .filter(t => t.name && t.text && t.active)
+      .sort((a, b) => a.sort - b.sort);
 
     return new Response(JSON.stringify({ currency: "INR", services, banners, faq, testimonials }), {
       headers: {
         "content-type": "application/json; charset=utf-8",
         "cache-control": "public, max-age=60",
+        "access-control-allow-origin": "*",
       },
     });
   } catch (err) {
@@ -51,4 +96,3 @@ export async function onRequestGet(context) {
     });
   }
 }
-
