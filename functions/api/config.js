@@ -17,11 +17,13 @@ export async function onRequestGet({ env }) {
     const fallback = {
       currency: "INR",
       banners: {
-        heroHeadline: "Clear Answers. Practical Remedies.",
-        heroSub: "Kundli-based guidance + simple remedies.",
-        heroKicker: "Vedic Guidance",
-        whatsappNumber: "91XXXXXXXXXX",
-      },
+  heroHeadline: "Clear Answers. Practical Remedies.",
+  heroSub: "Kundli-based guidance + simple remedies.",
+  heroKicker: "Vedic Guidance",
+  whatsappNumber: "91XXXXXXXXXX",
+  heroBannerDesktopUrl: "",
+  heroBannerMobileUrl: ""
+},
       services: [
         { id: "love", name: "Love & Relationships", price: 351, badge: "Popular", active: true, sort: 10 },
         { id: "career", name: "Career & Money", price: 451, badge: "Best Value", active: true, sort: 20 },
