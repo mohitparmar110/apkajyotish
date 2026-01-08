@@ -1,60 +1,81 @@
-export async function onRequestGet(context) {
-  const SHEET_ID = context.env.SHEET_ID;
+// functions/api/config.js
 
-  if (!SHEET_ID) {
-    return new Response(JSON.stringify({ error: "SHEET_ID missing in env vars" }), {
-      status: 500,
-      headers: { "content-type": "application/json" },
-    });
-  }
+function splitCsvLine(line) {
+  // split commas that are NOT inside quotes
+  return line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/);
+}
 
-  const fetchCsv = async (sheetName) => {
-    const url =
-      `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq` +
-      `?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
-    const res = await fetch(url);
-    if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      throw new Error(`Failed to fetch "${sheetName}" (${res.status}): ${txt.slice(0, 120)}`);
-    }
-    return await res.text();
-  };
-
-  // Basic CSV (works fine as long as your cells don't contain commas in text)
-  const splitCsvLine = (line) =>
-  line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/); // splits commas outside quotes
-
-const clean = (v) =>
-  String(v ?? "")
+function cleanCell(v) {
+  return String(v ?? "")
+    .replace(/^\uFEFF/, "")     // remove BOM
     .trim()
-    .replace(/^\uFEFF/, "")          // remove BOM if any
-    .replace(/^"(.*)"$/, "$1")       // strip wrapping quotes
-    .replace(/""/g, '"');            // unescape double quotes
+    .replace(/^"(.*)"$/, "$1")  // remove wrapping quotes
+    .replace(/""/g, '"');       // unescape quotes
+}
 
-const csvToObjects = (csv) => {
+function csvToObjects(csv) {
   const lines = csv
     .split(/\r?\n/)
     .map((l) => l.trim())
     .filter(Boolean);
 
-  const headers = splitCsvLine(lines.shift()).map(clean);
+  if (lines.length === 0) return [];
+
+  const headers = splitCsvLine(lines.shift()).map(cleanCell);
 
   return lines.map((line) => {
-    const values = splitCsvLine(line).map(clean);
+    const values = splitCsvLine(line).map(cleanCell);
     const obj = {};
     headers.forEach((h, i) => (obj[h] = values[i] ?? ""));
     return obj;
   });
+}
+
+const toBool = (v) => ["true", "yes", "1"].includes(String(v).trim().toLowerCase());
+const toNum = (v) => {
+  const n = Number(String(v).trim());
+  return Number.isFinite(n) ? n : null;
 };
 
+export async function onRequestGet({ request, env }) {
+  const SHEET_ID = env.SHEET_ID;
+
+  if (!SHEET_ID) {
+    return new Response(JSON.stringify({ error: "SHEET_ID missing in Pages env vars" }), {
+      status: 500,
+      headers: { "content-type": "application/json" },
     });
+  }
+
+  const urlOf = (sheet) =>
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}`;
+
+  const fetchCsv = async (sheet) => {
+    const res = await fetch(urlOf(sheet), {
+      headers: {
+        // helps avoid weird edge-cases
+        "accept": "text/csv,*/*",
+      },
+    });
+
+    const text = await res.text();
+
+    if (!res.ok) {
+      throw new Error(`Fetch failed for "${sheet}" (${res.status}): ${text.slice(0, 200)}`);
+    }
+
+    // If Google returns HTML/login page instead of CSV
+    if (text.trim().startsWith("<!DOCTYPE html") || text.includes("<html")) {
+      throw new Error(
+        `Google returned HTML (permissions issue). Make sheet "Anyone with link: Viewer". Sheet: ${sheet}`
+      );
+    }
+
+    return text;
   };
 
-  const toBool = (v) => String(v).trim().toLowerCase() === "true";
-  const toNum = (v) => {
-    const n = Number(String(v).trim());
-    return Number.isFinite(n) ? n : null;
-  };
+  // Optional: bypass caching while testing
+  const noCache = new URL(request.url).searchParams.get("nocache") === "1";
 
   try {
     const servicesRaw = csvToObjects(await fetchCsv("services"));
@@ -63,7 +84,7 @@ const csvToObjects = (csv) => {
     const testimonialsRaw = csvToObjects(await fetchCsv("testimonials"));
 
     const services = servicesRaw
-      .map(s => ({
+      .map((s) => ({
         id: s.id,
         name: s.name,
         price: toNum(s.price),
@@ -71,39 +92,39 @@ const csvToObjects = (csv) => {
         active: toBool(s.active),
         sort: toNum(s.sort) ?? 999,
       }))
-      .filter(s => s.id && s.name && s.price != null && s.active)
+      .filter((s) => s.id && s.name && s.price != null && s.active)
       .sort((a, b) => a.sort - b.sort);
 
     const banners = {};
-    bannersRaw.forEach(b => {
+    bannersRaw.forEach((b) => {
       if (b.key) banners[b.key] = b.value ?? "";
     });
 
     const faq = faqRaw
-      .map(f => ({
+      .map((f) => ({
         q: f.q,
         a: f.a,
         active: toBool(f.active),
         sort: toNum(f.sort) ?? 999,
       }))
-      .filter(f => f.q && f.a && f.active)
+      .filter((f) => f.q && f.a && f.active)
       .sort((a, b) => a.sort - b.sort);
 
     const testimonials = testimonialsRaw
-      .map(t => ({
+      .map((t) => ({
         name: t.name,
         city: t.city,
         text: t.text,
         active: toBool(t.active),
         sort: toNum(t.sort) ?? 999,
       }))
-      .filter(t => t.name && t.text && t.active)
+      .filter((t) => t.name && t.text && t.active)
       .sort((a, b) => a.sort - b.sort);
 
     return new Response(JSON.stringify({ currency: "INR", services, banners, faq, testimonials }), {
       headers: {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=60",
+        "cache-control": noCache ? "no-store" : "public, max-age=60",
         "access-control-allow-origin": "*",
       },
     });
