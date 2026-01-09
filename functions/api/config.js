@@ -16,23 +16,26 @@ export async function onRequestGet({ env }) {
     // Fallback default (first time before you save)
     const fallback = {
       currency: "INR",
-     {
-  "hero": {
-    "desktopBanner": "https://cdn.apkajyotish.com/banners/hero-desktop.jpg",
-    "mobileBanner": "https://cdn.apkajyotish.com/banners/hero-mobile.jpg",
-    "headline": "Get Clarity. Get Direction.",
-    "subline": "Vedic guidance with practical remedies",
-    "kicker": "20+ Years Experience",
-    "whatsapp": "919999999999"
-  }
-}
+
+      // ✅ Match admin.html structure
+      banners: {
+        heroBannerDesktopUrl: "https://cdn.apkajyotish.com/banners/hero-desktop.jpg",
+        heroBannerMobileUrl: "https://cdn.apkajyotish.com/banners/hero-mobile.jpg",
+        heroHeadline: "Get Clarity. Get Direction.",
+        heroSub: "Vedic guidance with practical remedies",
+        heroKicker: "20+ Years Experience",
+        whatsappNumber: "919999999999",
+      },
+
       services: [
         { id: "love", name: "Love & Relationships", price: 351, badge: "Popular", active: true, sort: 10 },
         { id: "career", name: "Career & Money", price: 451, badge: "Best Value", active: true, sort: 20 },
       ],
+
       faq: [
         { q: "What do I need to send?", a: "Date, time, place of birth.", active: true, sort: 10 },
       ],
+
       testimonials: [
         { name: "Rahul", city: "Delhi", text: "Accurate & practical guidance.", active: true, sort: 10 },
       ],
@@ -48,7 +51,10 @@ export async function onRequestGet({ env }) {
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json; charset=utf-8",
+        "access-control-allow-origin": "*",
+      },
     });
   }
 }
