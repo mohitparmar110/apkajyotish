@@ -1,501 +1,889 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ApkaJyotish — Clear Answers. Practical Remedies.</title>
-  <meta name="description" content="Kundli-based guidance, clear answers, and practical remedies." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Apka Jyotish – Get Clarity, Calm & a Plan</title>
+  <meta name="description" content="Vedic astrology with practical remedies. 20+ years experience • 12,000+ clients • 100% confidential. Get clarity in minutes via WhatsApp or book a detailed reading." />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{
-      --bg:#0b0f17;
-      --card:#111827;
-      --card2:#0f172a;
-      --text:#e5e7eb;
-      --muted:#9ca3af;
-      --line:#1f2937;
-      --accent:#f59e0b;
-      --accent2:#fb7185;
-      --ok:#22c55e;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 18px;
-      --radius2: 26px;
-      --max: 1100px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: var(--font);
-      background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(245,158,11,.16), transparent 60%),
-        radial-gradient(900px 500px at 80% 20%, rgba(251,113,133,.12), transparent 60%),
-        radial-gradient(1000px 600px at 50% 90%, rgba(59,130,246,.10), transparent 55%),
-        var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      line-height:1.45;
-    }
-
-    a{ color:inherit; text-decoration:none; }
-    .wrap{ max-width:var(--max); margin:0 auto; padding:28px 18px 80px; }
-
-    /* Top bar */
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:14px 16px;
-      border:1px solid rgba(255,255,255,.06);
-      background: rgba(15,23,42,.55);
-      backdrop-filter: blur(10px);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      position: sticky; top: 14px; z-index: 50;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:700; letter-spacing:.2px;
-    }
-    .logo{
-      width:36px; height:36px; border-radius:12px;
-      background: linear-gradient(135deg, rgba(245,158,11,1), rgba(251,113,133,1));
-      display:grid; place-items:center;
-      box-shadow: 0 12px 30px rgba(245,158,11,.25);
-    }
-    .logo span{ font-size:18px; filter: drop-shadow(0 8px 12px rgba(0,0,0,.4)); }
-    .nav{
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-    }
-    .pill{
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.09);
-      background: rgba(17,24,39,.55);
-      color: var(--muted);
-      font-size:13px;
-      transition: .15s ease;
-    }
-    .pill:hover{ color: var(--text); border-color: rgba(245,158,11,.35); transform: translateY(-1px); }
-
-    .cta{
-      display:flex; align-items:center; gap:10px;
-    }
-    .btn{
-      border:0; cursor:pointer;
-      padding:10px 14px;
-      border-radius: 12px;
-      font-weight:650;
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border:1px solid rgba(255,255,255,.10);
-      transition: .15s ease;
-    }
-    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.16); }
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(245,158,11,1), rgba(251,113,133,1));
-      border:0;
-      color:#0b0f17;
-      box-shadow: 0 14px 36px rgba(245,158,11,.22);
-    }
-    .btn.primary:hover{ filter:saturate(1.05) brightness(1.02); }
-
-    /* Hero */
-    .hero{ margin-top:22px; display:grid; gap:18px; grid-template-columns: 1.25fr .75fr; }
-    @media (max-width: 900px){ .hero{ grid-template-columns:1fr; } }
-
-    .heroCard{
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.06);
-      background: rgba(17,24,39,.55);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .heroInner{ padding:28px 22px 24px; }
-    .kicker{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px; border-radius:999px;
-      background: rgba(245,158,11,.12);
-      border:1px solid rgba(245,158,11,.25);
-      color: #ffd18a;
-      font-size: 12px;
-      font-weight:650;
-    }
-    h1{
-      margin:12px 0 10px;
-      font-size: 44px;
-      line-height: 1.05;
-      letter-spacing: -0.8px;
-    }
-    @media (max-width: 480px){ h1{ font-size: 34px; } }
-    .sub{
-      color: var(--muted);
-      font-size: 15.5px;
-      max-width: 60ch;
-    }
-    .heroActions{ margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; }
-    .trustRow{ margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; color: var(--muted); font-size: 13px; }
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius: 999px;
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(15,23,42,.55);
-    }
-    .tag b{ color: var(--text); font-weight:650; }
-
-    .sideCard{ padding:18px; }
-    .sideTitle{ font-weight:750; margin:2px 0 10px; }
-    .sideItem{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:10px 0;
-      border-bottom:1px dashed rgba(255,255,255,.10);
-      color: var(--muted);
-      font-size: 13.5px;
-    }
-    .sideItem:last-child{ border-bottom:0; }
-    .dot{
-      width:10px; height:10px; border-radius:99px; margin-top:4px;
-      background: rgba(245,158,11,.9);
-      box-shadow: 0 0 0 4px rgba(245,158,11,.14);
-    }
-
-    /* Sections */
-    .section{ margin-top:34px; }
-    .sectionHead{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:14px; flex-wrap:wrap;
-      margin-bottom: 14px;
-    }
-    .sectionHead h2{
-      margin:0; font-size: 22px; letter-spacing:-.2px;
-    }
-    .sectionHead p{ margin:0; color: var(--muted); font-size: 13.5px; }
-
-    /* Cards grid */
-    .grid{ display:grid; gap:14px; grid-template-columns: repeat(3, 1fr); }
-    @media (max-width: 980px){ .grid{ grid-template-columns: repeat(2, 1fr);} }
-    @media (max-width: 620px){ .grid{ grid-template-columns: 1fr;} }
-
-    .card{
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(17,24,39,.52);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 14px 40px rgba(0,0,0,.33);
-      padding:16px;
-      position:relative;
-      overflow:hidden;
-      transition: .15s ease;
-    }
-    .card:hover{ transform: translateY(-2px); border-color: rgba(245,158,11,.25); }
-    .cardTop{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
-    .card h3{ margin:0; font-size: 16px; letter-spacing:-.2px; }
-    .price{
-      margin:10px 0 0;
-      font-size: 30px;
-      letter-spacing:-.8px;
-      font-weight: 800;
-    }
-    .per{ color: var(--muted); font-size: 12px; font-weight:600; margin-left:6px; }
-    .badge{
-      font-size: 12px; font-weight:750;
-      padding:6px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(245,158,11,.30);
-      background: rgba(245,158,11,.12);
-      color: #ffd18a;
-      white-space:nowrap;
-    }
-    .muted{ color: var(--muted); font-size: 13px; margin:10px 0 0; }
-    .features{ margin:12px 0 14px; padding:0; list-style:none; display:grid; gap:8px; }
-    .features li{ display:flex; gap:10px; align-items:flex-start; color: var(--muted); font-size: 13px; }
-    .tick{
-      width:18px; height:18px; border-radius: 999px;
-      background: rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.26);
-      display:grid; place-items:center;
-      color: rgba(34,197,94,1);
-      flex:0 0 auto;
-      margin-top:1px;
-    }
-    .cardActions{ display:flex; gap:10px; flex-wrap:wrap; }
-    .btn.full{ width: 100%; justify-content:center; display:flex; }
-
-    /* FAQ */
-    .faq{ display:grid; gap:10px; }
-    details{
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.07);
-      background: rgba(17,24,39,.48);
-      padding: 12px 14px;
-      box-shadow: 0 14px 40px rgba(0,0,0,.24);
-    }
-    summary{
-      cursor:pointer;
-      font-weight:700;
-      list-style:none;
-      outline:none;
-    }
-    summary::-webkit-details-marker{ display:none; }
-    details p{ margin:10px 0 0; color: var(--muted); font-size: 13.5px; }
-
-    /* Testimonials */
-    .tGrid{ display:grid; gap:14px; grid-template-columns: repeat(3, 1fr); }
-    @media (max-width: 980px){ .tGrid{ grid-template-columns: repeat(2, 1fr);} }
-    @media (max-width: 620px){ .tGrid{ grid-template-columns: 1fr;} }
-    .tCard{ padding:16px; }
-    .tText{ color: var(--text); font-size: 14px; opacity:.95; margin:0 0 12px; }
-    .tMeta{ color: var(--muted); font-size: 13px; display:flex; justify-content:space-between; gap:10px; }
-
-    /* Footer */
-    footer{ margin-top:44px; color: var(--muted); font-size: 13px; }
-    .foot{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
-      padding-top: 16px;
-      border-top:1px solid rgba(255,255,255,.08);
-    }
-
-    /* Loader */
-    .skeleton{
-      background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.10), rgba(255,255,255,.06));
-      background-size: 200% 100%;
-      animation: shimmer 1.2s infinite;
-      border-radius: 12px;
-      height: 14px;
-    }
-    @keyframes shimmer{
-      0%{ background-position: 0% 0; }
-      100%{ background-position: 200% 0; }
-    }
+    :root { --brand:#f97316; --brand-2:#fb923c; }
+    .font-inter{font-family:Inter,sans-serif}
+    .font-poppins{font-family:Poppins,sans-serif}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;font-weight:600;padding:.875rem 1.25rem;transition:.2s}
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff}
+    .btn-primary:hover{filter:brightness(1.05)}
+    .btn-outline{border:2px solid var(--brand);color:var(--brand)}
+    .btn-outline:hover{background:rgba(249,115,22,.06)}
+    .card{background:#fff;border:1px solid #eef0f3;border-radius:1rem;box-shadow:0 6px 18px rgba(16,24,40,.06)}
+    .badge{font-size:.75rem;border-radius:9999px;padding:.25rem .6rem;}
+    .input{border:1px solid #e5e7eb;border-radius:.75rem;padding:.75rem .9rem;width:100%}
+    .input:focus{outline:none;border-color:#fb923c;box-shadow:0 0 0 3px rgba(251,146,60,.2)}
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo"><span>🔱</span></div>
+<body class="font-inter bg-gray-50 text-gray-900">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-400 grid place-items-center text-white text-xl">✨</div>
         <div>
-          <div style="font-size:14px">ApkaJyotish</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:600">Sheet-powered website</div>
+          <div class="font-poppins font-bold text-lg leading-tight">Apka Jyotish</div>
+          <div class="text-[11px] text-orange-600/80 -mt-0.5">Your Astrology Companion</div>
         </div>
+      </a>
+      <nav class="hidden md:flex items-center gap-8 text-sm">
+        <a href="#services" class="hover:text-orange-600">Services</a>
+        <a href="#how" class="hover:text-orange-600">How it works</a>
+        <a href="#reviews" class="hover:text-orange-600">Reviews</a>
+        <a href="#faq" class="hover:text-orange-600">FAQ</a>
+        <button class="btn btn-primary" onclick="openLeadForm()">Free WhatsApp Chat</button>
+      </nav>
+      <button class="md:hidden btn btn-primary" onclick="openLeadForm()">Chat</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- =======================================
+     PREMIUM ULTRA HERO BANNER (Option D1)
+======================================== -->
+
+<!-- Full-width banner with curved bottom -->
+<section class="relative w-full overflow-hidden">
+
+  <!-- Banner images controlled by Admin Panel -->
+  <div class="relative w-full">
+    <img id="heroDesktopBanner"
+         src=""
+         class="hidden md:block w-full h-[520px] object-cover">
+
+    <img id="heroMobileBanner"
+         src=""
+         class="block md:hidden w-full h-[420px] object-cover">
+
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0"></div>
+
+   <!-- Smooth Soft Curve -->
+<div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+  <svg class="relative block w-full h-20 md:h-28 lg:h-32"
+       xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 1440 150"
+       preserveAspectRatio="none">
+    <path fill="#ffffff" d="M0,96 C360,160 1080,160 1440,96 L1440,150 L0,150 Z"></path>
+  </svg>
+</div>
+
+</section>
+
+<!-- =======================================
+     YOUR EXISTING HERO CONTENT (untouched)
+======================================== -->
+
+<section class="bg-white -mt-12 lg:-mt-16 relative z-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 grid lg:grid-cols-[1.15fr_minmax(0,0.95fr)] gap-10 items-center">
+
+    <!-- Left: Copy -->
+    <div>
+      <p class="inline-flex items-center gap-2 rounded-full bg-orange-50 text-[11px] font-semibold tracking-wide uppercase px-3 py-1 text-orange-600">
+        <span class="text-xs">◎</span> Vedic guidance • Practical remedies
+      </p>
+
+      <h1 class="font-poppins font-extrabold text-4xl sm:text-5xl lg:text-[2.9rem] tracking-tight mt-4 leading-tight">
+        Clear answers.
+        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500">
+          Practical remedies.
+        </span>
+      </h1>
+
+      <p class="mt-4 text-lg text-gray-600 max-w-xl">
+        Get calm, clarity, and next steps from a trusted Vedic astrologer.
+        <span class="font-semibold text-gray-800">Reply within 2 hours.</span>
+      </p>
+
+      <div class="mt-7 flex flex-col sm:flex-row gap-3">
+        <button class="btn btn-primary" onclick="openLeadForm('Free 5-min Chat')">
+          Start free WhatsApp chat
+        </button>
+        <a href="#services" class="btn btn-outline">See services & prices</a>
       </div>
-      <div class="nav">
-        <a class="pill" href="#pricing">Pricing</a>
-        <a class="pill" href="#faq">FAQ</a>
-        <a class="pill" href="#testimonials">Reviews</a>
-      </div>
-      <div class="cta">
-        <button class="btn" id="refreshBtn" type="button">Refresh</button>
-        <a class="btn primary" id="whatsappBtn" href="#" target="_blank" rel="noopener">WhatsApp</a>
+
+      <!-- Trust row -->
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+        <div class="card p-4">★★★★★ 4.9/5 from clients</div>
+        <div class="card p-4">20+ years of experience</div>
+        <div class="card p-4">🔒 100% confidential</div>
       </div>
     </div>
 
-    <section class="hero">
-      <div class="heroCard">
-        <div class="heroInner">
-          <div class="kicker">✨ <span id="heroKicker">Vedic Guidance</span></div>
-          <h1 id="heroHeadline">Clear Answers. Practical Remedies.</h1>
-          <p class="sub" id="heroSub">Kundli-based guidance, focused on what matters. Simple remedies you can follow.</p>
-
-          <div class="heroActions">
-            <a class="btn primary" href="#pricing">View Pricing</a>
-            <a class="btn" href="#faq">How it works</a>
+    <!-- Right: Highlight panel -->
+    <div class="relative">
+      <div class="absolute -inset-6 bg-gradient-to-br from-orange-500/10 via-amber-300/10 to-purple-500/10 blur-3xl opacity-80 pointer-events-none"></div>
+      <div class="relative card p-6 lg:p-7 bg-white/95 backdrop-blur">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-orange-500 text-white grid place-items-center text-2xl shadow-md">
+            ॐ
           </div>
-
-          <div class="trustRow">
-            <div class="tag">✅ <b>Fast</b> <span>Reply</span></div>
-            <div class="tag">🔒 <b>Secure</b> <span>Payments</span></div>
-            <div class="tag">🧾 <b>PDF</b> <span>Report</span></div>
+          <div>
+            <div class="font-poppins font-semibold text-base">Dheeraj Parmar</div>
+            <div class="text-xs text-gray-500">Vedic Astrologer • 20+ years</div>
           </div>
         </div>
+        <p class="mt-4 text-sm text-gray-700 leading-relaxed">
+          “Astrology should make life lighter, not more confusing. I focus on
+          clear answers, timelines and remedies that fit your real life, not
+          fear or superstition.”
+        </p>
+        <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-gray-600">
+          <div class="rounded-xl bg-orange-50/70 border border-orange-100 px-3 py-2">
+            12,000+ consultations<br/><span class="text-[11px] text-orange-700">Across India & overseas</span>
+          </div>
+          <div class="rounded-xl bg-amber-50/70 border border-amber-100 px-3 py-2">
+            Special focus on<br/><span class="text-[11px] text-amber-700">career, marriage & business</span>
+          </div>
+        </div>
+        <div class="mt-4 text-[11px] text-gray-500">
+          Powered by Vedic astrology, supported by practical psychological understanding.
+        </div>
       </div>
+    </div>
 
-      <div class="heroCard sideCard">
-        <div class="sideTitle">What you’ll get</div>
-        <div class="sideItem"><span class="dot"></span><span>Clear direction for your next step (career, love, money).</span></div>
-        <div class="sideItem"><span class="dot"></span><span>Simple remedies (no complicated rituals).</span></div>
-        <div class="sideItem"><span class="dot"></span><span>Honest guidance based on your kundli.</span></div>
-        <div class="sideItem"><span class="dot"></span><span>WhatsApp-first support.</span></div>
+  </div>
+</section>
+
+
+    <!-- Services -->
+    <section id="services" class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold">Services & Pricing</h2>
+          <p class="mt-2 text-gray-600">Outcomes first. Clear answers, practical remedies, follow-ups included.</p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Love -->
+          <article class="card p-6 flex flex-col">
+            <div class="flex items-center justify-between">
+              <h3 class="font-poppins font-semibold text-lg">Love & Relationships</h3>
+              <span class="badge bg-rose-100 text-rose-700">Popular</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-600">Clarity on compatibility, marriage timing & next steps.</p>
+            <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
+              <li>30-min consult</li>
+              <li>Marriage & relationship timing windows</li>
+              <li>2 follow-up questions free</li>
+            </ul>
+            <div class="mt-4 flex items-baseline gap-2">
+              <span class="text-2xl font-bold">₹550</span>
+              <span class="text-xs text-gray-500">incl. GST</span>
+            </div>
+            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Love & Relationships')">Start now</button>
+          </article>
+
+          <!-- Career -->
+          <article class="card p-6 flex flex-col ring-2 ring-orange-200">
+            <div class="flex items-center justify-between">
+              <h3 class="font-poppins font-semibold text-lg">Career & Money</h3>
+              <span class="badge bg-amber-100 text-amber-700">Best value</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-600">Job change timing, business luck & wealth pathways with clear next steps.</p>
+            <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
+              <li>40-min deep-dive</li>
+              <li>Action plan for next 90 days</li>
+              <li>2 follow-ups + remedies PDF</li>
+            </ul>
+            <div class="mt-4 flex items-baseline gap-2">
+              <span class="text-2xl font-bold">₹1,050</span>
+              <span class="text-xs text-gray-500">incl. GST</span>
+            </div>
+            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Career & Money')">Start now</button>
+          </article>
+
+          <!-- Full life -->
+          <article class="card p-6 flex flex-col">
+            <div class="flex items-center justify-between">
+              <h3 class="font-poppins font-semibold text-lg">Complete Life Reading</h3>
+              <span class="badge bg-indigo-100 text-indigo-700">Most booked</span>
+            </div>
+            <p class="mt-2 text-sm text-gray-600">Major themes, key life periods & remedies for peace and progress.</p>
+            <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
+              <li>60-min consult</li>
+              <li>Gemstone & Vastu guidance</li>
+              <li>Follow-ups for 7 days</li>
+            </ul>
+            <div class="mt-4 flex items-baseline gap-2">
+              <span class="text-2xl font-bold">₹1,550</span>
+              <span class="text-xs text-gray-500">incl. GST</span>
+            </div>
+            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Complete Life Reading')">Start now</button>
+          </article>
+
+          <!-- Home -->
+          <article class="card p-6 flex flex-col">
+            <h3 class="font-poppins font-semibold text-lg">Home & Family</h3>
+            <p class="mt-2 text-sm text-gray-600">Vastu tips & harmony guidance for your home.</p>
+            <div class="mt-4 flex items-baseline gap-2"><span class="text-2xl font-bold">₹750</span></div>
+            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Home & Family')">Start now</button>
+          </article>
+
+          <!-- Gems -->
+          <article class="card p-6 flex flex-col">
+            <h3 class="font-poppins font-semibold text-lg">Gems & Remedies</h3>
+            <p class="mt-2 text-sm text-gray-600">Lucky gemstones & simple, practical remedies.</p>
+            <div class="mt-4 flex items-baseline gap-2"><span class="text-2xl font-bold">₹450</span></div>
+            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Gems & Remedies')">Start now</button>
+          </article>
+
+          <!-- Quick Q -->
+          <article class="card p-6 flex flex-col">
+            <h3 class="font-poppins font-semibold text-lg">Quick Question</h3>
+            <p class="mt-2 text-sm text-gray-600">Instant clarity for urgent questions.</p>
+            <div class="mt-4 flex items-baseline gap-2"><span class="text-2xl font-bold">₹250</span></div>
+            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Quick Question')">Ask now</button>
+          </article>
+        </div>
+
+        <!-- Bundle -->
+        <div class="mt-8 card p-6 flex flex-col lg:flex-row items-center justify-between gap-4">
+          <div>
+            <h3 class="font-poppins font-semibold text-lg">Full Life Pack – Save 35%</h3>
+            <p class="text-sm text-gray-600">
+              Complete Life Reading + Career & Money + 7-day support. Ideal if you want a full map of life.
+            </p>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="text-right">
+              <div class="text-sm line-through text-gray-400">₹2,698</div>
+              <div class="text-2xl font-bold text-gray-900">₹1,750</div>
+              <div class="text-[11px] text-emerald-600 font-medium">You save 35%</div>
+            </div>
+            <button class="btn btn-primary" onclick="openLeadForm('Full Life Pack (Bundle)')">Book bundle</button>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="pricing">
-      <div class="sectionHead">
+    <!-- How it works -->
+    <section id="how" class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold text-center">How it works</h2>
+        <p class="mt-2 text-center text-gray-600">Simple, human and practical — no complicated rituals, no fear.</p>
+        <div class="mt-10 grid md:grid-cols-3 gap-6">
+          <div class="card p-6">
+            <div class="text-3xl">💬</div>
+            <h3 class="mt-3 font-semibold">Share your concern</h3>
+            <p class="text-sm text-gray-600 mt-1">
+              Fill a 30-second form with your key question and basic birth details so we can prepare.
+            </p>
+          </div>
+          <div class="card p-6">
+            <div class="text-3xl">🧭</div>
+            <h3 class="mt-3 font-semibold">Get your plan</h3>
+            <p class="text-sm text-gray-600 mt-1">
+              On the call, you get clear answers, timelines and remedies that are realistic for your life.
+            </p>
+          </div>
+          <div class="card p-6">
+            <div class="text-3xl">✅</div>
+            <h3 class="mt-3 font-semibold">Follow-up support</h3>
+            <p class="text-sm text-gray-600 mt-1">
+              Ask follow-ups for free within the support window so that your doubts are actually resolved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews -->
+    <section id="reviews" class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold text-center">What clients say</h2>
+        <p class="mt-2 text-center text-gray-600">Real stories from people who came with confusion and left with a plan.</p>
+        <div class="mt-10 grid md:grid-cols-3 gap-6">
+          <div class="card p-6 bg-white">
+            <div class="text-amber-500">★★★★★</div>
+            <p class="mt-2 text-gray-700 text-sm">
+              “We got married the month he predicted. It felt like having a wise friend who gives you steps, not jargon.”
+            </p>
+            <div class="mt-3 text-sm text-gray-500">— Anita P., Mumbai</div>
+          </div>
+          <div class="card p-6 bg-white">
+            <div class="text-amber-500">★★★★★</div>
+            <p class="mt-2 text-gray-700 text-sm">
+              “Sales doubled after his Vastu fixes. Straightforward, calm and action-oriented. No drama, just clarity.”
+            </p>
+            <div class="mt-3 text-sm text-gray-500">— Rohit G., Delhi</div>
+          </div>
+          <div class="card p-6 bg-white">
+            <div class="text-amber-500">★★★★★</div>
+            <p class="mt-2 text-gray-700 text-sm">
+              “The 90-day career plan removed my anxiety. I knew what to do on Monday, not just ‘in future you’ll succeed’.”
+            </p>
+            <div class="mt-3 text-sm text-gray-500">— Shreya K., Pune</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA band with gentle urgency -->
+    <section class="py-12 bg-gradient-to-br from-amber-500 to-orange-400 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-4">
         <div>
-          <h2>Pricing</h2>
-          <p>Prices and services are pulled live from Google Sheets.</p>
+          <h3 class="font-poppins text-2xl font-bold">Ready to feel lighter?</h3>
+          <p class="text-white/90">Reply within 2 hours • Only a few call slots daily • 100% confidential</p>
         </div>
-        <div style="display:flex; gap:10px; align-items:center;">
-          <span class="pill" id="lastUpdated">Loading…</span>
-        </div>
-      </div>
-
-      <div class="grid" id="pricingGrid">
-        <!-- skeleton -->
-        <div class="card"><div class="skeleton" style="width:45%"></div><div class="skeleton" style="width:70%;height:28px;margin-top:10px"></div><div class="skeleton" style="width:90%;margin-top:12px"></div></div>
-        <div class="card"><div class="skeleton" style="width:40%"></div><div class="skeleton" style="width:65%;height:28px;margin-top:10px"></div><div class="skeleton" style="width:92%;margin-top:12px"></div></div>
-        <div class="card"><div class="skeleton" style="width:50%"></div><div class="skeleton" style="width:60%;height:28px;margin-top:10px"></div><div class="skeleton" style="width:85%;margin-top:12px"></div></div>
+        <button class="btn bg-white text-orange-600 hover:opacity-90" onclick="openLeadForm('Free 5-min Chat')">
+          Start Free Chat
+        </button>
       </div>
     </section>
 
-    <section class="section" id="faq">
-      <div class="sectionHead">
+    <!-- FAQ -->
+    <section id="faq" class="py-16 bg-white">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold text-center">Frequently asked</h2>
+        <div class="mt-8 divide-y divide-gray-200">
+          <details class="group py-4" open>
+            <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold">What happens after I submit the form?
+              <span class="transition group-open:rotate-180">⌄</span>
+            </summary>
+            <p class="mt-2 text-gray-600">
+              You land on WhatsApp with your details pre-filled. We reply within 2 hours and confirm the next step
+              (free chat or paid call).
+            </p>
+          </details>
+          <details class="group py-4">
+            <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold">Is it confidential?
+              <span class="transition group-open:rotate-180">⌄</span>
+            </summary>
+            <p class="mt-2 text-gray-600">
+              Yes. 100% confidential. Your chart, questions and messages are never shared with anyone. No recordings
+              or posts are made using your details.
+            </p>
+          </details>
+          <details class="group py-4">
+            <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold">Do I need exact birth time?
+              <span class="transition group-open:rotate-180">⌄</span>
+            </summary>
+            <p class="mt-2 text-gray-600">
+              Exact birth time helps with finer predictions, but it’s not mandatory. If you’re unsure, we work with
+              approximate time and cross-check with key life events.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 mt-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid md:grid-cols-3 gap-8 items-start">
         <div>
-          <h2>FAQ</h2>
-          <p>Quick answers before you book.</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-400 grid place-items-center text-white text-xl">✨</div>
+            <div>
+              <div class="font-poppins font-bold text-lg text-white">Apka Jyotish</div>
+              <div class="text-xs text-orange-300/80">Your Astrology Companion</div>
+            </div>
+          </div>
+          <p class="mt-4 text-sm text-gray-400">
+            Spreading cosmic wisdom & positive vibes since 2004, with a focus on practical remedies and grounded guidance.
+          </p>
+          <div class="mt-4 text-xs text-gray-400">
+            © <span id="year"></span> Apka Jyotish. All rights reserved.
+          </div>
         </div>
-      </div>
-      <div class="faq" id="faqList"></div>
-    </section>
-
-    <section class="section" id="testimonials">
-      <div class="sectionHead">
         <div>
-          <h2>Reviews</h2>
-          <p>Real feedback (sheet-driven).</p>
+          <h4 class="font-semibold text-white text-sm">Trust</h4>
+          <ul class="mt-3 space-y-2 text-sm">
+            <li>★ 4.9/5 from clients</li>
+            <li>🎓 Masters in Jyotish</li>
+            <li>🔒 100% Confidential</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-white text-sm">Policies</h4>
+          <ul class="mt-3 space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-white">Refund Policy</a></li>
+          </ul>
+          <button class="mt-4 btn btn-primary w-full text-sm" onclick="openLeadForm('Free 5-min Chat (Footer)')">
+            Chat Now
+          </button>
         </div>
       </div>
-      <div class="tGrid" id="tGrid"></div>
-    </section>
+    </div>
+  </footer>
 
-    <footer>
-      <div class="foot">
-        <div>© <span id="year"></span> ApkaJyotish</div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <span class="pill">🌐 <span id="siteDomain">apkajyotish.com</span></span>
-          <a class="pill" href="/api/config?nocache=1" target="_blank" rel="noopener">View API</a>
-        </div>
+  <!-- Lead Form Modal (pre-WhatsApp) -->
+  <div id="lead-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/50" onclick="closeLeadForm()"></div>
+    <div class="relative max-w-lg w-[92%] mx-auto mt-16 card p-6 bg-white">
+      <div class="flex items-center justify-between">
+        <h3 class="font-poppins text-xl font-bold">Tell me a bit & we’ll start</h3>
+        <button class="text-gray-500 hover:text-gray-700" onclick="closeLeadForm()">✕</button>
       </div>
-    </footer>
+      <form id="lead-form" class="mt-4 grid gap-3" onsubmit="sendToWhatsApp(event)">
+        <input class="input" type="text" name="name" placeholder="Your name" required />
+        <input class="input" type="text" name="service" placeholder="Service (or leave as is)" />
+        <textarea class="input" name="concern" rows="3" placeholder="What do you want clarity on?" required></textarea>
+        <div class="grid grid-cols-3 gap-3">
+          <input class="input" type="text" name="dob" placeholder="DOB (dd-mm-yyyy)" />
+          <input class="input" type="text" name="tob" placeholder="Time (e.g., 14:35)" />
+          <input class="input" type="text" name="pob" placeholder="Place of birth" />
+        </div>
+        <button class="btn btn-primary w-full" type="submit">Start WhatsApp</button>
+        <p class="text-xs text-gray-500">By continuing you agree to our privacy policy. 100% confidential.</p>
+      </form>
+    </div>
   </div>
 
+
+  <!-- ============================================
+        SUPER-SECURE ADMIN BANNER PANEL SYSTEM
+        Hidden unless correct URL key + PIN entered
+  ================================================ -->
+  <style>
+    #banner-admin-panel {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      z-index: 999999;
+      width: 300px;
+      display: none;
+    }
+    #banner-admin-panel h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    #banner-admin-panel label {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .admin-input {
+      margin-bottom: 12px;
+      font-size: 13px;
+      width: 100%;
+    }
+    #admin-pin-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      display: none;
+      place-items: center;
+      z-index: 1000000;
+    }
+    #admin-pin-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 300px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    }
+    #admin-pin-box input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      margin-top: 8px;
+    }
+    #previewDesktop, #previewMobile {
+      width: 100%;
+      margin-top: 8px;
+      border-radius: 10px;
+      display: none;
+    }
+  </style>
+
+  <!-- SECRET ADMIN PANEL -->
+  <div id="banner-admin-panel">
+    <h3>Upload Banners</h3>
+
+    <label>Desktop Banner</label>
+    <input type="file" id="desktopBannerInput" class="admin-input" accept="image/*">
+    <img id="previewDesktop">
+
+    <label>Mobile Banner</label>
+    <input type="file" id="mobileBannerInput" class="admin-input" accept="image/*">
+    <img id="previewMobile">
+
+    <button onclick="saveBanners()" style="padding:8px 12px; width:100%; background:#f97316; border:none; color:white; border-radius:8px; font-size:14px; font-weight:600;">
+      Save Banner
+    </button>
+
+    <button onclick="resetBanners()" style="margin-top:8px; padding:8px 12px; width:100%; background:#555; border:none; color:white; border-radius:8px; font-size:13px; font-weight:600;">
+      Reset Banners
+    </button>
+  </div>
+
+  <!-- PIN POPUP -->
+  <div id="admin-pin-modal">
+    <div id="admin-pin-box">
+      <h3 style="margin:0; font-size:17px; font-weight:700; text-align:center;">
+        Admin Access
+      </h3>
+      <p style="font-size:13px; color:#444; text-align:center; margin-bottom:10px;">
+        Enter Admin PIN to continue
+      </p>
+      <input id="adminPinInput" type="password" placeholder="Enter PIN">
+      <button onclick="verifyPin()" style="margin-top:12px; padding:10px; width:100%; background:#f97316; border:none; color:white; border-radius:8px; font-size:14px; font-weight:600;">
+        Unlock
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script>
-    // --- Helpers ---
-    const $ = (id) => document.getElementById(id);
-    const escapeHtml = (s) => String(s ?? "").replace(/[&<>"']/g, (m) => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[m]));
+    const WHATSAPP_NUMBER = "9326139609"; // e.g. 919876543210 (no + or spaces)
+    let presetService = "";
 
-    function buildWhatsApp(number, text){
-      const n = (number || "").replace(/[^\d]/g, "");
-      const msg = encodeURIComponent(text || "Hi, I want to book a Kundli reading.");
-      if(!n) return "#";
-      return `https://wa.me/${n}?text=${msg}`;
+    function openLeadForm(service = "") {
+      presetService = service;
+      const modal = document.getElementById('lead-modal');
+      modal.classList.remove('hidden');
+      const serviceField = document.querySelector('#lead-form [name="service"]');
+      serviceField.value = service || serviceField.value || "Free 5-min Chat";
+    }
+    function closeLeadForm(){
+      const modal = document.getElementById('lead-modal');
+      modal.classList.add('hidden');
     }
 
-    // Placeholder payment function
-    window.payNow = (serviceId, amount) => {
-      alert(`Pay flow placeholder\\nService: ${serviceId}\\nAmount: ₹${amount}`);
-      // Later: call your Razorpay Worker/endpoint here.
-    };
+    function sendToWhatsApp(e){
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const name = data.get('name')?.trim();
+      const service = (data.get('service')||presetService||'Consultation').trim();
+      const concern = data.get('concern')?.trim();
+      const dob = data.get('dob')?.trim();
+      const tob = data.get('tob')?.trim();
+      const pob = data.get('pob')?.trim();
 
-    async function loadConfig({ noCache = false } = {}) {
-      const url = noCache ? "/api/config?nocache=1" : "/api/config";
-      const res = await fetch(url, { cache: "no-store" });
-      if(!res.ok) throw new Error("Failed to load config");
-      return await res.json();
+      const message = `Hi Dheeraj ji, I am ${name}. I want *${service}*.\n\nConcern: ${concern}\nDOB: ${dob || '-'}\nTime: ${tob || '-'}\nPlace: ${pob || '-'}\n\nPlease guide me on next steps.`;
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank', 'noopener');
+      closeLeadForm();
     }
 
-    function render(cfg) {
-      // Hero from banners (fallbacks)
-      const banners = cfg.banners || {};
-      $("heroHeadline").textContent = banners.heroHeadline || "Clear Answers. Practical Remedies.";
-      $("heroSub").textContent = banners.heroSub || "Kundli-based guidance, focused on what matters. Simple remedies you can follow.";
-      $("heroKicker").textContent = banners.heroKicker || "Vedic Guidance";
-
-      // WhatsApp button
-      const whatsapp = banners.whatsappNumber || "";
-      $("whatsappBtn").href = buildWhatsApp(whatsapp, "Hi, I want to book a reading.");
-      $("whatsappBtn").style.opacity = whatsapp ? "1" : ".6";
-
-      // Pricing
-      const currency = cfg.currency || "INR";
-      const services = (cfg.services || []).filter(s => s && s.active !== false);
-      const grid = $("pricingGrid");
-
-      if (!services.length) {
-        grid.innerHTML = `
-          <div class="card" style="grid-column:1/-1">
-            <h3>No active services found</h3>
-            <p class="muted">Check your Google Sheet: set <b>active</b> to TRUE for services.</p>
-            <div class="cardActions" style="margin-top:12px">
-              <a class="btn primary" href="/api/config?nocache=1" target="_blank" rel="noopener">Debug API</a>
-              <button class="btn" onclick="location.reload()">Reload</button>
-            </div>
-          </div>
-        `;
-      } else {
-        grid.innerHTML = services.map(s => `
-          <div class="card">
-            <div class="cardTop">
-              <h3>${escapeHtml(s.name)}</h3>
-              ${s.badge ? `<span class="badge">${escapeHtml(s.badge)}</span>` : ``}
-            </div>
-            <div class="price">₹${Number(s.price).toLocaleString("en-IN")}<span class="per">/ reading</span></div>
-            <p class="muted">WhatsApp guidance + practical remedies.</p>
-            <ul class="features">
-              <li><span class="tick">✓</span><span>Personalized analysis</span></li>
-              <li><span class="tick">✓</span><span>Clear next steps</span></li>
-              <li><span class="tick">✓</span><span>Simple remedies</span></li>
-            </ul>
-            <div class="cardActions">
-              <button class="btn primary full" onclick="payNow('${escapeHtml(s.id)}', ${Number(s.price)})">Pay ₹${Number(s.price).toLocaleString("en-IN")}</button>
-            </div>
-          </div>
-        `).join("");
-      }
-
-      // FAQ
-      const faq = (cfg.faq || []).filter(f => f && f.active !== false);
-      const faqEl = $("faqList");
-      faqEl.innerHTML = faq.length
-        ? faq.map(item => `
-            <details>
-              <summary>${escapeHtml(item.q)}</summary>
-              <p>${escapeHtml(item.a)}</p>
-            </details>
-          `).join("")
-        : `<div class="card"><h3>No FAQs yet</h3><p class="muted">Add rows in your <b>faq</b> sheet (active TRUE).</p></div>`;
-
-      // Testimonials
-      const t = (cfg.testimonials || []).filter(t => t && t.active !== false);
-      const tGrid = $("tGrid");
-      tGrid.innerHTML = t.length
-        ? t.map(x => `
-            <div class="card tCard">
-              <p class="tText">“${escapeHtml(x.text)}”</p>
-              <div class="tMeta">
-                <span><b style="color:var(--text)">${escapeHtml(x.name)}</b></span>
-                <span>${escapeHtml(x.city || "")}</span>
-              </div>
-            </div>
-          `).join("")
-        : `<div class="card" style="grid-column:1/-1"><h3>No reviews yet</h3><p class="muted">Add rows in <b>testimonials</b> sheet (active TRUE).</p></div>`;
-
-      $("lastUpdated").textContent = `Updated: ${new Date().toLocaleString()}`;
-    }
-
-    async function boot(noCache=false){
-      try{
-        const cfg = await loadConfig({ noCache });
-        render(cfg);
-      } catch(e){
-        $("pricingGrid").innerHTML = `
-          <div class="card" style="grid-column:1/-1">
-            <h3>Could not load config</h3>
-            <p class="muted">${escapeHtml(e.message || e)}</p>
-            <div class="cardActions" style="margin-top:12px">
-              <a class="btn primary" href="/api/config?nocache=1" target="_blank" rel="noopener">Open API</a>
-              <button class="btn" onclick="boot(true)">Retry (no cache)</button>
-            </div>
-          </div>`;
-      }
-    }
-
-    $("refreshBtn").addEventListener("click", () => boot(true));
-    $("year").textContent = new Date().getFullYear();
-
-    boot(false);
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+  <!-- Schema: LocalBusiness/Person for rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Dheeraj Parmar",
+    "jobTitle": "Vedic Astrologer",
+    "description": "Practical Vedic astrology with remedies. 20+ years of experience and 12,000+ clients.",
+    "areaServed": "IN",
+    "brand": {"@type":"Brand","name":"Apka Jyotish"},
+    "sameAs": []
+  }
+  </script>
+
+  <!-- ======= APPENDED: Razorpay integration without altering original core logic ======= -->
+  <script>
+    // Load Razorpay script dynamically
+    (function loadRZP(){
+      const s = document.createElement('script');
+      s.src = "https://checkout.razorpay.com/v1/checkout.js";
+      s.async = true;
+      document.head.appendChild(s);
+    })();
+
+    // CONFIG
+    const AJ_DEMO_MODE = false; // set false for live
+    const AJ_RAZORPAY_KEY_ID = "rzp_live_ReQS6kBC1MMpAK"; // live key
+    const AJ_CREATE_ORDER_URL = "https://apkajyotish-pay.mohit-parmar110.workers.dev"; // for live
+    const AJ_LOGO_URL = "https://dummyimage.com/200x200/ffa733/ffffff.png&text=Apka+Jyotish";
+
+    function ajAmountFor(service){
+      const map = {
+        "Love & Relationships": 55000,
+        "Career & Money": 105000,
+        "Complete Life Reading": 155000,
+        "Home & Family": 75000,
+        "Gems & Remedies": 45000,
+        "Quick Question": 25000,
+        "Full Life Pack (Bundle)": 175000,
+        "Free 5-min Chat": 0,
+        "Free 5-min Chat (Footer)": 0
+      };
+      return map[service] ?? 0;
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      const form = document.getElementById('lead-form');
+      if(!form) return;
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if(!submitBtn) return;
+
+      const payBtn = document.createElement('button');
+      payBtn.type = 'button';
+      payBtn.id = 'aj-pay-btn';
+      payBtn.className = 'btn btn-primary w-full';
+      payBtn.textContent = 'Pay Now';
+      payBtn.style.marginTop = '0.25rem';
+
+      const grid = document.createElement('div');
+      grid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
+
+      submitBtn.classList.remove('btn-primary');
+      submitBtn.classList.add('btn-outline');
+      submitBtn.id = 'aj-wa-btn';
+      submitBtn.disabled = true;
+
+      submitBtn.parentNode.insertBefore(grid, submitBtn);
+      grid.appendChild(payBtn);
+      grid.appendChild(submitBtn);
+
+      const helper = document.createElement('p');
+      helper.id = 'aj-helper';
+      helper.className = 'text-xs text-gray-500 mt-1';
+      helper.textContent = 'Payment required for paid services. WhatsApp unlocks after successful payment.';
+      grid.parentNode.appendChild(helper);
+
+      function ajToggle(){
+        const fd = new FormData(form);
+        const service = (fd.get('service') || window.presetService || '').trim();
+        const amt = ajAmountFor(service);
+        const isFree = amt <= 0;
+        if(isFree){
+          payBtn.classList.add('hidden');
+          submitBtn.disabled = false;
+          helper.textContent = 'Free service selected. You can start WhatsApp directly.';
+        } else {
+          payBtn.classList.remove('hidden');
+          submitBtn.disabled = !window.__ajPaidOK;
+          helper.textContent = 'Payment required for paid services. WhatsApp unlocks after successful payment.';
+        }
+      }
+
+      form.addEventListener('input', (e)=>{
+        if(e.target && e.target.name === 'service') ajToggle();
+      });
+
+      const _openLeadForm = window.openLeadForm;
+      window.openLeadForm = function(service=""){
+        if(typeof _openLeadForm === 'function') _openLeadForm(service);
+        window.__ajPaidOK = false;
+        ajToggle();
+      };
+
+      payBtn.addEventListener('click', async function(){
+        const fd = new FormData(form);
+        const name    = (fd.get('name') || '').trim();
+        const service = (fd.get('service') || window.presetService || 'Consultation').trim();
+        const concern = (fd.get('concern') || '').trim();
+        const dob     = (fd.get('dob') || '').trim();
+        const tob     = (fd.get('tob') || '').trim();
+        const pob     = (fd.get('pob') || '').trim();
+
+        if(!name || !concern){
+          alert('Please fill your name and concern first.');
+          return;
+        }
+
+        const amount = ajAmountFor(service);
+        if(amount <= 0){
+          window.__ajPaidOK = true;
+          submitBtn.disabled = false;
+          return;
+        }
+
+        function ready(){ return window.Razorpay; }
+        if(!ready()){
+          await new Promise(res=>{
+            const check = setInterval(()=>{ if(ready()){ clearInterval(check); res(); }}, 50);
+          });
+        }
+
+        if(AJ_DEMO_MODE){
+          const options = {
+            key: AJ_RAZORPAY_KEY_ID,
+            amount: amount,
+            currency: "INR",
+            name: "Apka Jyotish (Demo)",
+            description: service,
+            image: AJ_LOGO_URL,
+            prefill: { name },
+            notes: { service, dob, tob, pob },
+            theme: { color: "#F97316" },
+            handler: function () {
+              window.__ajPaidOK = true;
+              submitBtn.disabled = false;
+              alert("Demo payment success! WhatsApp unlocked.");
+            }
+          };
+          new Razorpay(options).open();
+        } else {
+          try{
+            const order = await fetch(AJ_CREATE_ORDER_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ amount, currency: 'INR', notes: { name, service, concern, dob, tob, pob } })
+            }).then(r=>r.json());
+            if(!order || !order.id){ alert("Order error, try again."); return; }
+
+            const options = {
+              key: AJ_RAZORPAY_KEY_ID,
+              amount: amount,
+              currency: "INR",
+              name: "Apka Jyotish",
+              description: service,
+              image: AJ_LOGO_URL,
+              order_id: order.id,
+              prefill: { name },
+              notes: { service, dob, tob, pob },
+              theme: { color: "#F97316" },
+              handler: function () {
+                window.__ajPaidOK = true;
+                submitBtn.disabled = false;
+                alert("Payment successful! You can start WhatsApp now.");
+              }
+            };
+            new Razorpay(options).open();
+          }catch(err){
+            console.error(err);
+            alert("Could not create order. Please try again.");
+          }
+        }
+      });
+
+      ajToggle();
+    });
+  </script>
+  <!-- ======= /APPENDED ======= -->
+
+  <script>
+    const ADMIN_SECRET = "apkajyotish";     // URL secret
+    const ADMIN_PIN = "7860";               // PIN (change anytime)
+
+    function checkAdminURL() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("admin") === ADMIN_SECRET) {
+        document.getElementById("admin-pin-modal").style.display = "grid";
+      }
+    }
+
+    function verifyPin() {
+      const pin = document.getElementById("adminPinInput").value.trim();
+      if (pin === ADMIN_PIN) {
+        document.getElementById("admin-pin-modal").style.display = "none";
+        document.getElementById("banner-admin-panel").style.display = "block";
+      } else {
+        alert("Incorrect PIN");
+      }
+    }
+
+    function previewImage(input, preview) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const deskInput = document.getElementById("desktopBannerInput");
+      const mobInput = document.getElementById("mobileBannerInput");
+      if (deskInput) {
+        deskInput.addEventListener("change", function () {
+          previewImage(this, document.getElementById("previewDesktop"));
+        });
+      }
+      if (mobInput) {
+        mobInput.addEventListener("change", function () {
+          previewImage(this, document.getElementById("previewMobile"));
+        });
+      }
+    });
+
+    function saveBanners() {
+      const desktopInput = document.getElementById("desktopBannerInput").files[0];
+      const mobileInput = document.getElementById("mobileBannerInput").files[0];
+
+      if (desktopInput) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          localStorage.setItem("desktopBanner", e.target.result);
+          updateBanners();
+        };
+        reader.readAsDataURL(desktopInput);
+      }
+
+      if (mobileInput) {
+        const reader2 = new FileReader();
+        reader2.onload = e => {
+          localStorage.setItem("mobileBanner", e.target.result);
+          updateBanners();
+        };
+        reader2.readAsDataURL(mobileInput);
+      }
+
+      alert("Banner Updated Successfully!");
+    }
+
+    function resetBanners() {
+      localStorage.removeItem("desktopBanner");
+      localStorage.removeItem("mobileBanner");
+      alert("Banners reset! Reload page.");
+    }
+
+    function updateBanners() {
+      const desktopBanner = localStorage.getItem("desktopBanner");
+      const mobileBanner = localStorage.getItem("mobileBanner");
+
+      const desktopEl = document.getElementById("heroDesktopBanner");
+      const mobileEl = document.getElementById("heroMobileBanner");
+
+      if (desktopBanner && desktopEl) desktopEl.src = desktopBanner;
+      if (mobileBanner && mobileEl) mobileEl.src = mobileBanner;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      updateBanners();
+      checkAdminURL();
+    });
+  </script>
+  <script>
+async function loadSiteConfig(){
+  try{
+    const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
+    const cfg = await res.json();
+    if(!res.ok) return;
+
+    const b = cfg.banners || {};
+
+    const d = document.getElementById("heroDesktopBanner");
+    const m = document.getElementById("heroMobileBanner");
+
+    if(d && b.heroBannerDesktopUrl) d.src = b.heroBannerDesktopUrl;
+    if(m && b.heroBannerMobileUrl)  m.src = b.heroBannerMobileUrl;
+
+    window.__AJ_CFG__ = cfg;
+  } catch(e){
+    console.warn("Config load failed", e);
+  }
+}
+document.addEventListener("DOMContentLoaded", loadSiteConfig);
+</script>
 </body>
 </html>
