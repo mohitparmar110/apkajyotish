@@ -7,20 +7,19 @@
 
   <style>
     :root{
-      /* Light + calming palette */
       --bg: #f7f8fb;
       --surface: rgba(255,255,255,.86);
       --surface2: rgba(255,255,255,.96);
-      --text: #0f172a;     /* slate-900 */
-      --muted: #64748b;    /* slate-500 */
+      --text: #0f172a;
+      --muted: #64748b;
       --line: rgba(15,23,42,.10);
       --line2: rgba(15,23,42,.08);
 
-      --accent: #2563eb;   /* blue-600 */
-      --accent2:#22c55e;   /* green-500 */
-      --warn: #f59e0b;     /* amber-500 */
-      --bad:  #ef4444;     /* red-500 */
-      --ok:   #16a34a;     /* green-600 */
+      --accent: #2563eb;
+      --accent2:#22c55e;
+      --warn: #f59e0b;
+      --bad:  #ef4444;
+      --ok:   #16a34a;
 
       --radius: 16px;
       --radius2: 22px;
@@ -28,7 +27,7 @@
       --shadow2: 0 8px 26px rgba(15,23,42,.06);
 
       --h: 42px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
     *{box-sizing:border-box}
@@ -47,7 +46,6 @@
 
     .wrap{max-width:1180px;margin:0 auto;padding:18px 18px 54px}
 
-    /* Sticky top bar */
     .top{
       position:sticky; top:0; z-index:50;
       background: rgba(247,248,251,.78);
@@ -74,7 +72,6 @@
     .brand h1{font-size:18px;line-height:1.1;margin:0}
     .brand .sub{color:var(--muted);font-size:12px;margin-top:4px}
 
-    /* Token + actions */
     .actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
     .tokenWrap{
       display:flex;align-items:center;gap:10px;
@@ -90,9 +87,7 @@
       color:var(--text);
       height:34px;font-size:13px;
     }
-    .tokenWrap input::placeholder{color:rgba(100,116,139,.9)}
 
-    /* Buttons */
     .btn{
       height:36px;
       padding:0 14px;
@@ -116,14 +111,12 @@
       color:white;
       box-shadow: 0 10px 26px rgba(37,99,235,.18);
     }
-    .btn.primary:hover{filter:brightness(1.02)}
     .btn.primary[data-state="saving"]{pointer-events:none;opacity:.92}
     .btn.primary[data-state="saved"]{
       background: linear-gradient(135deg, var(--ok), #86efac);
       box-shadow: 0 10px 26px rgba(22,163,74,.18);
     }
 
-    /* Save spinner */
     .spinner{
       width:14px;height:14px;border-radius:999px;
       border:2px solid rgba(255,255,255,.35);
@@ -134,7 +127,6 @@
     .tick{display:none}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* Cards */
     .card{
       background: var(--surface);
       border:1px solid var(--line);
@@ -157,11 +149,10 @@
     .cardHead h2{font-size:16px;margin:0}
     .hint{color:var(--muted);font-size:12px;margin-top:4px}
 
-    /* Form fields */
     label{display:block;margin:10px 0 6px;color:var(--muted);font-size:12px}
     input, textarea{
       width:100%;
-      height: var(--h);
+      height: 42px;
       padding:10px 12px;
       border-radius: 14px;
       border:1px solid var(--line);
@@ -187,7 +178,6 @@
       .tokenWrap input{width: min(420px, 70vw);}
     }
 
-    /* Tables */
     .tableWrap{
       overflow:auto;
       border-radius: 16px;
@@ -199,7 +189,7 @@
       width:100%;
       border-collapse:separate;
       border-spacing:0;
-      min-width: 880px; /* keeps layout stable; scroll on mobile */
+      min-width: 1100px;
     }
     thead th{
       position:sticky; top:0;
@@ -211,18 +201,16 @@
       padding:10px 10px;
       border-bottom:1px solid var(--line2);
       z-index:2;
+      white-space:nowrap;
     }
     tbody td{
       padding:10px 10px;
       border-bottom:1px solid var(--line2);
-      vertical-align:middle;
+      vertical-align:top;
     }
     tbody tr:hover td{background: rgba(37,99,235,.03)}
 
-    .cellInput input{height:36px;border-radius:12px}
-    .cellSmall{min-width:140px}
-    .cellMed{min-width:220px}
-    .cellWide{min-width:320px}
+    .cellInput input,.cellInput textarea{border-radius:12px}
     .cellBtn{width:120px}
 
     .check{
@@ -234,7 +222,6 @@
     .statusRow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
     .dangerText{color: rgba(239,68,68,.85); font-weight:600}
 
-    /* Toast */
     .toast{
       position:fixed; right:18px; bottom:18px; z-index:9999;
       background: rgba(255,255,255,.92);
@@ -258,7 +245,6 @@
     .toast .t1{font-weight:900;font-size:13px}
     .toast .t2{color:var(--muted);font-size:12px;margin-top:2px}
 
-    /* Extra nice: subtle section divider */
     .divider{
       height:1px;background:linear-gradient(90deg, transparent, rgba(15,23,42,.10), transparent);
       margin:10px 0 4px;
@@ -315,15 +301,12 @@
       </div>
 
       <div class="grid">
-
-        <!-- ✅ NEW: Upload Desktop -->
         <div>
           <label>Upload Desktop Banner</label>
           <input type="file" id="heroDesktopFile" accept="image/*" />
           <button class="btn" id="uploadDesktopBtn" type="button">Upload Desktop</button>
         </div>
 
-        <!-- ✅ NEW: Upload Mobile -->
         <div>
           <label>Upload Mobile Banner</label>
           <input type="file" id="heroMobileFile" accept="image/*" />
@@ -362,7 +345,7 @@
       <div class="cardHead">
         <div>
           <h2>Services (Pricing)</h2>
-          <div class="hint">id, name, price, badge, active, sort</div>
+          <div class="hint">id, name, price, badge, subtitle, bullets, cta, gst_note, active, sort</div>
         </div>
         <button class="btn" id="addService">+ Add Service</button>
       </div>
@@ -436,54 +419,73 @@
     window.__t = setTimeout(()=> $("toast").classList.remove("show"), 2200);
   }
 
+  function escapeHtml(str){
+    return String(str ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function bulletsToText(b){
+    if(Array.isArray(b)) return b.join("\n");
+    return String(b || "");
+  }
+
   function renderTables(){
+    if(!state) return;
+
+    // SERVICES
     const s = state.services || [];
     $("servicesTable").innerHTML = `
-     $("servicesTable").innerHTML = `
-  <thead>
-    <tr>
-      <th class="cellSmall">id</th>
-      <th class="cellMed">name</th>
-      <th class="cellSmall">price</th>
-      <th class="cellMed">badge</th>
-      <th class="cellWide">subtitle</th>
-      <th class="cellWide">bullets (comma / newline)</th>
-      <th class="cellMed">cta</th>
-      <th class="cellMed">gst_note</th>
-      <th class="cellSmall">active</th>
-      <th class="cellSmall">sort</th>
-      <th class="cellBtn"></th>
-    </tr>
-  </thead>
-  <tbody>
-    ${(s||[]).map((x,i)=>`
-      <tr>
-        <td class="cellInput"><input value="${escapeHtml(x.id||"")}" oninput="state.services[${i}].id=this.value"></td>
-        <td class="cellInput"><input value="${escapeHtml(x.name||"")}" oninput="state.services[${i}].name=this.value"></td>
-        <td class="cellInput"><input value="${escapeHtml(x.price??"")}" inputmode="numeric" oninput="state.services[${i}].price=this.value"></td>
-        <td class="cellInput"><input value="${escapeHtml(x.badge||"")}" oninput="state.services[${i}].badge=this.value"></td>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>price</th>
+          <th>badge</th>
+          <th>subtitle</th>
+          <th>bullets (one per line)</th>
+          <th>cta</th>
+          <th>gst_note</th>
+          <th>active</th>
+          <th>sort</th>
+          <th class="cellBtn"></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${s.map((x,i)=>`
+          <tr>
+            <td class="cellInput"><input value="${escapeHtml(x.id||"")}" oninput="state.services[${i}].id=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.name||"")}" oninput="state.services[${i}].name=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.price??"")}" inputmode="numeric" oninput="state.services[${i}].price=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.badge||"")}" oninput="state.services[${i}].badge=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.subtitle||"")}" oninput="state.services[${i}].subtitle=this.value"></td>
 
-        <td class="cellInput"><input value="${escapeHtml(x.subtitle||"")}" oninput="state.services[${i}].subtitle=this.value"></td>
-        <td class="cellInput"><input value="${escapeHtml(Array.isArray(x.bullets)? x.bullets.join(", ") : (x.bullets||""))}" oninput="state.services[${i}].bullets=this.value"></td>
-        <td class="cellInput"><input value="${escapeHtml(x.cta||"")}" oninput="state.services[${i}].cta=this.value"></td>
-        <td class="cellInput"><input value="${escapeHtml(x.gst_note||"")}" oninput="state.services[${i}].gst_note=this.value"></td>
+            <td class="cellInput">
+              <textarea rows="4" oninput="state.services[${i}].bullets=this.value">${escapeHtml(bulletsToText(x.bullets))}</textarea>
+            </td>
 
-        <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.services[${i}].active=this.checked"></td>
-        <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.services[${i}].sort=this.value"></td>
-        <td><button class="btn" onclick="state.services.splice(${i},1); renderTables()">Delete</button></td>
-      </tr>
-    `).join("")}
-  </tbody>
-`;
+            <td class="cellInput"><input value="${escapeHtml(x.cta||"")}" oninput="state.services[${i}].cta=this.value"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.gst_note||"")}" oninput="state.services[${i}].gst_note=this.value"></td>
+            <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.services[${i}].active=this.checked"></td>
+            <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.services[${i}].sort=this.value"></td>
+            <td><button class="btn" type="button" onclick="state.services.splice(${i},1); renderTables()">Delete</button></td>
+          </tr>
+        `).join("")}
+      </tbody>
+    `;
 
+    // FAQ
     const f = state.faq || [];
     $("faqTable").innerHTML = `
       <thead>
         <tr>
-          <th class="cellWide">q</th>
-          <th class="cellWide">a</th>
-          <th class="cellSmall">active</th>
-          <th class="cellSmall">sort</th>
+          <th>q</th>
+          <th>a</th>
+          <th>active</th>
+          <th>sort</th>
           <th class="cellBtn"></th>
         </tr>
       </thead>
@@ -494,21 +496,22 @@
             <td class="cellInput"><input value="${escapeHtml(x.a||"")}" oninput="state.faq[${i}].a=this.value"></td>
             <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.faq[${i}].active=this.checked"></td>
             <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.faq[${i}].sort=this.value"></td>
-            <td><button class="btn" onclick="state.faq.splice(${i},1); renderTables()">Delete</button></td>
+            <td><button class="btn" type="button" onclick="state.faq.splice(${i},1); renderTables()">Delete</button></td>
           </tr>
         `).join("")}
       </tbody>
     `;
 
+    // TESTIMONIALS
     const t = state.testimonials || [];
     $("tTable").innerHTML = `
       <thead>
         <tr>
-          <th class="cellMed">name</th>
-          <th class="cellMed">city</th>
-          <th class="cellWide">text</th>
-          <th class="cellSmall">active</th>
-          <th class="cellSmall">sort</th>
+          <th>name</th>
+          <th>city</th>
+          <th>text</th>
+          <th>active</th>
+          <th>sort</th>
           <th class="cellBtn"></th>
         </tr>
       </thead>
@@ -520,20 +523,11 @@
             <td class="cellInput"><input value="${escapeHtml(x.text||"")}" oninput="state.testimonials[${i}].text=this.value"></td>
             <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.testimonials[${i}].active=this.checked"></td>
             <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.testimonials[${i}].sort=this.value"></td>
-            <td><button class="btn" onclick="state.testimonials.splice(${i},1); renderTables()">Delete</button></td>
+            <td><button class="btn" type="button" onclick="state.testimonials.splice(${i},1); renderTables()">Delete</button></td>
           </tr>
         `).join("")}
       </tbody>
     `;
-  }
-
-  function escapeHtml(str){
-    return String(str ?? "")
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
   }
 
   async function load(){
@@ -542,16 +536,15 @@
       const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
       const cfg = await res.json();
       if(!res.ok) throw new Error(cfg?.error || "Load failed");
+
       state = cfg || {};
-
-      // Ensure banners object exists
       state.banners = state.banners || {};
+      state.services = Array.isArray(state.services) ? state.services : [];
+      state.faq = Array.isArray(state.faq) ? state.faq : [];
+      state.testimonials = Array.isArray(state.testimonials) ? state.testimonials : [];
 
-      // Banner URLs
       $("heroBannerDesktopUrl").value = state.banners.heroBannerDesktopUrl || "";
       $("heroBannerMobileUrl").value  = state.banners.heroBannerMobileUrl  || "";
-
-      // Existing banner fields
       $("heroHeadline").value = state.banners.heroHeadline || "";
       $("heroSub").value      = state.banners.heroSub || "";
       $("heroKicker").value   = state.banners.heroKicker || "";
@@ -593,12 +586,8 @@
     }
 
     state.banners = state.banners || {};
-
-    // Save banner URLs
     state.banners.heroBannerDesktopUrl = $("heroBannerDesktopUrl").value.trim();
     state.banners.heroBannerMobileUrl  = $("heroBannerMobileUrl").value.trim();
-
-    // Save existing banner fields
     state.banners.heroHeadline = $("heroHeadline").value.trim();
     state.banners.heroSub      = $("heroSub").value.trim();
     state.banners.heroKicker   = $("heroKicker").value.trim();
@@ -606,6 +595,7 @@
 
     setSaveState("saving");
     setStatus("Saving...");
+
     try{
       const res = await fetch("/api/admin/save", {
         method:"POST",
@@ -629,7 +619,6 @@
     }
   }
 
-  // ✅ NEW: Upload logic (matches your upload-banner.js response: { success, key, url })
   async function uploadBanner(variant){
     const token = $("token").value.trim();
     if(!token){
@@ -638,7 +627,6 @@
       return;
     }
 
-    // ensure we have state loaded (so auto-save works)
     if(!state){
       await load();
       if(!state){
@@ -671,11 +659,9 @@
       const out = await res.json().catch(()=> ({}));
       if(!res.ok) throw new Error(out?.error || ("HTTP " + res.status));
 
-      // Fill URL field from your API: out.url
       if(variant === "desktop") $("heroBannerDesktopUrl").value = out.url || "";
       if(variant === "mobile")  $("heroBannerMobileUrl").value  = out.url || "";
 
-      // ✅ Auto-save to KV so frontend updates immediately
       setStatus(`Uploaded ✅ (${variant}) — saving config...`);
       await save();
 
@@ -689,27 +675,26 @@
   $("loadBtn").addEventListener("click", load);
   $("saveBtn").addEventListener("click", save);
 
-  // ✅ Wire upload buttons
   $("uploadDesktopBtn").addEventListener("click", ()=> uploadBanner("desktop"));
   $("uploadMobileBtn").addEventListener("click", ()=> uploadBanner("mobile"));
 
   $("addService").addEventListener("click", ()=>{
-  state.services = state.services || [];
-  state.services.push({
-    id:"new",
-    name:"New Service",
-    price:0,
-    badge:"",
-    subtitle:"",
-    bullets:"",
-    cta:"Start now",
-    gst_note:"incl. GST",
-    active:true,
-    sort:999
+    state.services = state.services || [];
+    state.services.push({
+      id:"new",
+      name:"New Service",
+      price:0,
+      badge:"",
+      subtitle:"",
+      bullets:"",
+      cta:"Start now",
+      gst_note:"incl. GST",
+      active:true,
+      sort:999
+    });
+    renderTables();
+    toast("Added", "New service row added.");
   });
-  renderTables();
-  toast("Added", "New service row added.");
-});
 
   $("addFaq").addEventListener("click", ()=>{
     state.faq = state.faq || [];
