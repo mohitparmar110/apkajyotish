@@ -17,8 +17,8 @@ export async function onRequestGet({ env }) {
       currency: "INR",
 
       banners: {
-        heroBannerDesktopUrl: "https://cdn.apkajyotish.com/banners/hero-desktop.jpg",
-        heroBannerMobileUrl: "https://cdn.apkajyotish.com/banners/hero-mobile.jpg",
+        heroBannerDesktopUrl: "https://pub-c1f56b2e5a0a43aabe3aac3dcb2f27db.r2.dev/banners/hero-desktop.jpg",
+        heroBannerMobileUrl: "https://pub-c1f56b2e5a0a43aabe3aac3dcb2f27db.r2.dev/banners/hero-mobile.jpg",
         heroHeadline: "Get Clarity. Get Direction.",
         heroSub: "Vedic guidance with practical remedies",
         heroKicker: "20+ Years Experience",
