@@ -439,31 +439,42 @@
   function renderTables(){
     const s = state.services || [];
     $("servicesTable").innerHTML = `
-      <thead>
-        <tr>
-          <th class="cellSmall">id</th>
-          <th class="cellMed">name</th>
-          <th class="cellSmall">price</th>
-          <th class="cellMed">badge</th>
-          <th class="cellSmall">active</th>
-          <th class="cellSmall">sort</th>
-          <th class="cellBtn"></th>
-        </tr>
-      </thead>
-      <tbody>
-        ${s.map((x,i)=>`
-          <tr>
-            <td class="cellInput"><input value="${escapeHtml(x.id||"")}" oninput="state.services[${i}].id=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.name||"")}" oninput="state.services[${i}].name=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.price??"")}" inputmode="numeric" oninput="state.services[${i}].price=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.badge||"")}" oninput="state.services[${i}].badge=this.value"></td>
-            <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.services[${i}].active=this.checked"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.services[${i}].sort=this.value"></td>
-            <td><button class="btn" onclick="state.services.splice(${i},1); renderTables()">Delete</button></td>
-          </tr>
-        `).join("")}
-      </tbody>
-    `;
+     $("servicesTable").innerHTML = `
+  <thead>
+    <tr>
+      <th class="cellSmall">id</th>
+      <th class="cellMed">name</th>
+      <th class="cellSmall">price</th>
+      <th class="cellMed">badge</th>
+      <th class="cellWide">subtitle</th>
+      <th class="cellWide">bullets (comma / newline)</th>
+      <th class="cellMed">cta</th>
+      <th class="cellMed">gst_note</th>
+      <th class="cellSmall">active</th>
+      <th class="cellSmall">sort</th>
+      <th class="cellBtn"></th>
+    </tr>
+  </thead>
+  <tbody>
+    ${(s||[]).map((x,i)=>`
+      <tr>
+        <td class="cellInput"><input value="${escapeHtml(x.id||"")}" oninput="state.services[${i}].id=this.value"></td>
+        <td class="cellInput"><input value="${escapeHtml(x.name||"")}" oninput="state.services[${i}].name=this.value"></td>
+        <td class="cellInput"><input value="${escapeHtml(x.price??"")}" inputmode="numeric" oninput="state.services[${i}].price=this.value"></td>
+        <td class="cellInput"><input value="${escapeHtml(x.badge||"")}" oninput="state.services[${i}].badge=this.value"></td>
+
+        <td class="cellInput"><input value="${escapeHtml(x.subtitle||"")}" oninput="state.services[${i}].subtitle=this.value"></td>
+        <td class="cellInput"><input value="${escapeHtml(Array.isArray(x.bullets)? x.bullets.join(", ") : (x.bullets||""))}" oninput="state.services[${i}].bullets=this.value"></td>
+        <td class="cellInput"><input value="${escapeHtml(x.cta||"")}" oninput="state.services[${i}].cta=this.value"></td>
+        <td class="cellInput"><input value="${escapeHtml(x.gst_note||"")}" oninput="state.services[${i}].gst_note=this.value"></td>
+
+        <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.services[${i}].active=this.checked"></td>
+        <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.services[${i}].sort=this.value"></td>
+        <td><button class="btn" onclick="state.services.splice(${i},1); renderTables()">Delete</button></td>
+      </tr>
+    `).join("")}
+  </tbody>
+`;
 
     const f = state.faq || [];
     $("faqTable").innerHTML = `
@@ -683,11 +694,22 @@
   $("uploadMobileBtn").addEventListener("click", ()=> uploadBanner("mobile"));
 
   $("addService").addEventListener("click", ()=>{
-    state.services = state.services || [];
-    state.services.push({ id:"new", name:"New Service", price:0, badge:"", active:true, sort:999 });
-    renderTables();
-    toast("Added", "New service row added.");
+  state.services = state.services || [];
+  state.services.push({
+    id:"new",
+    name:"New Service",
+    price:0,
+    badge:"",
+    subtitle:"",
+    bullets:"",
+    cta:"Start now",
+    gst_note:"incl. GST",
+    active:true,
+    sort:999
   });
+  renderTables();
+  toast("Added", "New service row added.");
+});
 
   $("addFaq").addEventListener("click", ()=>{
     state.faq = state.faq || [];
