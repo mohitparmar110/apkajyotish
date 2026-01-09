@@ -465,34 +465,29 @@
     }
 
     function applyBanners(cfg){
-      const banners = cfg.banners || {};
-      const hero = cfg.hero || {};
+  const FALLBACK_DESKTOP =
+    "https://pub-c1f56b2e5a0a43aabe3aac3dcb2f27db.r2.dev/banners/hero-desktop.jpg";
+  const FALLBACK_MOBILE =
+    "https://pub-c1f56b2e5a0a43aabe3aac3dcb2f27db.r2.dev/banners/hero-mobile.jpg";
 
-      // Support both formats
-      const desktopUrl =
-        banners.heroBannerDesktopUrl ||
-        banners.heroBannerDesktopUrl?.trim?.() ||
-        hero.desktopBanner ||
-        "";
+  const banners = cfg.banners || {};
 
-      const mobileUrl =
-        banners.heroBannerMobileUrl ||
-        banners.heroBannerMobileUrl?.trim?.() ||
-        hero.mobileBanner ||
-        "";
+  const desktopUrl = String(
+    banners.heroBannerDesktopUrl || FALLBACK_DESKTOP
+  ).trim();
 
-      const version = cfg.bannerVersion || Date.now(); // cache bust
-      const d = document.getElementById("heroDesktopBanner");
-      const m = document.getElementById("heroMobileBanner");
+  const mobileUrl = String(
+    banners.heroBannerMobileUrl || FALLBACK_MOBILE
+  ).trim();
 
-      if(d && desktopUrl){
-        d.src = desktopUrl + (desktopUrl.includes("?") ? "&" : "?") + "v=" + version;
-      }
-      if(m && mobileUrl){
-        m.src = mobileUrl + (mobileUrl.includes("?") ? "&" : "?") + "v=" + version;
-      }
-    }
+  const version = Date.now(); // cache bust every load
 
+  const d = document.getElementById("heroDesktopBanner");
+  const m = document.getElementById("heroMobileBanner");
+
+  if (d) d.src = desktopUrl + "?v=" + version;
+  if (m) m.src = mobileUrl + "?v=" + version;
+}
     function renderServices(cfg){
       const grid = document.getElementById("servicesGrid");
       if(!grid) return;
