@@ -316,52 +316,33 @@
 
       <div class="grid">
         <div>
-          
-          <div>
-<div class="grid">
+          <label>Hero Banner Desktop URL</label>
+          <input id="heroBannerDesktopUrl" placeholder="https://cdn.../banners/hero-desktop.jpg" />
+        </div>
+        <div>
+          <label>Hero Banner Mobile URL</label>
+          <input id="heroBannerMobileUrl" placeholder="https://cdn.../banners/hero-mobile.jpg" />
+        </div>
 
-  <div>
-    <label>Upload Desktop Banner</label>
-    <input type="file" id="heroDesktopFile" accept="image/*" />
-    <button class="btn" id="uploadDesktopBtn" type="button">Upload</button>
-  </div>
+        <div>
+          <label>Hero Headline</label>
+          <input id="heroHeadline" />
+        </div>
+        <div>
+          <label>Hero Kicker</label>
+          <input id="heroKicker" />
+        </div>
+        <div>
+          <label>Hero Sub</label>
+          <input id="heroSub" />
+        </div>
+        <div>
+          <label>WhatsApp Number (with country code)</label>
+          <input id="whatsappNumber" placeholder="91XXXXXXXXXX" />
+        </div>
+      </div>
+    </div>
 
-  <div>
-    <label>Upload Mobile Banner</label>
-    <input type="file" id="heroMobileFile" accept="image/*" />
-    <button class="btn" id="uploadMobileBtn" type="button">Upload</button>
-  </div>
-
-  <div>
-    <label>Hero Banner Desktop URL</label>
-    <input id="heroBannerDesktopUrl" placeholder="https://cdn.../banners/hero-desktop.jpg" />
-  </div>
-
-  <div>
-    <label>Hero Banner Mobile URL</label>
-    <input id="heroBannerMobileUrl" placeholder="https://cdn.../banners/hero-mobile.jpg" />
-  </div>
-
-  <div>
-    <label>Hero Headline</label>
-    <input id="heroHeadline" />
-  </div>
-
-  <div>
-    <label>Hero Kicker</label>
-    <input id="heroKicker" />
-  </div>
-
-  <div>
-    <label>Hero Sub</label>
-    <input id="heroSub" />
-  </div>
-
-  <div>
-    <label>WhatsApp Number (with country code)</label>
-    <input id="whatsappNumber" placeholder="91XXXXXXXXXX" />
-  </div>
-</div>
     <div class="card">
       <div class="cardHead">
         <div>
@@ -621,48 +602,6 @@
       toast("Save failed", e.message, false);
     }
   }
-async function uploadBanner(variant){
-  const token = $("token").value.trim();
-  if(!token){
-    setStatus("Paste ADMIN_TOKEN first.");
-    toast("Token missing", "Paste ADMIN_TOKEN first.", false);
-    return;
-  }
-
-  const fileInput = variant === "desktop" ? $("heroDesktopFile") : $("heroMobileFile");
-  const file = fileInput?.files?.[0];
-  if(!file){
-    toast("No file selected", "Choose an image first.", false);
-    return;
-  }
-
-  const form = new FormData();
-  form.append("variant", variant);
-  form.append("file", file);
-
-  setStatus(`Uploading ${variant} banner...`);
-
-  try{
-    const res = await fetch("/api/admin/upload-banner", {
-      method: "POST",
-      headers: { "x-admin-token": token },
-      body: form
-    });
-
-    const out = await res.json().catch(()=> ({}));
-    if(!res.ok) throw new Error(out?.error || ("HTTP " + res.status));
-
-    // Fill URL fields automatically after upload
-    if(variant === "desktop") $("heroBannerDesktopUrl").value = out.url;
-    if(variant === "mobile") $("heroBannerMobileUrl").value = out.url;
-
-    setStatus(`Uploaded ✅ (${variant}) — Now click SAVE`);
-    toast("Uploaded ✅", "Now click SAVE to apply on website.");
-  }catch(e){
-    setStatus("Upload failed: " + e.message);
-    toast("Upload failed", e.message, false);
-  }
-}
 
   $("loadBtn").addEventListener("click", load);
   $("saveBtn").addEventListener("click", save);
@@ -692,3 +631,4 @@ async function uploadBanner(variant){
 </script>
 </body>
 </html>
+
