@@ -469,3 +469,179 @@
       const hero = cfg.hero || {};
 
       // Support both formats
+      const desktopUrl =
+        banners.heroBannerDesktopUrl ||
+        banners.heroBannerDesktopUrl?.trim?.() ||
+        hero.desktopBanner ||
+        "";
+
+      const mobileUrl =
+        banners.heroBannerMobileUrl ||
+        banners.heroBannerMobileUrl?.trim?.() ||
+        hero.mobileBanner ||
+        "";
+
+      const version = cfg.bannerVersion || Date.now(); // cache bust
+      const d = document.getElementById("heroDesktopBanner");
+      const m = document.getElementById("heroMobileBanner");
+
+      if(d && desktopUrl){
+        d.src = desktopUrl + (desktopUrl.includes("?") ? "&" : "?") + "v=" + version;
+      }
+      if(m && mobileUrl){
+        m.src = mobileUrl + (mobileUrl.includes("?") ? "&" : "?") + "v=" + version;
+      }
+    }
+
+    function renderServices(cfg){
+      const grid = document.getElementById("servicesGrid");
+      if(!grid) return;
+
+      const services = (cfg.services || [])
+        .filter(s => s && (s.active !== false))
+        .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
+
+      if(!services.length){
+        grid.innerHTML = `<div class="card p-6 text-sm text-gray-600">No services configured.</div>`;
+        return;
+      }
+
+      grid.innerHTML = services.map(s=>{
+        const title = esc(s.name || "");
+        const subtitle = esc(s.subtitle || "");
+        const badge = esc(s.badge || "");
+        const bullets = parseBullets(s.bullets);
+        const cta = esc(s.cta || "Start now");
+        const gst = esc(s.gst_note || "incl. GST");
+        const ring = (badge || "").toLowerCase().includes("best") ? ' ring-2 ring-orange-200' : '';
+
+        return `
+          <article class="card p-6 flex flex-col${ring}">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="font-poppins font-semibold text-lg">${title}</h3>
+              ${badge ? `<span class="badge bg-amber-100 text-amber-700">${badge}</span>` : ``}
+            </div>
+
+            ${subtitle ? `<p class="mt-2 text-sm text-gray-600">${subtitle}</p>` : ``}
+
+            ${bullets.length ? `
+              <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
+                ${bullets.map(b=>`<li>${esc(b)}</li>`).join("")}
+              </ul>
+            `: ``}
+
+            <div class="mt-4 flex items-baseline gap-2">
+              <span class="text-2xl font-bold">${formatINR(s.price)}</span>
+              <span class="text-xs text-gray-500">${gst}</span>
+            </div>
+
+            <button class="mt-4 btn btn-primary" onclick="openLeadForm('${esc(s.name)}')">${cta}</button>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderFaq(cfg){
+      const el = document.getElementById("faqList");
+      if(!el) return;
+
+      const faq = (cfg.faq || [])
+        .filter(x => x && (x.active !== false))
+        .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
+
+      if(!faq.length){
+        el.innerHTML = `<div class="card p-6 text-sm text-gray-600">No FAQ configured.</div>`;
+        return;
+      }
+
+      el.innerHTML = faq.map((x,i)=>`
+        <details class="group py-4" ${i===0 ? "open":""}>
+          <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold">
+            ${esc(x.q || "")}
+            <span class="transition group-open:rotate-180">⌄</span>
+          </summary>
+          <p class="mt-2 text-gray-600">${esc(x.a || "")}</p>
+        </details>
+      `).join("");
+    }
+
+    function renderTestimonials(cfg){
+      const el = document.getElementById("reviewsGrid");
+      if(!el) return;
+
+      const list = (cfg.testimonials || [])
+        .filter(x => x && (x.active !== false))
+        .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
+
+      if(!list.length){
+        el.innerHTML = `<div class="card p-6 text-sm text-gray-600">No reviews configured.</div>`;
+        return;
+      }
+
+      el.innerHTML = list.map(x=>`
+        <div class="card p-6 bg-white">
+          <div class="text-amber-500">★★★★★</div>
+          <p class="mt-2 text-gray-700 text-sm">“${esc(x.text || "")}”</p>
+          <div class="mt-3 text-sm text-gray-500">— ${esc(x.name || "Client")}${x.city ? `, ${esc(x.city)}` : ""}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderHow(cfg){
+      const el = document.getElementById("howGrid");
+      if(!el) return;
+
+      const fallback = [
+        { icon:"💬", title:"Share your concern", text:"Fill a 30-second form with your key question and basic birth details so we can prepare." },
+        { icon:"🧭", title:"Get your plan", text:"On the call, you get clear answers, timelines and remedies that are realistic for your life." },
+        { icon:"✅", title:"Follow-up support", text:"Ask follow-ups for free within the support window so that your doubts are actually resolved." },
+      ];
+
+      const steps = Array.isArray(cfg.steps) && cfg.steps.length ? cfg.steps : fallback;
+
+      el.innerHTML = steps.slice(0,6).map(s=>`
+        <div class="card p-6">
+          <div class="text-3xl">${esc(s.icon || "✨")}</div>
+          <h3 class="mt-3 font-semibold">${esc(s.title || "")}</h3>
+          <p class="text-sm text-gray-600 mt-1">${esc(s.text || "")}</p>
+        </div>
+      `).join("");
+    }
+
+    function ajAmountForFromConfig(serviceName){
+      const cfg = window.__AJ_CFG__ || {};
+      const services = cfg.services || [];
+      const found = services.find(s => (s.name || "").trim() === (serviceName || "").trim());
+      if(!found) return 0;
+
+      const price = Number(found.price);
+      if(!Number.isFinite(price) || price <= 0) return 0;
+      return Math.round(price * 100); // paise
+    }
+
+    async function loadSiteConfig(){
+      try{
+        const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
+        const cfg = await res.json();
+        if(!res.ok) return;
+
+        window.__AJ_CFG__ = cfg;
+
+        applyBanners(cfg);
+        renderServices(cfg);
+        renderFaq(cfg);
+        renderTestimonials(cfg);
+        renderHow(cfg);
+
+        window.ajAmountFor = ajAmountForFromConfig;
+        if (typeof window.__ajToggle === "function") window.__ajToggle();
+      }catch(e){
+        console.warn("Config load failed", e);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadSiteConfig);
+  </script>
+
+</body>
+</html>
