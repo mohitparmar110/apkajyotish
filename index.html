@@ -864,26 +864,39 @@
     });
   </script>
   <script>
-async function loadSiteConfig(){
-  try{
-    const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
-    const cfg = await res.json();
-    if(!res.ok) return;
+  async function loadSiteConfig(){
+    try{
+      const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
+      const cfg = await res.json();
+      if(!res.ok) return;
 
-    const b = cfg.banners || {};
+      // ✅ support both: cfg.hero.* and cfg.banners.*
+      const hero = cfg.hero || {};
+      const banners = cfg.banners || {};
 
-    const d = document.getElementById("heroDesktopBanner");
-    const m = document.getElementById("heroMobileBanner");
+      const desktopUrl =
+        hero.desktopBanner ||
+        banners.heroBannerDesktopUrl ||
+        "";
 
-    if(d && b.heroBannerDesktopUrl) d.src = b.heroBannerDesktopUrl;
-    if(m && b.heroBannerMobileUrl)  m.src = b.heroBannerMobileUrl;
+      const mobileUrl =
+        hero.mobileBanner ||
+        banners.heroBannerMobileUrl ||
+        "";
 
-    window.__AJ_CFG__ = cfg;
-  } catch(e){
-    console.warn("Config load failed", e);
+      const d = document.getElementById("heroDesktopBanner");
+      const m = document.getElementById("heroMobileBanner");
+
+      if(d && desktopUrl) d.src = desktopUrl;
+      if(m && mobileUrl)  m.src = mobileUrl;
+
+      window.__AJ_CFG__ = cfg;
+    } catch(e){
+      console.warn("Config load failed", e);
+    }
   }
-}
-document.addEventListener("DOMContentLoaded", loadSiteConfig);
+
+  document.addEventListener("DOMContentLoaded", loadSiteConfig);
 </script>
 </body>
 </html>
