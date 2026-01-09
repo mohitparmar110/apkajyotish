@@ -464,7 +464,7 @@
       return s.split(",").map(x=>x.trim()).filter(Boolean);
     }
 
-    function applyBanners(cfg){
+   function applyBanners(cfg){
   const FALLBACK_DESKTOP =
     "https://pub-c1f56b2e5a0a43aabe3aac3dcb2f27db.r2.dev/banners/hero-desktop.jpg";
   const FALLBACK_MOBILE =
@@ -480,14 +480,34 @@
     banners.heroBannerMobileUrl || FALLBACK_MOBILE
   ).trim();
 
-  const version = Date.now(); // cache bust every load
+  const version = Date.now();
 
   const d = document.getElementById("heroDesktopBanner");
   const m = document.getElementById("heroMobileBanner");
 
-  if (d) d.src = desktopUrl + "?v=" + version;
-  if (m) m.src = mobileUrl + "?v=" + version;
+  if (d) {
+    d.classList.add("banner-hidden");
+    const img = new Image();
+    img.onload = () => {
+      d.src = desktopUrl + "?v=" + version;
+      d.classList.remove("banner-hidden");
+      d.classList.add("banner-visible");
+    };
+    img.src = desktopUrl;
+  }
+
+  if (m) {
+    m.classList.add("banner-hidden");
+    const img = new Image();
+    img.onload = () => {
+      m.src = mobileUrl + "?v=" + version;
+      m.classList.remove("banner-hidden");
+      m.classList.add("banner-visible");
+    };
+    img.src = mobileUrl;
+  }
 }
+
     function renderServices(cfg){
       const grid = document.getElementById("servicesGrid");
       if(!grid) return;
