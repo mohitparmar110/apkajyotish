@@ -619,6 +619,101 @@
         grid.innerHTML = `<div class="card p-6 text-sm text-gray-600">No services configured.</div>`;
         return;
       }
+      <script>
+  function renderFaq(cfg){
+    const el = document.getElementById("faqList");
+    if(!el) return;
+
+    const faq = (cfg.faq || [])
+      .filter(x => x && (x.active !== false))
+      .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
+
+    if(!faq.length){
+      el.innerHTML = `<div class="card p-6 text-sm text-gray-600">No FAQ configured.</div>`;
+      return;
+    }
+
+    el.innerHTML = faq.map((x,i)=>`
+      <details class="group py-4" ${i===0 ? "open":""}>
+        <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold">
+          ${esc(x.q || "")}
+          <span class="transition group-open:rotate-180">⌄</span>
+        </summary>
+        <p class="mt-2 text-gray-600">${esc(x.a || "")}</p>
+      </details>
+    `).join("");
+  }
+
+  function renderTestimonials(cfg){
+    const el = document.getElementById("reviewsGrid");
+    if(!el) return;
+
+    const list = (cfg.testimonials || [])
+      .filter(x => x && (x.active !== false))
+      .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
+
+    if(!list.length){
+      el.innerHTML = `<div class="card p-6 text-sm text-gray-600">No reviews configured.</div>`;
+      return;
+    }
+
+    el.innerHTML = list.map(x=>`
+      <div class="card p-6 bg-white">
+        <div class="text-amber-500">★★★★★</div>
+        <p class="mt-2 text-gray-700 text-sm">“${esc(x.text || "")}”</p>
+        <div class="mt-3 text-sm text-gray-500">— ${esc(x.name || "Client")}${x.city ? `, ${esc(x.city)}` : ""}</div>
+      </div>
+    `).join("");
+  }
+
+  // Optional: make “How it works” editable via config.steps
+  // If you don’t have cfg.steps, it will fallback to your default 3.
+  function renderHow(cfg){
+    const el = document.getElementById("howGrid");
+    if(!el) return;
+
+    const fallback = [
+      { icon:"💬", title:"Share your concern", text:"Fill a 30-second form with your key question and basic birth details so we can prepare." },
+      { icon:"🧭", title:"Get your plan", text:"On the call, you get clear answers, timelines and remedies that are realistic for your life." },
+      { icon:"✅", title:"Follow-up support", text:"Ask follow-ups for free within the support window so that your doubts are actually resolved." },
+    ];
+
+    const steps = Array.isArray(cfg.steps) && cfg.steps.length ? cfg.steps : fallback;
+
+    el.innerHTML = steps.slice(0,6).map(s=>`
+      <div class="card p-6">
+        <div class="text-3xl">${esc(s.icon || "✨")}</div>
+        <h3 class="mt-3 font-semibold">${esc(s.title || "")}</h3>
+        <p class="text-sm text-gray-600 mt-1">${esc(s.text || "")}</p>
+      </div>
+    `).join("");
+  }
+
+  // ✅ Banner apply + cache busting so you SEE updates instantly
+  function applyBanners(cfg){
+    const hero = cfg.hero || {};
+    const banners = cfg.banners || {};
+
+    const desktopUrl = hero.desktopBanner || banners.heroBannerDesktopUrl || "";
+    const mobileUrl  = hero.mobileBanner  || banners.heroBannerMobileUrl  || "";
+
+    const stamp = Date.now(); // bust cache
+
+    const d = document.getElementById("heroDesktopBanner");
+    const m = document.getElementById("heroMobileBanner");
+
+    if(d && desktopUrl) d.src = desktopUrl + (desktopUrl.includes("?") ? "&" : "?") + "v=" + stamp;
+    if(m && mobileUrl)  m.src = mobileUrl  + (mobileUrl.includes("?") ? "&" : "?") + "v=" + stamp;
+  }
+
+  // Then inside your loadSiteConfig() success part, call these:
+  // applyBanners(cfg);
+  // renderServices(cfg);
+  // renderFaq(cfg);
+  // renderTestimonials(cfg);
+  // renderHow(cfg);
+</script>
+
 
       grid.innerHTML = services.map(s=>{
         const title = esc(s.name || "");
@@ -668,42 +763,47 @@
       return Math.round(price * 100);
     }
 
-    async function loadSiteConfig(){
-      try{
-        const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
-        const cfg = await res.json();
-        if(!res.ok) return;
+    <script>
+async function loadSiteConfig(){
+  try{
+    const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
+    const cfg = await res.json();
+    if(!res.ok) return;
 
-        window.__AJ_CFG__ = cfg;
+    // ✅ make config globally available
+    window.__AJ_CFG__ = cfg;
 
-        // hero banners
-        const hero = cfg.hero || {};
-        const banners = cfg.banners || {};
+    /* -------------------------
+       APPLY EVERYTHING FROM KV
+       ------------------------- */
 
-        const desktopUrl = hero.desktopBanner || banners.heroBannerDesktopUrl || "";
-        const mobileUrl  = hero.mobileBanner  || banners.heroBannerMobileUrl  || "";
+    // 1️⃣ Hero banners
+    applyBanners(cfg);
 
-        const d = document.getElementById("heroDesktopBanner");
-        const m = document.getElementById("heroMobileBanner");
-        if(d && desktopUrl) d.src = desktopUrl;
-        if(m && mobileUrl)  m.src = mobileUrl;
+    // 2️⃣ Services & pricing
+    renderServices(cfg);
 
-        // ✅ render services NOW
-        renderServices(cfg);
+    // 3️⃣ FAQ
+    renderFaq(cfg);
 
-        // ✅ make Razorpay pricing dynamic
-        window.ajAmountFor = ajAmountForFromConfig;
+    // 4️⃣ Testimonials
+    renderTestimonials(cfg);
 
-        // if modal already open, re-evaluate payment lock
-        if (typeof window.__ajToggle === "function") window.__ajToggle();
+    // 5️⃣ How it works
+    renderHow(cfg);
 
-      } catch(e){
-        console.warn("Config load failed", e);
-      }
-    }
+    // 6️⃣ Razorpay pricing should use config
+    window.ajAmountFor = ajAmountForFromConfig;
 
-    document.addEventListener("DOMContentLoaded", loadSiteConfig);
-  </script>
+  } catch(e){
+    console.warn("Config load failed", e);
+  }
+}
+
+// ✅ run once DOM is ready
+document.addEventListener("DOMContentLoaded", loadSiteConfig);
+</script>
+
 
 </body>
 </html>
