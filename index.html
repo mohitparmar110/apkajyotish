@@ -48,14 +48,11 @@
   </header>
 
   <main>
-    <!-- =======================================
-         PREMIUM ULTRA HERO BANNER
-    ======================================== -->
+    <!-- Hero Banner -->
     <section class="relative w-full overflow-hidden">
       <div class="relative w-full">
-        <img id="heroDesktopBanner" src="" class="hidden md:block w-full h-[520px] object-cover">
-        <img id="heroMobileBanner"  src="" class="block md:hidden w-full h-[420px] object-cover">
-        <div class="absolute inset-0"></div>
+        <img id="heroDesktopBanner" src="" class="hidden md:block w-full h-[520px] object-cover" alt="Hero Banner Desktop">
+        <img id="heroMobileBanner"  src="" class="block md:hidden w-full h-[420px] object-cover" alt="Hero Banner Mobile">
 
         <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
           <svg class="relative block w-full h-20 md:h-28 lg:h-32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" preserveAspectRatio="none">
@@ -65,7 +62,7 @@
       </div>
     </section>
 
-    <!-- HERO CONTENT -->
+    <!-- Hero Content -->
     <section class="bg-white -mt-12 lg:-mt-16 relative z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 grid lg:grid-cols-[1.15fr_minmax(0,0.95fr)] gap-10 items-center">
 
@@ -146,8 +143,6 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold text-center">How it works</h2>
         <p class="mt-2 text-center text-gray-600">Simple, human and practical — no complicated rituals, no fear.</p>
-
-        <!-- ✅ editable container -->
         <div id="howGrid" class="mt-10 grid md:grid-cols-3 gap-6"></div>
       </div>
     </section>
@@ -157,8 +152,6 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold text-center">What clients say</h2>
         <p class="mt-2 text-center text-gray-600">Real stories from people who came with confusion and left with a plan.</p>
-
-        <!-- ✅ editable container -->
         <div id="reviewsGrid" class="mt-10 grid md:grid-cols-3 gap-6"></div>
       </div>
     </section>
@@ -170,7 +163,9 @@
           <h3 class="font-poppins text-2xl font-bold">Ready to feel lighter?</h3>
           <p class="text-white/90">Reply within 2 hours • Only a few call slots daily • 100% confidential</p>
         </div>
-        <button class="btn bg-white text-orange-600 hover:opacity-90" onclick="openLeadForm('Free 5-min Chat')">Start Free Chat</button>
+        <button class="btn bg-white text-orange-600 hover:opacity-90" onclick="openLeadForm('Free 5-min Chat')">
+          Start Free Chat
+        </button>
       </div>
     </section>
 
@@ -178,12 +173,9 @@
     <section id="faq" class="py-16 bg-white">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold text-center">Frequently asked</h2>
-
-        <!-- ✅ editable container -->
         <div id="faqList" class="mt-8 divide-y divide-gray-200"></div>
       </div>
     </section>
-
   </main>
 
   <!-- Footer -->
@@ -220,7 +212,9 @@
             <li><a href="#" class="hover:text-white">Terms of Service</a></li>
             <li><a href="#" class="hover:text-white">Refund Policy</a></li>
           </ul>
-          <button class="mt-4 btn btn-primary w-full text-sm" onclick="openLeadForm('Free 5-min Chat (Footer)')">Chat Now</button>
+          <button class="mt-4 btn btn-primary w-full text-sm" onclick="openLeadForm('Free 5-min Chat (Footer)')">
+            Chat Now
+          </button>
         </div>
       </div>
     </div>
@@ -230,9 +224,9 @@
   <div id="lead-modal" class="fixed inset-0 z-50 hidden">
     <div class="absolute inset-0 bg-black/50" onclick="closeLeadForm()"></div>
     <div class="relative max-w-lg w-[92%] mx-auto mt-16 card p-6 bg-white">
-      <div class="flex items-center justify-content-between">
+      <div class="flex items-center justify-between">
         <h3 class="font-poppins text-xl font-bold">Tell me a bit & we’ll start</h3>
-        <button class="text-gray-500 hover:text-gray-700" onclick="closeLeadForm()" style="margin-left:auto;">✕</button>
+        <button class="text-gray-500 hover:text-gray-700" onclick="closeLeadForm()">✕</button>
       </div>
       <form id="lead-form" class="mt-4 grid gap-3" onsubmit="sendToWhatsApp(event)">
         <input class="input" type="text" name="name" placeholder="Your name" required />
@@ -249,82 +243,7 @@
     </div>
   </div>
 
-  <!-- Hidden banner admin UI (kept as-is) -->
-  <style>
-    #banner-admin-panel {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: white;
-      padding: 16px;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      z-index: 999999;
-      width: 300px;
-      display: none;
-    }
-    #banner-admin-panel h3 { margin: 0 0 10px; font-size: 15px; font-weight: 600; }
-    #banner-admin-panel label { font-size: 12px; font-weight: 500; }
-    .admin-input { margin-bottom: 12px; font-size: 13px; width: 100%; }
-    #admin-pin-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.55);
-      display: none;
-      place-items: center;
-      z-index: 1000000;
-    }
-    #admin-pin-box {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      width: 300px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-    }
-    #admin-pin-box input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 15px;
-      margin-top: 8px;
-    }
-    #previewDesktop, #previewMobile {
-      width: 100%;
-      margin-top: 8px;
-      border-radius: 10px;
-      display: none;
-    }
-  </style>
-
-  <div id="banner-admin-panel">
-    <h3>Upload Banners</h3>
-    <label>Desktop Banner</label>
-    <input type="file" id="desktopBannerInput" class="admin-input" accept="image/*">
-    <img id="previewDesktop">
-    <label>Mobile Banner</label>
-    <input type="file" id="mobileBannerInput" class="admin-input" accept="image/*">
-    <img id="previewMobile">
-    <button onclick="saveBanners()" style="padding:8px 12px; width:100%; background:#f97316; border:none; color:white; border-radius:8px; font-size:14px; font-weight:600;">
-      Save Banner
-    </button>
-    <button onclick="resetBanners()" style="margin-top:8px; padding:8px 12px; width:100%; background:#555; border:none; color:white; border-radius:8px; font-size:13px; font-weight:600;">
-      Reset Banners
-    </button>
-  </div>
-
-  <div id="admin-pin-modal">
-    <div id="admin-pin-box">
-      <h3 style="margin:0; font-size:17px; font-weight:700; text-align:center;">Admin Access</h3>
-      <p style="font-size:13px; color:#444; text-align:center; margin-bottom:10px;">Enter Admin PIN to continue</p>
-      <input id="adminPinInput" type="password" placeholder="Enter PIN">
-      <button onclick="verifyPin()" style="margin-top:12px; padding:10px; width:100%; background:#f97316; border:none; color:white; border-radius:8px; font-size:14px; font-weight:600;">
-        Unlock
-      </button>
-    </div>
-  </div>
-
-  <!-- WhatsApp modal + basics -->
+  <!-- Scripts: WhatsApp modal -->
   <script>
     const WHATSAPP_NUMBER = "9326139609";
     let presetService = "";
@@ -361,21 +280,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
-  <!-- Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Dheeraj Parmar",
-    "jobTitle": "Vedic Astrologer",
-    "description": "Practical Vedic astrology with remedies. 20+ years of experience and 12,000+ clients.",
-    "areaServed": "IN",
-    "brand": {"@type":"Brand","name":"Apka Jyotish"},
-    "sameAs": []
-  }
-  </script>
-
-  <!-- Razorpay integration (kept), pricing comes from config via window.ajAmountFor -->
+  <!-- Razorpay (unchanged, but pricing comes from config) -->
   <script>
     (function loadRZP(){
       const s = document.createElement('script');
@@ -389,7 +294,6 @@
     const AJ_CREATE_ORDER_URL = "https://apkajyotish-pay.mohit-parmar110.workers.dev";
     const AJ_LOGO_URL = "https://dummyimage.com/200x200/ffa733/ffffff.png&text=Apka+Jyotish";
 
-    // will be overridden after config loads
     window.ajAmountFor = function(){ return 0; };
 
     document.addEventListener('DOMContentLoaded', function(){
@@ -426,7 +330,7 @@
 
       function ajToggle(){
         const fd = new FormData(form);
-        const service = (fd.get('service') || window.presetService || '').trim();
+        const service = (fd.get('service') || presetService || '').trim();
         const amt = window.ajAmountFor ? window.ajAmountFor(service) : 0;
         const isFree = amt <= 0;
 
@@ -440,7 +344,6 @@
           helper.textContent = 'Payment required for paid services. WhatsApp unlocks after successful payment.';
         }
       }
-
       window.__ajToggle = ajToggle;
 
       form.addEventListener('input', (e)=>{
@@ -450,7 +353,7 @@
       payBtn.addEventListener('click', async function(){
         const fd = new FormData(form);
         const name    = (fd.get('name') || '').trim();
-        const service = (fd.get('service') || window.presetService || 'Consultation').trim();
+        const service = (fd.get('service') || presetService || 'Consultation').trim();
         const concern = (fd.get('concern') || '').trim();
         const dob     = (fd.get('dob') || '').trim();
         const tob     = (fd.get('tob') || '').trim();
@@ -477,7 +380,7 @@
         }
 
         if(AJ_DEMO_MODE){
-          const options = {
+          new Razorpay({
             key: AJ_RAZORPAY_KEY_ID,
             amount,
             currency: "INR",
@@ -493,8 +396,7 @@
               alert("Demo payment success! WhatsApp unlocked.");
               ajToggle();
             }
-          };
-          new Razorpay(options).open();
+          }).open();
         } else {
           try{
             const order = await fetch(AJ_CREATE_ORDER_URL, {
@@ -508,7 +410,7 @@
               return;
             }
 
-            const options = {
+            new Razorpay({
               key: AJ_RAZORPAY_KEY_ID,
               amount,
               currency: "INR",
@@ -525,8 +427,7 @@
                 alert("Payment successful! You can start WhatsApp now.");
                 ajToggle();
               }
-            };
-            new Razorpay(options).open();
+            }).open();
           }catch(err){
             console.error(err);
             alert("Could not create order. Please try again.");
@@ -538,7 +439,7 @@
     });
   </script>
 
-  <!-- ✅ ONE CLEAN CONFIG + RENDER SYSTEM -->
+  <!-- Dynamic Config Rendering (Services + FAQ + Reviews + How + Banners) -->
   <script>
     function esc(s){
       return String(s ?? "")
@@ -564,172 +465,7 @@
     }
 
     function applyBanners(cfg){
-      const hero = cfg.hero || {};
       const banners = cfg.banners || {};
-      const desktopUrl = hero.desktopBanner || banners.heroBannerDesktopUrl || "";
-      const mobileUrl  = hero.mobileBanner  || banners.heroBannerMobileUrl  || "";
+      const hero = cfg.hero || {};
 
-      const stamp = Date.now(); // cache bust
-      const d = document.getElementById("heroDesktopBanner");
-      const m = document.getElementById("heroMobileBanner");
-
-      if(d && desktopUrl) d.src = desktopUrl + (desktopUrl.includes("?") ? "&" : "?") + "v=" + stamp;
-      if(m && mobileUrl)  m.src = mobileUrl  + (mobileUrl.includes("?") ? "&" : "?") + "v=" + stamp;
-    }
-
-    function renderServices(cfg){
-      const grid = document.getElementById("servicesGrid");
-      if(!grid) return;
-
-      const services = (cfg.services || [])
-        .filter(s => s && s.active !== false)
-        .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
-
-      if(!services.length){
-        grid.innerHTML = `<div class="card p-6 text-sm text-gray-600">No services configured.</div>`;
-        return;
-      }
-
-      grid.innerHTML = services.map(s=>{
-        const title = esc(s.name || "");
-        const subtitle = esc(s.subtitle || "");
-        const badge = esc(s.badge || "");
-        const bullets = parseBullets(s.bullets);
-        const cta = esc(s.cta || "Start now");
-        const gst = esc(s.gst_note || "incl. GST");
-        const ring = (badge || "").toLowerCase().includes("best") ? ' ring-2 ring-orange-200' : '';
-
-        return `
-          <article class="card p-6 flex flex-col${ring}">
-            <div class="flex items-center justify-between gap-3">
-              <h3 class="font-poppins font-semibold text-lg">${title}</h3>
-              ${badge ? `<span class="badge bg-amber-100 text-amber-700">${badge}</span>` : ``}
-            </div>
-
-            ${subtitle ? `<p class="mt-2 text-sm text-gray-600">${subtitle}</p>` : ``}
-
-            ${bullets.length ? `
-              <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
-                ${bullets.map(b=>`<li>${esc(b)}</li>`).join("")}
-              </ul>
-            `: ``}
-
-            <div class="mt-4 flex items-baseline gap-2">
-              <span class="text-2xl font-bold">${formatINR(s.price)}</span>
-              <span class="text-xs text-gray-500">${gst}</span>
-            </div>
-
-            <button class="mt-4 btn btn-primary" onclick="openLeadForm('${esc(s.name)}')">${cta}</button>
-          </article>
-        `;
-      }).join("");
-    }
-
-    function renderFaq(cfg){
-      const el = document.getElementById("faqList");
-      if(!el) return;
-
-      const faq = (cfg.faq || [])
-        .filter(x => x && x.active !== false)
-        .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
-
-      if(!faq.length){
-        el.innerHTML = `<div class="card p-6 text-sm text-gray-600">No FAQ configured.</div>`;
-        return;
-      }
-
-      el.innerHTML = faq.map((x,i)=>`
-        <details class="group py-4" ${i===0 ? "open":""}>
-          <summary class="flex cursor-pointer items-center justify-between text-lg font-semibold">
-            ${esc(x.q || "")}
-            <span class="transition group-open:rotate-180">⌄</span>
-          </summary>
-          <p class="mt-2 text-gray-600">${esc(x.a || "")}</p>
-        </details>
-      `).join("");
-    }
-
-    function renderTestimonials(cfg){
-      const el = document.getElementById("reviewsGrid");
-      if(!el) return;
-
-      const list = (cfg.testimonials || [])
-        .filter(x => x && x.active !== false)
-        .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
-
-      if(!list.length){
-        el.innerHTML = `<div class="card p-6 text-sm text-gray-600">No reviews configured.</div>`;
-        return;
-      }
-
-      el.innerHTML = list.map(x=>`
-        <div class="card p-6 bg-white">
-          <div class="text-amber-500">★★★★★</div>
-          <p class="mt-2 text-gray-700 text-sm">“${esc(x.text || "")}”</p>
-          <div class="mt-3 text-sm text-gray-500">— ${esc(x.name || "Client")}${x.city ? `, ${esc(x.city)}` : ""}</div>
-        </div>
-      `).join("");
-    }
-
-    function renderHow(cfg){
-      const el = document.getElementById("howGrid");
-      if(!el) return;
-
-      const fallback = [
-        { icon:"💬", title:"Share your concern", text:"Fill a 30-second form with your key question and basic birth details so we can prepare." },
-        { icon:"🧭", title:"Get your plan", text:"On the call, you get clear answers, timelines and remedies that are realistic for your life." },
-        { icon:"✅", title:"Follow-up support", text:"Ask follow-ups for free within the support window so that your doubts are actually resolved." },
-      ];
-
-      const steps = Array.isArray(cfg.steps) && cfg.steps.length ? cfg.steps : fallback;
-
-      el.innerHTML = steps.slice(0,6).map(s=>`
-        <div class="card p-6">
-          <div class="text-3xl">${esc(s.icon || "✨")}</div>
-          <h3 class="mt-3 font-semibold">${esc(s.title || "")}</h3>
-          <p class="text-sm text-gray-600 mt-1">${esc(s.text || "")}</p>
-        </div>
-      `).join("");
-    }
-
-    function ajAmountForFromConfig(serviceName){
-      const cfg = window.__AJ_CFG__ || {};
-      const services = cfg.services || [];
-      const found = services.find(s => (s.name || "").trim() === (serviceName || "").trim());
-      if(!found) return 0;
-
-      const price = Number(found.price);
-      if(!Number.isFinite(price) || price <= 0) return 0;
-
-      return Math.round(price * 100);
-    }
-
-    async function loadSiteConfig(){
-      try{
-        const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
-        const cfg = await res.json();
-        if(!res.ok) return;
-
-        window.__AJ_CFG__ = cfg;
-
-        applyBanners(cfg);
-        renderServices(cfg);
-        renderFaq(cfg);
-        renderTestimonials(cfg);
-        renderHow(cfg);
-
-        window.ajAmountFor = ajAmountForFromConfig;
-
-        if (typeof window.__ajToggle === "function") window.__ajToggle();
-
-      } catch(e){
-        console.warn("Config load failed", e);
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", loadSiteConfig);
-  </script>
-
-</body>
-</html>
-
+      // Support both formats
