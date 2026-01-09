@@ -113,15 +113,19 @@ export async function onRequestPost({ request, env }) {
 
     // ---- SERVICES NORMALIZATION ----
     body.services = body.services
-      .map((s) => ({
-        id: asString(s?.id),
-        name: asString(s?.name),
-        price: asNumber(s?.price, 0),
-        badge: asString(s?.badge),
-        active: asBool(s?.active),
-        sort: asNumber(s?.sort, 999),
-      }))
-      .filter((s) => s.id && s.name);
+  .map((s) => ({
+    id: asString(s?.id),
+    name: asString(s?.name),
+    price: asNumber(s?.price, 0),
+    badge: asString(s?.badge),
+    subtitle: asString(s?.subtitle),
+    bullets: Array.isArray(s?.bullets) ? s.bullets : asString(s?.bullets), // accept both
+    cta: asString(s?.cta, "Start now"),
+    gst_note: asString(s?.gst_note, "incl. GST"),
+    active: asBool(s?.active),
+    sort: asNumber(s?.sort, 999),
+  }))
+  .filter((s) => s.id && s.name);
 
     // ---- FAQ NORMALIZATION ----
     body.faq = body.faq
