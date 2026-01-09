@@ -163,110 +163,10 @@
           <p class="mt-2 text-gray-600">Outcomes first. Clear answers, practical remedies, follow-ups included.</p>
         </div>
 
-        <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!-- Love -->
-          <article class="card p-6 flex flex-col">
-            <div class="flex items-center justify-between">
-              <h3 class="font-poppins font-semibold text-lg">Love & Relationships</h3>
-              <span class="badge bg-rose-100 text-rose-700">Popular</span>
-            </div>
-            <p class="mt-2 text-sm text-gray-600">Clarity on compatibility, marriage timing & next steps.</p>
-            <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
-              <li>30-min consult</li>
-              <li>Marriage & relationship timing windows</li>
-              <li>2 follow-up questions free</li>
-            </ul>
-            <div class="mt-4 flex items-baseline gap-2">
-              <span class="text-2xl font-bold">₹550</span>
-              <span class="text-xs text-gray-500">incl. GST</span>
-            </div>
-            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Love & Relationships')">Start now</button>
-          </article>
+        <div id="servicesGrid" class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-          <!-- Career -->
-          <article class="card p-6 flex flex-col ring-2 ring-orange-200">
-            <div class="flex items-center justify-between">
-              <h3 class="font-poppins font-semibold text-lg">Career & Money</h3>
-              <span class="badge bg-amber-100 text-amber-700">Best value</span>
-            </div>
-            <p class="mt-2 text-sm text-gray-600">Job change timing, business luck & wealth pathways with clear next steps.</p>
-            <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
-              <li>40-min deep-dive</li>
-              <li>Action plan for next 90 days</li>
-              <li>2 follow-ups + remedies PDF</li>
-            </ul>
-            <div class="mt-4 flex items-baseline gap-2">
-              <span class="text-2xl font-bold">₹1,050</span>
-              <span class="text-xs text-gray-500">incl. GST</span>
-            </div>
-            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Career & Money')">Start now</button>
-          </article>
-
-          <!-- Full life -->
-          <article class="card p-6 flex flex-col">
-            <div class="flex items-center justify-between">
-              <h3 class="font-poppins font-semibold text-lg">Complete Life Reading</h3>
-              <span class="badge bg-indigo-100 text-indigo-700">Most booked</span>
-            </div>
-            <p class="mt-2 text-sm text-gray-600">Major themes, key life periods & remedies for peace and progress.</p>
-            <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
-              <li>60-min consult</li>
-              <li>Gemstone & Vastu guidance</li>
-              <li>Follow-ups for 7 days</li>
-            </ul>
-            <div class="mt-4 flex items-baseline gap-2">
-              <span class="text-2xl font-bold">₹1,550</span>
-              <span class="text-xs text-gray-500">incl. GST</span>
-            </div>
-            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Complete Life Reading')">Start now</button>
-          </article>
-
-          <!-- Home -->
-          <article class="card p-6 flex flex-col">
-            <h3 class="font-poppins font-semibold text-lg">Home & Family</h3>
-            <p class="mt-2 text-sm text-gray-600">Vastu tips & harmony guidance for your home.</p>
-            <div class="mt-4 flex items-baseline gap-2"><span class="text-2xl font-bold">₹750</span></div>
-            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Home & Family')">Start now</button>
-          </article>
-
-          <!-- Gems -->
-          <article class="card p-6 flex flex-col">
-            <h3 class="font-poppins font-semibold text-lg">Gems & Remedies</h3>
-            <p class="mt-2 text-sm text-gray-600">Lucky gemstones & simple, practical remedies.</p>
-            <div class="mt-4 flex items-baseline gap-2"><span class="text-2xl font-bold">₹450</span></div>
-            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Gems & Remedies')">Start now</button>
-          </article>
-
-          <!-- Quick Q -->
-          <article class="card p-6 flex flex-col">
-            <h3 class="font-poppins font-semibold text-lg">Quick Question</h3>
-            <p class="mt-2 text-sm text-gray-600">Instant clarity for urgent questions.</p>
-            <div class="mt-4 flex items-baseline gap-2"><span class="text-2xl font-bold">₹250</span></div>
-            <button class="mt-4 btn btn-primary" onclick="openLeadForm('Quick Question')">Ask now</button>
-          </article>
-        </div>
-
-        <!-- Bundle -->
-        <div class="mt-8 card p-6 flex flex-col lg:flex-row items-center justify-between gap-4">
-          <div>
-            <h3 class="font-poppins font-semibold text-lg">Full Life Pack – Save 35%</h3>
-            <p class="text-sm text-gray-600">
-              Complete Life Reading + Career & Money + 7-day support. Ideal if you want a full map of life.
-            </p>
-          </div>
-          <div class="flex items-center gap-4">
-            <div class="text-right">
-              <div class="text-sm line-through text-gray-400">₹2,698</div>
-              <div class="text-2xl font-bold text-gray-900">₹1,750</div>
-              <div class="text-[11px] text-emerald-600 font-medium">You save 35%</div>
-            </div>
-            <button class="btn btn-primary" onclick="openLeadForm('Full Life Pack (Bundle)')">Book bundle</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- How it works -->
+<div id="bundleWrap" class="mt-8"></div>
+ <!-- How it works -->
     <section id="how" class="py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold text-center">How it works</h2>
@@ -803,5 +703,104 @@
 
   document.addEventListener("DOMContentLoaded", loadSiteConfig);
 </script>
+<script>
+function esc(s){return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+
+function formatINR(n){
+  const num = Number(n);
+  if(!Number.isFinite(num)) return "";
+  return "₹" + num.toLocaleString("en-IN");
+}
+
+function parseBullets(v){
+  // Accept: array OR comma-separated OR newline-separated
+  if (Array.isArray(v)) return v.filter(Boolean).map(String);
+  const s = String(v ?? "").trim();
+  if(!s) return [];
+  if(s.includes("\n")) return s.split("\n").map(x=>x.trim()).filter(Boolean);
+  return s.split(",").map(x=>x.trim()).filter(Boolean);
+}
+
+function renderServices(cfg){
+  const grid = document.getElementById("servicesGrid");
+  if(!grid) return;
+
+  const services = (cfg.services || [])
+    .filter(s => s && (s.active !== false))
+    .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
+
+  if(!services.length){
+    grid.innerHTML = `<div class="card p-6 text-sm text-gray-600">No services configured.</div>`;
+    return;
+  }
+
+  grid.innerHTML = services.map(s=>{
+    const title = esc(s.name || "");
+    const subtitle = esc(s.subtitle || "");
+    const badge = esc(s.badge || "");
+    const bullets = parseBullets(s.bullets);
+    const cta = esc(s.cta || "Start now");
+    const gst = esc(s.gst_note || "incl. GST");
+
+    // Optional highlight: if badge contains "Best value" -> ring
+    const ring = (badge || "").toLowerCase().includes("best") ? ' ring-2 ring-orange-200' : '';
+
+    return `
+      <article class="card p-6 flex flex-col${ring}">
+        <div class="flex items-center justify-between gap-3">
+          <h3 class="font-poppins font-semibold text-lg">${title}</h3>
+          ${badge ? `<span class="badge bg-amber-100 text-amber-700">${badge}</span>` : ``}
+        </div>
+
+        ${subtitle ? `<p class="mt-2 text-sm text-gray-600">${subtitle}</p>` : ``}
+
+        ${bullets.length ? `
+          <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
+            ${bullets.map(b=>`<li>${esc(b)}</li>`).join("")}
+          </ul>
+        `: ``}
+
+        <div class="mt-4 flex items-baseline gap-2">
+          <span class="text-2xl font-bold">${formatINR(s.price)}</span>
+          <span class="text-xs text-gray-500">${gst}</span>
+        </div>
+
+        <button class="mt-4 btn btn-primary" onclick="openLeadForm('${esc(s.name)}')">${cta}</button>
+      </article>
+    `;
+  }).join("");
+}
+
+// Razorpay pricing should come from config
+function ajAmountForFromConfig(serviceName){
+  const cfg = window.__AJ_CFG__ || {};
+  const services = cfg.services || [];
+  const found = services.find(s => (s.name || "").trim() === (serviceName || "").trim());
+  if(!found) return 0;
+
+  const price = Number(found.price);
+  if(!Number.isFinite(price) || price <= 0) return 0;
+
+  // Razorpay uses paise
+  return Math.round(price * 100);
+}
+
+// Override your hardcoded map with config-based pricing
+window.ajAmountFor = ajAmountForFromConfig;
+
+// After config loads, render services
+document.addEventListener("DOMContentLoaded", function(){
+  // If config already loaded, render now
+  if(window.__AJ_CFG__) renderServices(window.__AJ_CFG__);
+
+  // Hook into your existing loadSiteConfig
+  const oldLoad = window.loadSiteConfig;
+  window.loadSiteConfig = async function(){
+    await oldLoad?.();
+    if(window.__AJ_CFG__) renderServices(window.__AJ_CFG__);
+  };
+});
+</script>
+
 </body>
 </html>
