@@ -315,6 +315,21 @@
       </div>
 
       <div class="grid">
+
+        <!-- ✅ NEW: Upload Desktop -->
+        <div>
+          <label>Upload Desktop Banner</label>
+          <input type="file" id="heroDesktopFile" accept="image/*" />
+          <button class="btn" id="uploadDesktopBtn" type="button">Upload Desktop</button>
+        </div>
+
+        <!-- ✅ NEW: Upload Mobile -->
+        <div>
+          <label>Upload Mobile Banner</label>
+          <input type="file" id="heroMobileFile" accept="image/*" />
+          <button class="btn" id="uploadMobileBtn" type="button">Upload Mobile</button>
+        </div>
+
         <div>
           <label>Hero Banner Desktop URL</label>
           <input id="heroBannerDesktopUrl" placeholder="https://cdn.../banners/hero-desktop.jpg" />
@@ -603,8 +618,69 @@
     }
   }
 
+  // ✅ NEW: Upload logic (matches your upload-banner.js response: { success, key, url })
+  async function uploadBanner(variant){
+    const token = $("token").value.trim();
+    if(!token){
+      setStatus("Paste ADMIN_TOKEN first.");
+      toast("Token missing", "Paste ADMIN_TOKEN first.", false);
+      return;
+    }
+
+    // ensure we have state loaded (so auto-save works)
+    if(!state){
+      await load();
+      if(!state){
+        toast("Load required", "Could not load config. Try again.", false);
+        return;
+      }
+    }
+
+    const fileInput = (variant === "desktop") ? $("heroDesktopFile") : $("heroMobileFile");
+    const file = fileInput?.files?.[0];
+
+    if(!file){
+      toast("No file selected", "Choose an image first.", false);
+      return;
+    }
+
+    const form = new FormData();
+    form.append("variant", variant);
+    form.append("file", file);
+
+    setStatus(`Uploading ${variant} banner...`);
+
+    try{
+      const res = await fetch("/api/admin/upload-banner", {
+        method: "POST",
+        headers: { "x-admin-token": token },
+        body: form
+      });
+
+      const out = await res.json().catch(()=> ({}));
+      if(!res.ok) throw new Error(out?.error || ("HTTP " + res.status));
+
+      // Fill URL field from your API: out.url
+      if(variant === "desktop") $("heroBannerDesktopUrl").value = out.url || "";
+      if(variant === "mobile")  $("heroBannerMobileUrl").value  = out.url || "";
+
+      // ✅ Auto-save to KV so frontend updates immediately
+      setStatus(`Uploaded ✅ (${variant}) — saving config...`);
+      await save();
+
+      toast("Uploaded + Saved ✅", "Banner uploaded and applied on website.");
+    }catch(e){
+      setStatus("Upload failed: " + e.message);
+      toast("Upload failed", e.message, false);
+    }
+  }
+
   $("loadBtn").addEventListener("click", load);
   $("saveBtn").addEventListener("click", save);
+
+  // ✅ Wire upload buttons
+  $("uploadDesktopBtn").addEventListener("click", ()=> uploadBanner("desktop"));
+  $("uploadMobileBtn").addEventListener("click", ()=> uploadBanner("mobile"));
 
   $("addService").addEventListener("click", ()=>{
     state.services = state.services || [];
@@ -631,4 +707,3 @@
 </script>
 </body>
 </html>
-
