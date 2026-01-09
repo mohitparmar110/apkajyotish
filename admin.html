@@ -614,6 +614,48 @@
       toast("Save failed", e.message, false);
     }
   }
+async function uploadBanner(variant){
+  const token = $("token").value.trim();
+  if(!token){
+    setStatus("Paste ADMIN_TOKEN first.");
+    toast("Token missing", "Paste ADMIN_TOKEN first.", false);
+    return;
+  }
+
+  const fileInput = variant === "desktop" ? $("heroDesktopFile") : $("heroMobileFile");
+  const file = fileInput?.files?.[0];
+  if(!file){
+    toast("No file selected", "Choose an image first.", false);
+    return;
+  }
+
+  const form = new FormData();
+  form.append("variant", variant);
+  form.append("file", file);
+
+  setStatus(`Uploading ${variant} banner...`);
+
+  try{
+    const res = await fetch("/api/admin/upload-banner", {
+      method: "POST",
+      headers: { "x-admin-token": token },
+      body: form
+    });
+
+    const out = await res.json().catch(()=> ({}));
+    if(!res.ok) throw new Error(out?.error || ("HTTP " + res.status));
+
+    // Fill URL fields automatically after upload
+    if(variant === "desktop") $("heroBannerDesktopUrl").value = out.url;
+    if(variant === "mobile") $("heroBannerMobileUrl").value = out.url;
+
+    setStatus(`Uploaded ✅ (${variant}) — Now click SAVE`);
+    toast("Uploaded ✅", "Now click SAVE to apply on website.");
+  }catch(e){
+    setStatus("Upload failed: " + e.message);
+    toast("Upload failed", e.message, false);
+  }
+}
 
   $("loadBtn").addEventListener("click", load);
   $("saveBtn").addEventListener("click", save);
