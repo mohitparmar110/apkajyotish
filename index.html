@@ -24,6 +24,7 @@
     .input:focus{outline:none;border-color:#fb923c;box-shadow:0 0 0 3px rgba(251,146,60,.2)}
   </style>
 </head>
+
 <body class="font-inter bg-gray-50 text-gray-900">
   <!-- Header -->
   <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
@@ -48,112 +49,107 @@
 
   <main>
     <!-- =======================================
-     PREMIUM ULTRA HERO BANNER (Option D1)
-======================================== -->
+         PREMIUM ULTRA HERO BANNER (Option D1)
+    ======================================== -->
+    <section class="relative w-full overflow-hidden">
+      <!-- Banner images controlled by Admin Panel -->
+      <div class="relative w-full">
+        <img id="heroDesktopBanner"
+             src=""
+             class="hidden md:block w-full h-[520px] object-cover">
 
-<!-- Full-width banner with curved bottom -->
-<section class="relative w-full overflow-hidden">
+        <img id="heroMobileBanner"
+             src=""
+             class="block md:hidden w-full h-[420px] object-cover">
 
-  <!-- Banner images controlled by Admin Panel -->
-  <div class="relative w-full">
-    <img id="heroDesktopBanner"
-         src=""
-         class="hidden md:block w-full h-[520px] object-cover">
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0"></div>
 
-    <img id="heroMobileBanner"
-         src=""
-         class="block md:hidden w-full h-[420px] object-cover">
-
-    <!-- Gradient overlay -->
-    <div class="absolute inset-0"></div>
-
-   <!-- Smooth Soft Curve -->
-<div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
-  <svg class="relative block w-full h-20 md:h-28 lg:h-32"
-       xmlns="http://www.w3.org/2000/svg"
-       viewBox="0 0 1440 150"
-       preserveAspectRatio="none">
-    <path fill="#ffffff" d="M0,96 C360,160 1080,160 1440,96 L1440,150 L0,150 Z"></path>
-  </svg>
-</div>
-
-</section>
-
-<!-- =======================================
-     YOUR EXISTING HERO CONTENT (untouched)
-======================================== -->
-
-<section class="bg-white -mt-12 lg:-mt-16 relative z-10">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 grid lg:grid-cols-[1.15fr_minmax(0,0.95fr)] gap-10 items-center">
-
-    <!-- Left: Copy -->
-    <div>
-      <p class="inline-flex items-center gap-2 rounded-full bg-orange-50 text-[11px] font-semibold tracking-wide uppercase px-3 py-1 text-orange-600">
-        <span class="text-xs">◎</span> Vedic guidance • Practical remedies
-      </p>
-
-      <h1 class="font-poppins font-extrabold text-4xl sm:text-5xl lg:text-[2.9rem] tracking-tight mt-4 leading-tight">
-        Clear answers.
-        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500">
-          Practical remedies.
-        </span>
-      </h1>
-
-      <p class="mt-4 text-lg text-gray-600 max-w-xl">
-        Get calm, clarity, and next steps from a trusted Vedic astrologer.
-        <span class="font-semibold text-gray-800">Reply within 2 hours.</span>
-      </p>
-
-      <div class="mt-7 flex flex-col sm:flex-row gap-3">
-        <button class="btn btn-primary" onclick="openLeadForm('Free 5-min Chat')">
-          Start free WhatsApp chat
-        </button>
-        <a href="#services" class="btn btn-outline">See services & prices</a>
-      </div>
-
-      <!-- Trust row -->
-      <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-        <div class="card p-4">★★★★★ 4.9/5 from clients</div>
-        <div class="card p-4">20+ years of experience</div>
-        <div class="card p-4">🔒 100% confidential</div>
-      </div>
-    </div>
-
-    <!-- Right: Highlight panel -->
-    <div class="relative">
-      <div class="absolute -inset-6 bg-gradient-to-br from-orange-500/10 via-amber-300/10 to-purple-500/10 blur-3xl opacity-80 pointer-events-none"></div>
-      <div class="relative card p-6 lg:p-7 bg-white/95 backdrop-blur">
-        <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-orange-500 text-white grid place-items-center text-2xl shadow-md">
-            ॐ
-          </div>
-          <div>
-            <div class="font-poppins font-semibold text-base">Dheeraj Parmar</div>
-            <div class="text-xs text-gray-500">Vedic Astrologer • 20+ years</div>
-          </div>
-        </div>
-        <p class="mt-4 text-sm text-gray-700 leading-relaxed">
-          “Astrology should make life lighter, not more confusing. I focus on
-          clear answers, timelines and remedies that fit your real life, not
-          fear or superstition.”
-        </p>
-        <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-gray-600">
-          <div class="rounded-xl bg-orange-50/70 border border-orange-100 px-3 py-2">
-            12,000+ consultations<br/><span class="text-[11px] text-orange-700">Across India & overseas</span>
-          </div>
-          <div class="rounded-xl bg-amber-50/70 border border-amber-100 px-3 py-2">
-            Special focus on<br/><span class="text-[11px] text-amber-700">career, marriage & business</span>
-          </div>
-        </div>
-        <div class="mt-4 text-[11px] text-gray-500">
-          Powered by Vedic astrology, supported by practical psychological understanding.
+        <!-- Smooth Soft Curve -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+          <svg class="relative block w-full h-20 md:h-28 lg:h-32"
+               xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 1440 150"
+               preserveAspectRatio="none">
+            <path fill="#ffffff" d="M0,96 C360,160 1080,160 1440,96 L1440,150 L0,150 Z"></path>
+          </svg>
         </div>
       </div>
-    </div>
+    </section>
 
-  </div>
-</section>
+    <!-- =======================================
+         HERO CONTENT
+    ======================================== -->
+    <section class="bg-white -mt-12 lg:-mt-16 relative z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 grid lg:grid-cols-[1.15fr_minmax(0,0.95fr)] gap-10 items-center">
 
+        <!-- Left: Copy -->
+        <div>
+          <p class="inline-flex items-center gap-2 rounded-full bg-orange-50 text-[11px] font-semibold tracking-wide uppercase px-3 py-1 text-orange-600">
+            <span class="text-xs">◎</span> Vedic guidance • Practical remedies
+          </p>
+
+          <h1 class="font-poppins font-extrabold text-4xl sm:text-5xl lg:text-[2.9rem] tracking-tight mt-4 leading-tight">
+            Clear answers.
+            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-rose-500">
+              Practical remedies.
+            </span>
+          </h1>
+
+          <p class="mt-4 text-lg text-gray-600 max-w-xl">
+            Get calm, clarity, and next steps from a trusted Vedic astrologer.
+            <span class="font-semibold text-gray-800">Reply within 2 hours.</span>
+          </p>
+
+          <div class="mt-7 flex flex-col sm:flex-row gap-3">
+            <button class="btn btn-primary" onclick="openLeadForm('Free 5-min Chat')">
+              Start free WhatsApp chat
+            </button>
+            <a href="#services" class="btn btn-outline">See services & prices</a>
+          </div>
+
+          <!-- Trust row -->
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+            <div class="card p-4">★★★★★ 4.9/5 from clients</div>
+            <div class="card p-4">20+ years of experience</div>
+            <div class="card p-4">🔒 100% confidential</div>
+          </div>
+        </div>
+
+        <!-- Right: Highlight panel -->
+        <div class="relative">
+          <div class="absolute -inset-6 bg-gradient-to-br from-orange-500/10 via-amber-300/10 to-purple-500/10 blur-3xl opacity-80 pointer-events-none"></div>
+          <div class="relative card p-6 lg:p-7 bg-white/95 backdrop-blur">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-full bg-orange-500 text-white grid place-items-center text-2xl shadow-md">
+                ॐ
+              </div>
+              <div>
+                <div class="font-poppins font-semibold text-base">Dheeraj Parmar</div>
+                <div class="text-xs text-gray-500">Vedic Astrologer • 20+ years</div>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-gray-700 leading-relaxed">
+              “Astrology should make life lighter, not more confusing. I focus on
+              clear answers, timelines and remedies that fit your real life, not
+              fear or superstition.”
+            </p>
+            <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-gray-600">
+              <div class="rounded-xl bg-orange-50/70 border border-orange-100 px-3 py-2">
+                12,000+ consultations<br/><span class="text-[11px] text-orange-700">Across India & overseas</span>
+              </div>
+              <div class="rounded-xl bg-amber-50/70 border border-amber-100 px-3 py-2">
+                Special focus on<br/><span class="text-[11px] text-amber-700">career, marriage & business</span>
+              </div>
+            </div>
+            <div class="mt-4 text-[11px] text-gray-500">
+              Powered by Vedic astrology, supported by practical psychological understanding.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- Services -->
     <section id="services" class="py-16 bg-gray-50">
@@ -164,9 +160,12 @@
         </div>
 
         <div id="servicesGrid" class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <div id="bundleWrap" class="mt-8"></div>
+      </div>
+    </section>
+    <!-- ✅ FIX: Services section properly closed above -->
 
-<div id="bundleWrap" class="mt-8"></div>
- <!-- How it works -->
+    <!-- How it works -->
     <section id="how" class="py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="font-poppins text-3xl sm:text-4xl font-extrabold text-center">How it works</h2>
@@ -228,7 +227,7 @@
       </div>
     </section>
 
-    <!-- CTA band with gentle urgency -->
+    <!-- CTA band -->
     <section class="py-12 bg-gradient-to-br from-amber-500 to-orange-400 text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-4">
         <div>
@@ -320,7 +319,7 @@
     </div>
   </footer>
 
-  <!-- Lead Form Modal (pre-WhatsApp) -->
+  <!-- Lead Form Modal -->
   <div id="lead-modal" class="fixed inset-0 z-50 hidden">
     <div class="absolute inset-0 bg-black/50" onclick="closeLeadForm()"></div>
     <div class="relative max-w-lg w-[92%] mx-auto mt-16 card p-6 bg-white">
@@ -343,11 +342,7 @@
     </div>
   </div>
 
-
-  <!-- ============================================
-        SUPER-SECURE ADMIN BANNER PANEL SYSTEM
-        Hidden unless correct URL key + PIN entered
-  ================================================ -->
+  <!-- Hidden banner admin UI (kept as-is) -->
   <style>
     #banner-admin-panel {
       position: fixed;
@@ -361,20 +356,9 @@
       width: 300px;
       display: none;
     }
-    #banner-admin-panel h3 {
-      margin: 0 0 10px;
-      font-size: 15px;
-      font-weight: 600;
-    }
-    #banner-admin-panel label {
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .admin-input {
-      margin-bottom: 12px;
-      font-size: 13px;
-      width: 100%;
-    }
+    #banner-admin-panel h3 { margin: 0 0 10px; font-size: 15px; font-weight: 600; }
+    #banner-admin-panel label { font-size: 12px; font-weight: 500; }
+    .admin-input { margin-bottom: 12px; font-size: 13px; width: 100%; }
     #admin-pin-modal {
       position: fixed;
       inset: 0;
@@ -406,7 +390,6 @@
     }
   </style>
 
-  <!-- SECRET ADMIN PANEL -->
   <div id="banner-admin-panel">
     <h3>Upload Banners</h3>
 
@@ -427,15 +410,10 @@
     </button>
   </div>
 
-  <!-- PIN POPUP -->
   <div id="admin-pin-modal">
     <div id="admin-pin-box">
-      <h3 style="margin:0; font-size:17px; font-weight:700; text-align:center;">
-        Admin Access
-      </h3>
-      <p style="font-size:13px; color:#444; text-align:center; margin-bottom:10px;">
-        Enter Admin PIN to continue
-      </p>
+      <h3 style="margin:0; font-size:17px; font-weight:700; text-align:center;">Admin Access</h3>
+      <p style="font-size:13px; color:#444; text-align:center; margin-bottom:10px;">Enter Admin PIN to continue</p>
       <input id="adminPinInput" type="password" placeholder="Enter PIN">
       <button onclick="verifyPin()" style="margin-top:12px; padding:10px; width:100%; background:#f97316; border:none; color:white; border-radius:8px; font-size:14px; font-weight:600;">
         Unlock
@@ -443,9 +421,9 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Scripts: WhatsApp modal + basics -->
   <script>
-    const WHATSAPP_NUMBER = "9326139609"; // e.g. 919876543210 (no + or spaces)
+    const WHATSAPP_NUMBER = "9326139609"; // no + or spaces
     let presetService = "";
 
     function openLeadForm(service = "") {
@@ -454,7 +432,11 @@
       modal.classList.remove('hidden');
       const serviceField = document.querySelector('#lead-form [name="service"]');
       serviceField.value = service || serviceField.value || "Free 5-min Chat";
+      // reset payment lock each time (used by appended razorpay)
+      window.__ajPaidOK = false;
+      if (typeof window.__ajToggle === "function") window.__ajToggle();
     }
+
     function closeLeadForm(){
       const modal = document.getElementById('lead-modal');
       modal.classList.add('hidden');
@@ -480,7 +462,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
-  <!-- Schema: LocalBusiness/Person for rich results -->
+  <!-- Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -494,7 +476,7 @@
   }
   </script>
 
-  <!-- ======= APPENDED: Razorpay integration without altering original core logic ======= -->
+  <!-- ======= APPENDED: Razorpay integration (kept), but pricing now comes from config via window.ajAmountFor ======= -->
   <script>
     // Load Razorpay script dynamically
     (function loadRZP(){
@@ -505,25 +487,14 @@
     })();
 
     // CONFIG
-    const AJ_DEMO_MODE = false; // set false for live
-    const AJ_RAZORPAY_KEY_ID = "rzp_live_ReQS6kBC1MMpAK"; // live key
-    const AJ_CREATE_ORDER_URL = "https://apkajyotish-pay.mohit-parmar110.workers.dev"; // for live
+    const AJ_DEMO_MODE = false;
+    const AJ_RAZORPAY_KEY_ID = "rzp_live_ReQS6kBC1MMpAK";
+    const AJ_CREATE_ORDER_URL = "https://apkajyotish-pay.mohit-parmar110.workers.dev";
     const AJ_LOGO_URL = "https://dummyimage.com/200x200/ffa733/ffffff.png&text=Apka+Jyotish";
 
-    function ajAmountFor(service){
-      const map = {
-        "Love & Relationships": 55000,
-        "Career & Money": 105000,
-        "Complete Life Reading": 155000,
-        "Home & Family": 75000,
-        "Gems & Remedies": 45000,
-        "Quick Question": 25000,
-        "Full Life Pack (Bundle)": 175000,
-        "Free 5-min Chat": 0,
-        "Free 5-min Chat (Footer)": 0
-      };
-      return map[service] ?? 0;
-    }
+    // Fallback (will be overridden after config loads)
+    function ajAmountFor(service){ return 0; }
+    window.ajAmountFor = ajAmountFor;
 
     document.addEventListener('DOMContentLoaded', function(){
       const form = document.getElementById('lead-form');
@@ -560,8 +531,9 @@
       function ajToggle(){
         const fd = new FormData(form);
         const service = (fd.get('service') || window.presetService || '').trim();
-        const amt = ajAmountFor(service);
+        const amt = window.ajAmountFor ? window.ajAmountFor(service) : 0;
         const isFree = amt <= 0;
+
         if(isFree){
           payBtn.classList.add('hidden');
           submitBtn.disabled = false;
@@ -573,16 +545,11 @@
         }
       }
 
+      window.__ajToggle = ajToggle;
+
       form.addEventListener('input', (e)=>{
         if(e.target && e.target.name === 'service') ajToggle();
       });
-
-      const _openLeadForm = window.openLeadForm;
-      window.openLeadForm = function(service=""){
-        if(typeof _openLeadForm === 'function') _openLeadForm(service);
-        window.__ajPaidOK = false;
-        ajToggle();
-      };
 
       payBtn.addEventListener('click', async function(){
         const fd = new FormData(form);
@@ -598,7 +565,7 @@
           return;
         }
 
-        const amount = ajAmountFor(service);
+        const amount = window.ajAmountFor ? window.ajAmountFor(service) : 0;
         if(amount <= 0){
           window.__ajPaidOK = true;
           submitBtn.disabled = false;
@@ -627,6 +594,7 @@
               window.__ajPaidOK = true;
               submitBtn.disabled = false;
               alert("Demo payment success! WhatsApp unlocked.");
+              ajToggle();
             }
           };
           new Razorpay(options).open();
@@ -637,7 +605,11 @@
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ amount, currency: 'INR', notes: { name, service, concern, dob, tob, pob } })
             }).then(r=>r.json());
-            if(!order || !order.id){ alert("Order error, try again."); return; }
+
+            if(!order || !order.id){
+              alert("Order error, try again.");
+              return;
+            }
 
             const options = {
               key: AJ_RAZORPAY_KEY_ID,
@@ -654,6 +626,7 @@
                 window.__ajPaidOK = true;
                 submitBtn.disabled = false;
                 alert("Payment successful! You can start WhatsApp now.");
+                ajToggle();
               }
             };
             new Razorpay(options).open();
@@ -668,139 +641,130 @@
     });
   </script>
   <!-- ======= /APPENDED ======= -->
+
+  <!-- ✅ FIXED: Single config loader that ALSO renders services immediately -->
   <script>
-  async function loadSiteConfig(){
-    try{
-      const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
-      const cfg = await res.json();
-      if(!res.ok) return;
-
-      // ✅ support both: cfg.hero.* and cfg.banners.*
-      const hero = cfg.hero || {};
-      const banners = cfg.banners || {};
-
-      const desktopUrl =
-        hero.desktopBanner ||
-        banners.heroBannerDesktopUrl ||
-        "";
-
-      const mobileUrl =
-        hero.mobileBanner ||
-        banners.heroBannerMobileUrl ||
-        "";
-
-      const d = document.getElementById("heroDesktopBanner");
-      const m = document.getElementById("heroMobileBanner");
-
-      if(d && desktopUrl) d.src = desktopUrl;
-      if(m && mobileUrl)  m.src = mobileUrl;
-
-      window.__AJ_CFG__ = cfg;
-    } catch(e){
-      console.warn("Config load failed", e);
+    // --- helpers ---
+    function esc(s){
+      return String(s ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
-  }
 
-  document.addEventListener("DOMContentLoaded", loadSiteConfig);
-</script>
-<script>
-function esc(s){return String(s??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+    function formatINR(n){
+      const num = Number(n);
+      if(!Number.isFinite(num)) return "";
+      return "₹" + num.toLocaleString("en-IN");
+    }
 
-function formatINR(n){
-  const num = Number(n);
-  if(!Number.isFinite(num)) return "";
-  return "₹" + num.toLocaleString("en-IN");
-}
+    function parseBullets(v){
+      if (Array.isArray(v)) return v.filter(Boolean).map(String);
+      const s = String(v ?? "").trim();
+      if(!s) return [];
+      if(s.includes("\n")) return s.split("\n").map(x=>x.trim()).filter(Boolean);
+      return s.split(",").map(x=>x.trim()).filter(Boolean);
+    }
 
-function parseBullets(v){
-  // Accept: array OR comma-separated OR newline-separated
-  if (Array.isArray(v)) return v.filter(Boolean).map(String);
-  const s = String(v ?? "").trim();
-  if(!s) return [];
-  if(s.includes("\n")) return s.split("\n").map(x=>x.trim()).filter(Boolean);
-  return s.split(",").map(x=>x.trim()).filter(Boolean);
-}
+    function renderServices(cfg){
+      const grid = document.getElementById("servicesGrid");
+      if(!grid) return;
 
-function renderServices(cfg){
-  const grid = document.getElementById("servicesGrid");
-  if(!grid) return;
+      const services = (cfg.services || [])
+        .filter(s => s && (s.active !== false))
+        .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
 
-  const services = (cfg.services || [])
-    .filter(s => s && (s.active !== false))
-    .sort((a,b)=> (Number(a.sort)||999) - (Number(b.sort)||999));
+      if(!services.length){
+        grid.innerHTML = `<div class="card p-6 text-sm text-gray-600">No services configured.</div>`;
+        return;
+      }
 
-  if(!services.length){
-    grid.innerHTML = `<div class="card p-6 text-sm text-gray-600">No services configured.</div>`;
-    return;
-  }
+      grid.innerHTML = services.map(s=>{
+        const title = esc(s.name || "");
+        const subtitle = esc(s.subtitle || "");
+        const badge = esc(s.badge || "");
+        const bullets = parseBullets(s.bullets);
+        const cta = esc(s.cta || "Start now");
+        const gst = esc(s.gst_note || "incl. GST");
+        const ring = (badge || "").toLowerCase().includes("best") ? ' ring-2 ring-orange-200' : '';
 
-  grid.innerHTML = services.map(s=>{
-    const title = esc(s.name || "");
-    const subtitle = esc(s.subtitle || "");
-    const badge = esc(s.badge || "");
-    const bullets = parseBullets(s.bullets);
-    const cta = esc(s.cta || "Start now");
-    const gst = esc(s.gst_note || "incl. GST");
+        return `
+          <article class="card p-6 flex flex-col${ring}">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="font-poppins font-semibold text-lg">${title}</h3>
+              ${badge ? `<span class="badge bg-amber-100 text-amber-700">${badge}</span>` : ``}
+            </div>
 
-    // Optional highlight: if badge contains "Best value" -> ring
-    const ring = (badge || "").toLowerCase().includes("best") ? ' ring-2 ring-orange-200' : '';
+            ${subtitle ? `<p class="mt-2 text-sm text-gray-600">${subtitle}</p>` : ``}
 
-    return `
-      <article class="card p-6 flex flex-col${ring}">
-        <div class="flex items-center justify-between gap-3">
-          <h3 class="font-poppins font-semibold text-lg">${title}</h3>
-          ${badge ? `<span class="badge bg-amber-100 text-amber-700">${badge}</span>` : ``}
-        </div>
+            ${bullets.length ? `
+              <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
+                ${bullets.map(b=>`<li>${esc(b)}</li>`).join("")}
+              </ul>
+            `: ``}
 
-        ${subtitle ? `<p class="mt-2 text-sm text-gray-600">${subtitle}</p>` : ``}
+            <div class="mt-4 flex items-baseline gap-2">
+              <span class="text-2xl font-bold">${formatINR(s.price)}</span>
+              <span class="text-xs text-gray-500">${gst}</span>
+            </div>
 
-        ${bullets.length ? `
-          <ul class="mt-4 text-sm text-gray-700 space-y-2 list-disc list-inside">
-            ${bullets.map(b=>`<li>${esc(b)}</li>`).join("")}
-          </ul>
-        `: ``}
+            <button class="mt-4 btn btn-primary" onclick="openLeadForm('${esc(s.name)}')">${cta}</button>
+          </article>
+        `;
+      }).join("");
+    }
 
-        <div class="mt-4 flex items-baseline gap-2">
-          <span class="text-2xl font-bold">${formatINR(s.price)}</span>
-          <span class="text-xs text-gray-500">${gst}</span>
-        </div>
+    // Razorpay amount should come from config (paise)
+    function ajAmountForFromConfig(serviceName){
+      const cfg = window.__AJ_CFG__ || {};
+      const services = cfg.services || [];
+      const found = services.find(s => (s.name || "").trim() === (serviceName || "").trim());
+      if(!found) return 0;
 
-        <button class="mt-4 btn btn-primary" onclick="openLeadForm('${esc(s.name)}')">${cta}</button>
-      </article>
-    `;
-  }).join("");
-}
+      const price = Number(found.price);
+      if(!Number.isFinite(price) || price <= 0) return 0;
 
-// Razorpay pricing should come from config
-function ajAmountForFromConfig(serviceName){
-  const cfg = window.__AJ_CFG__ || {};
-  const services = cfg.services || [];
-  const found = services.find(s => (s.name || "").trim() === (serviceName || "").trim());
-  if(!found) return 0;
+      return Math.round(price * 100);
+    }
 
-  const price = Number(found.price);
-  if(!Number.isFinite(price) || price <= 0) return 0;
+    async function loadSiteConfig(){
+      try{
+        const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
+        const cfg = await res.json();
+        if(!res.ok) return;
 
-  // Razorpay uses paise
-  return Math.round(price * 100);
-}
+        window.__AJ_CFG__ = cfg;
 
-// Override your hardcoded map with config-based pricing
-window.ajAmountFor = ajAmountForFromConfig;
+        // hero banners
+        const hero = cfg.hero || {};
+        const banners = cfg.banners || {};
 
-// After config loads, render services
-document.addEventListener("DOMContentLoaded", function(){
-  // If config already loaded, render now
-  if(window.__AJ_CFG__) renderServices(window.__AJ_CFG__);
+        const desktopUrl = hero.desktopBanner || banners.heroBannerDesktopUrl || "";
+        const mobileUrl  = hero.mobileBanner  || banners.heroBannerMobileUrl  || "";
 
-  // Hook into your existing loadSiteConfig
-  const oldLoad = window.loadSiteConfig;
-  window.loadSiteConfig = async function(){
-    await oldLoad?.();
-    if(window.__AJ_CFG__) renderServices(window.__AJ_CFG__);
-  };
-});
-</script>
+        const d = document.getElementById("heroDesktopBanner");
+        const m = document.getElementById("heroMobileBanner");
+        if(d && desktopUrl) d.src = desktopUrl;
+        if(m && mobileUrl)  m.src = mobileUrl;
+
+        // ✅ render services NOW
+        renderServices(cfg);
+
+        // ✅ make Razorpay pricing dynamic
+        window.ajAmountFor = ajAmountForFromConfig;
+
+        // if modal already open, re-evaluate payment lock
+        if (typeof window.__ajToggle === "function") window.__ajToggle();
+
+      } catch(e){
+        console.warn("Config load failed", e);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadSiteConfig);
+  </script>
 
 </body>
 </html>
