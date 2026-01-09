@@ -1,7 +1,6 @@
 // functions/api/admin/save.js
-// - Normalizes + validates config payload
-// - Ensures banners structure matches your frontend (cfg.banners.heroBannerDesktopUrl etc.)
-// - Preserves whatsappNumber (won't change even if admin tries), by keeping existing KV value
+
+_toggleHeaders: undefined;
 
 function json(res, status = 200) {
   return new Response(JSON.stringify(res), {
@@ -27,8 +26,20 @@ function asBool(v) {
   return Boolean(v);
 }
 
+function normalizeBullets(v){
+  if (Array.isArray(v)) {
+    return v.map(x => asString(x)).filter(Boolean);
+  }
+  const txt = asString(v);
+  if (!txt) return [];
+  // allow newline OR comma
+  return txt
+    .split(/\r?\n|,/g)
+    .map(s => s.trim())
+    .filter(Boolean);
+}
+
 export async function onRequestOptions() {
-  // Preflight
   return json({ ok: true }, 200);
 }
 
@@ -42,28 +53,20 @@ export async function onRequestPost({ request, env }) {
     const body = await request.json();
     if (!body || typeof body !== "object") return json({ error: "Invalid JSON" }, 400);
 
-    // Read existing config so we can preserve whatsappNumber no matter what
+    // Read existing config so we can preserve whatsappNumber
     let existing = {};
     try {
       const raw = await env.APK_KV.get("config");
       if (raw) existing = JSON.parse(raw);
     } catch (_) {}
 
-    // Defaults
     if (!body.currency) body.currency = "INR";
     if (!Array.isArray(body.services)) body.services = [];
     if (!Array.isArray(body.faq)) body.faq = [];
     if (!Array.isArray(body.testimonials)) body.testimonials = [];
     if (!body.banners || typeof body.banners !== "object") body.banners = {};
 
-    // ---- BANNERS NORMALIZATION (match frontend) ----
-    // Support legacy payloads:
-    // - body.hero.desktopBanner / mobileBanner / headline...
-    // - body.banners.hero.desktopBanner ... etc.
-    const legacyHero =
-      body.hero ||
-      body.banners?.hero ||
-      {};
+    const legacyHero = body.hero || body.banners?.hero || {};
 
     const normalizedBanners = {
       heroBannerDesktopUrl: asString(
@@ -100,7 +103,7 @@ export async function onRequestPost({ request, env }) {
         ""
       ),
 
-      // IMPORTANT: preserve whatsappNumber (do not let admin change it)
+      // preserve whatsappNumber
       whatsappNumber: asString(
         existing?.banners?.whatsappNumber ||
         body.banners.whatsappNumber ||
@@ -111,23 +114,21 @@ export async function onRequestPost({ request, env }) {
 
     body.banners = normalizedBanners;
 
-    // ---- SERVICES NORMALIZATION ----
     body.services = body.services
-  .map((s) => ({
-    id: asString(s?.id),
-    name: asString(s?.name),
-    price: asNumber(s?.price, 0),
-    badge: asString(s?.badge),
-    subtitle: asString(s?.subtitle),
-    bullets: Array.isArray(s?.bullets) ? s.bullets : asString(s?.bullets), // accept both
-    cta: asString(s?.cta, "Start now"),
-    gst_note: asString(s?.gst_note, "incl. GST"),
-    active: asBool(s?.active),
-    sort: asNumber(s?.sort, 999),
-  }))
-  .filter((s) => s.id && s.name);
+      .map((s) => ({
+        id: asString(s?.id),
+        name: asString(s?.name),
+        price: asNumber(s?.price, 0),
+        badge: asString(s?.badge),
+        subtitle: asString(s?.subtitle),
+        bullets: normalizeBullets(s?.bullets),
+        cta: asString(s?.cta, "Start now"),
+        gst_note: asString(s?.gst_note, "incl. GST"),
+        active: asBool(s?.active),
+        sort: asNumber(s?.sort, 999),
+      }))
+      .filter((s) => s.id && s.name);
 
-    // ---- FAQ NORMALIZATION ----
     body.faq = body.faq
       .map((f) => ({
         q: asString(f?.q),
@@ -137,7 +138,6 @@ export async function onRequestPost({ request, env }) {
       }))
       .filter((f) => f.q && f.a);
 
-    // ---- TESTIMONIALS NORMALIZATION ----
     body.testimonials = body.testimonials
       .map((t) => ({
         name: asString(t?.name),
@@ -148,8 +148,6 @@ export async function onRequestPost({ request, env }) {
       }))
       .filter((t) => t.name && t.text);
 
-    // Optional: strip any unexpected huge fields
-    // (keep only known keys)
     const finalConfig = {
       currency: asString(body.currency, "INR"),
       banners: body.banners,
@@ -172,3 +170,4 @@ export async function onRequestPost({ request, env }) {
     return json({ error: err?.message || "Save failed" }, 500);
   }
 }
+
