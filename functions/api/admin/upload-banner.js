@@ -1,11 +1,27 @@
+// functions/api/admin/upload-banner.js
+
+function json(res, status = 200) {
+  return new Response(JSON.stringify(res), {
+    status,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+      "access-control-allow-origin": "*",
+      "access-control-allow-headers": "content-type, x-admin-token",
+      "access-control-allow-methods": "POST, OPTIONS",
+    },
+  });
+}
+
+export async function onRequestOptions() {
+  return json({ ok: true }, 200);
+}
+
 export async function onRequestPost({ request, env }) {
   try {
     const token = request.headers.get("x-admin-token");
     if (!token || token !== env.ADMIN_TOKEN) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { "content-type": "application/json" }
-      });
+      return json({ error: "Unauthorized" }, 401);
     }
 
     const form = await request.formData();
@@ -13,17 +29,11 @@ export async function onRequestPost({ request, env }) {
     const variant = form.get("variant"); // "desktop" | "mobile"
 
     if (!file || typeof file === "string") {
-      return new Response(JSON.stringify({ error: "Missing file" }), {
-        status: 400,
-        headers: { "content-type": "application/json" }
-      });
+      return json({ error: "Missing file" }, 400);
     }
 
     if (!["desktop", "mobile"].includes(variant)) {
-      return new Response(JSON.stringify({ error: "Invalid variant" }), {
-        status: 400,
-        headers: { "content-type": "application/json" }
-      });
+      return json({ error: "Invalid variant" }, 400);
     }
 
     // Fixed filenames so frontend never changes
@@ -41,16 +51,21 @@ export async function onRequestPost({ request, env }) {
       }
     });
 
-    const base = env.CDN_BASE_URL; // e.g. https://cdn.apkajyotish.com
-    const url = `${base}/${key}`;
+    // Prefer CDN_BASE_URL (your custom domain/CDN), else fallback if provided
+    const base =
+      env.CDN_BASE_URL ||
+      env.R2_PUBLIC_BASE_URL || // optional: set this if you want
+      "";
 
-    return new Response(JSON.stringify({ success: true, key, url }), {
-      headers: { "content-type": "application/json" }
-    });
+    if (!base) {
+      // If you forget to set base URLs, we still return the key
+      return json({ success: true, key, url: "" }, 200);
+    }
+
+    const url = `${base.replace(/\/+$/,"")}/${key}`;
+
+    return json({ success: true, key, url }, 200);
   } catch (e) {
-    return new Response(JSON.stringify({ error: e.message || "Upload failed" }), {
-      status: 500,
-      headers: { "content-type": "application/json" }
-    });
+    return json({ error: e.message || "Upload failed" }, 500);
   }
 }
