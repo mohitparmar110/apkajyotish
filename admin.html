@@ -7,310 +7,419 @@
 
   <style>
     :root{
-      --bg: #f7f8fb;
-      --surface: rgba(255,255,255,.86);
-      --surface2: rgba(255,255,255,.96);
-      --text: #0f172a;
-      --muted: #64748b;
+      --bg:#f6f7fb;
+      --card: rgba(255,255,255,.92);
+      --card2: rgba(255,255,255,.98);
+      --text:#0f172a;
+      --muted:#64748b;
       --line: rgba(15,23,42,.10);
-      --line2: rgba(15,23,42,.08);
+      --line2: rgba(15,23,42,.07);
 
-      --accent: #2563eb;
-      --accent2:#22c55e;
-      --warn: #f59e0b;
-      --bad:  #ef4444;
-      --ok:   #16a34a;
+      --brand:#2563eb;
+      --good:#16a34a;
+      --bad:#ef4444;
+      --warn:#f59e0b;
 
-      --radius: 16px;
-      --radius2: 22px;
+      --r:18px;
+      --r2:24px;
+
       --shadow: 0 18px 50px rgba(15,23,42,.08);
-      --shadow2: 0 8px 26px rgba(15,23,42,.06);
+      --shadow2: 0 8px 22px rgba(15,23,42,.06);
 
-      --h: 42px;
       --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
-
     body{
       margin:0;
       font-family:var(--font);
       color:var(--text);
       background:
-        radial-gradient(900px 500px at 15% 10%, rgba(37,99,235,.10), transparent 60%),
-        radial-gradient(900px 500px at 85% 20%, rgba(34,197,94,.10), transparent 60%),
-        radial-gradient(900px 500px at 50% 110%, rgba(245,158,11,.08), transparent 60%),
+        radial-gradient(900px 500px at 12% 8%, rgba(37,99,235,.12), transparent 60%),
+        radial-gradient(900px 500px at 88% 18%, rgba(34,197,94,.10), transparent 60%),
+        radial-gradient(900px 500px at 50% 115%, rgba(245,158,11,.10), transparent 60%),
         var(--bg);
     }
 
-    .wrap{max-width:1180px;margin:0 auto;padding:18px 18px 54px}
+    .wrap{max-width:980px;margin:0 auto;padding:14px 14px 110px}
+    @media (min-width: 900px){
+      .wrap{padding:20px 20px 90px}
+    }
 
+    /* Top bar */
     .top{
-      position:sticky; top:0; z-index:50;
-      background: rgba(247,248,251,.78);
+      position:sticky; top:0; z-index:40;
+      background: rgba(246,247,251,.85);
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line2);
-      padding:14px 0 12px;
-      margin-bottom:16px;
     }
     .topInner{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:14px;flex-wrap:wrap;
+      max-width:980px;
+      margin:0 auto;
+      padding:12px 14px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    @media (min-width:900px){
+      .topInner{padding:14px 20px}
     }
 
-    .brand{display:flex;align-items:center;gap:12px;min-width:260px}
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      min-width: 210px;
+    }
     .logo{
-      width:40px;height:40px;border-radius:14px;
-      background: linear-gradient(135deg, rgba(37,99,235,.16), rgba(34,197,94,.12));
+      width:38px;height:38px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(37,99,235,.18), rgba(34,197,94,.12));
       border:1px solid var(--line);
       box-shadow: var(--shadow2);
       display:grid;place-items:center;
       flex:0 0 auto;
     }
-    .logo svg{opacity:.8}
-    .brand h1{font-size:18px;line-height:1.1;margin:0}
-    .brand .sub{color:var(--muted);font-size:12px;margin-top:4px}
+    .brand h1{margin:0;font-size:16px;line-height:1.1}
+    .brand p{margin:4px 0 0;color:var(--muted);font-size:12px}
 
-    .actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .tokenWrap{
-      display:flex;align-items:center;gap:10px;
-      background: var(--surface);
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
       border:1px solid var(--line);
-      border-radius: 999px;
-      padding:8px 8px 8px 12px;
+      background: rgba(255,255,255,.75);
+      padding:8px 10px;border-radius:999px;
       box-shadow: var(--shadow2);
+      font-size:12px;color:var(--muted);
+      user-select:none;
     }
-    .tokenWrap input{
-      width:min(360px, 54vw);
-      border:0;background:transparent;outline:none;
-      color:var(--text);
-      height:34px;font-size:13px;
+    .dot{width:9px;height:9px;border-radius:999px;background:var(--warn)}
+    .dot.ok{background:var(--good)}
+    .dot.bad{background:var(--bad)}
+
+    /* Cards / sections */
+    .card{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--r2);
+      padding:14px;
+      box-shadow: var(--shadow);
+    }
+    .card + .card{margin-top:12px}
+    @media (min-width:900px){
+      .card{padding:16px}
+      .card + .card{margin-top:14px}
+    }
+
+    .cardHead{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+      flex-wrap:wrap;
+    }
+    .title{
+      margin:0;font-size:15px;font-weight:900;
+    }
+    .hint{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:12px;
     }
 
     .btn{
-      height:36px;
+      height:40px;
       padding:0 14px;
       border-radius:999px;
       border:1px solid var(--line);
       background: rgba(15,23,42,.03);
       color:var(--text);
-      font-weight:700;
+      font-weight:800;
       cursor:pointer;
       display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      transition: transform .12s ease, background .12s ease;
       user-select:none;
       white-space:nowrap;
     }
     .btn:hover{transform:translateY(-1px);background:rgba(15,23,42,.05)}
-    .btn:active{transform:translateY(0px)}
-
+    .btn:active{transform:translateY(0)}
     .btn.primary{
       border:0;
-      background: linear-gradient(135deg, var(--accent), #60a5fa);
-      color:white;
+      background: linear-gradient(135deg, var(--brand), #60a5fa);
+      color:#fff;
       box-shadow: 0 10px 26px rgba(37,99,235,.18);
     }
-    .btn.primary[data-state="saving"]{pointer-events:none;opacity:.92}
-    .btn.primary[data-state="saved"]{
-      background: linear-gradient(135deg, var(--ok), #86efac);
+    .btn.good{
+      border:0;
+      background: linear-gradient(135deg, var(--good), #86efac);
+      color:#fff;
       box-shadow: 0 10px 26px rgba(22,163,74,.18);
     }
-
-    .spinner{
-      width:14px;height:14px;border-radius:999px;
-      border:2px solid rgba(255,255,255,.35);
-      border-top-color: rgba(255,255,255,.95);
-      animation: spin .8s linear infinite;
-      display:none;
-    }
-    .tick{display:none}
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    .card{
-      background: var(--surface);
-      border:1px solid var(--line);
-      border-radius: var(--radius2);
-      padding:16px;
-      box-shadow: var(--shadow);
-      animation: fadeUp .28s ease both;
-    }
-    .card + .card{margin-top:14px}
-    @keyframes fadeUp{
-      from{opacity:0;transform:translateY(8px)}
-      to{opacity:1;transform:translateY(0)}
+    .btn.danger{
+      border:1px solid rgba(239,68,68,.28);
+      background: rgba(239,68,68,.07);
+      color: rgba(185,28,28,.95);
     }
 
-    .cardHead{
-      display:flex;align-items:center;justify-content:space-between;
-      gap:12px;flex-wrap:wrap;
-      margin-bottom:10px;
-    }
-    .cardHead h2{font-size:16px;margin:0}
-    .hint{color:var(--muted);font-size:12px;margin-top:4px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .row.right{justify-content:flex-end}
 
-    label{display:block;margin:10px 0 6px;color:var(--muted);font-size:12px}
-    input, textarea{
+    label{display:block;margin:12px 0 6px;color:var(--muted);font-size:12px}
+    input, textarea, select{
       width:100%;
-      height: 42px;
-      padding:10px 12px;
+      height: 44px;
+      padding:11px 12px;
       border-radius: 14px;
       border:1px solid var(--line);
-      background: var(--surface2);
+      background: var(--card2);
       color:var(--text);
       outline:none;
       transition: border-color .12s ease, box-shadow .12s ease;
-      font-size:13px;
+      font-size:14px;
     }
-    textarea{height:auto;min-height:90px;resize:vertical}
-    input:focus, textarea:focus{
-      border-color: rgba(37,99,235,.40);
-      box-shadow: 0 0 0 4px rgba(37,99,235,.10);
-    }
-
-    .grid{
-      display:grid;
-      gap:12px;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    @media (max-width: 900px){
-      .grid{grid-template-columns: 1fr}
-      .tokenWrap input{width: min(420px, 70vw);}
+    textarea{height:auto;min-height:96px;resize:vertical}
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(37,99,235,.45);
+      box-shadow: 0 0 0 4px rgba(37,99,235,.12);
     }
 
-    .tableWrap{
-      overflow:auto;
-      border-radius: 16px;
+    .grid2{
+      display:grid;gap:12px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 900px){
+      .grid2{grid-template-columns: 1fr 1fr}
+    }
+
+    .divider{
+      height:1px;background:linear-gradient(90deg, transparent, rgba(15,23,42,.10), transparent);
+      margin:12px 0;
+    }
+
+    /* Accordion */
+    details{
       border:1px solid var(--line2);
       background: rgba(15,23,42,.02);
+      border-radius: 16px;
+      padding: 10px 12px;
+    }
+    details + details{margin-top:10px}
+    summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      user-select:none;
+      font-weight:900;
+      font-size:13px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .sumRight{display:flex;align-items:center;gap:10px}
+    .badge{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.70);
+      color: var(--muted);
+      font-weight:800;
+    }
+    .chev{
+      width:10px;height:10px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform .15s ease;
+      margin-left:2px;
+      opacity:.9;
+    }
+    details[open] .chev{transform: rotate(225deg)}
+
+    .mini{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
       margin-top:10px;
     }
-    table{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0;
-      min-width: 1100px;
+    @media (min-width:900px){
+      .mini{grid-template-columns: 1fr 1fr 1fr}
     }
-    thead th{
-      position:sticky; top:0;
-      background: rgba(247,248,251,.92);
+
+    .toggle{
+      display:flex;align-items:center;gap:10px;margin-top:12px;
+      color: var(--muted);font-size:13px;font-weight:700;
+    }
+    .toggle input{width:18px;height:18px;accent-color: var(--brand)}
+
+    /* Sticky bottom bar (mobile-first) */
+    .bottomBar{
+      position:fixed;left:0;right:0;bottom:0;z-index:60;
+      background: rgba(246,247,251,.88);
       backdrop-filter: blur(10px);
-      color: var(--muted);
+      border-top:1px solid var(--line2);
+      padding:10px 12px;
+    }
+    .bottomInner{
+      max-width:980px;margin:0 auto;
+      display:flex;gap:10px;align-items:center;justify-content:space-between;
+    }
+    .statusText{
+      font-size:12px;color:var(--muted);
+      max-width: 55vw;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    }
+    @media (min-width:900px){
+      .statusText{max-width:none}
+      .bottomBar{padding:12px 20px}
+    }
+
+    /* Login overlay */
+    .overlay{
+      position:fixed;inset:0;z-index:100;
+      background: rgba(15,23,42,.45);
+      backdrop-filter: blur(6px);
+      display:none;
+      align-items:center;justify-content:center;
+      padding:18px;
+    }
+    .overlay.show{display:flex}
+    .login{
+      width:min(520px, 100%);
+      background: rgba(255,255,255,.94);
+      border:1px solid rgba(255,255,255,.35);
+      box-shadow: 0 24px 70px rgba(15,23,42,.22);
+      border-radius: 22px;
+      padding:16px;
+    }
+    .login h2{margin:0;font-size:16px;font-weight:1000}
+    .login p{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
+    .login .row{margin-top:12px}
+    .smallWarn{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(245,158,11,.30);
+      background: rgba(245,158,11,.10);
+      color: rgba(124,45,18,.90);
       font-size:12px;
-      text-align:left;
-      padding:10px 10px;
-      border-bottom:1px solid var(--line2);
-      z-index:2;
-      white-space:nowrap;
-    }
-    tbody td{
-      padding:10px 10px;
-      border-bottom:1px solid var(--line2);
-      vertical-align:top;
-    }
-    tbody tr:hover td{background: rgba(37,99,235,.03)}
-
-    .cellInput input,.cellInput textarea{border-radius:12px}
-    .cellBtn{width:120px}
-
-    .check{
-      width:18px;height:18px;
-      accent-color: var(--accent);
-      transform: translateY(2px);
+      font-weight:700;
     }
 
-    .statusRow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .dangerText{color: rgba(239,68,68,.85); font-weight:600}
-
+    /* Toast */
     .toast{
-      position:fixed; right:18px; bottom:18px; z-index:9999;
+      position:fixed; right:14px; bottom:88px; z-index:9999;
       background: rgba(255,255,255,.92);
       border:1px solid var(--line);
       border-radius: 16px;
       padding:12px 14px;
       box-shadow: var(--shadow);
       display:flex;align-items:center;gap:10px;
-      max-width:min(420px, calc(100vw - 36px));
+      max-width:min(420px, calc(100vw - 28px));
       transform: translateY(12px);
       opacity:0;
       pointer-events:none;
       transition: opacity .18s ease, transform .18s ease;
     }
+    @media (min-width:900px){
+      .toast{bottom:20px;right:20px}
+    }
     .toast.show{opacity:1;transform: translateY(0)}
     .toastDot{
-      width:10px;height:10px;border-radius:999px;background:var(--ok);
+      width:10px;height:10px;border-radius:999px;background:var(--good);
       box-shadow: 0 0 0 6px rgba(22,163,74,.10);
       flex:0 0 auto;
     }
-    .toast .t1{font-weight:900;font-size:13px}
+    .toast .t1{font-weight:1000;font-size:13px}
     .toast .t2{color:var(--muted);font-size:12px;margin-top:2px}
 
-    .divider{
-      height:1px;background:linear-gradient(90deg, transparent, rgba(15,23,42,.10), transparent);
-      margin:10px 0 4px;
+    .dangerNote{
+      margin-top:10px;
+      color: rgba(239,68,68,.85);
+      font-weight:800;
+      font-size:12px;
     }
   </style>
 </head>
 
 <body>
-  <div class="top">
-    <div class="wrap">
-      <div class="topInner">
-        <div class="brand">
+  <!-- LOGIN -->
+  <div class="overlay" id="overlay">
+    <div class="login">
+      <div class="row" style="justify-content:space-between;gap:12px">
+        <div class="brand" style="min-width:auto">
           <div class="logo" aria-hidden="true">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <path d="M12 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <path d="M12 18v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M4.93 4.93l2.83 2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M16.24 16.24l2.83 2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <path d="M2 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <path d="M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/>
             </svg>
           </div>
           <div>
-            <h1>ApkaJyotish Admin</h1>
-            <div class="sub">Calm, clean editor → Save → website updates</div>
+            <h2>Admin Login</h2>
+            <p style="margin:4px 0 0;color:var(--muted);font-size:12px">ApkaJyotish editor</p>
           </div>
         </div>
+        <div class="chip"><span class="dot" id="loginDot"></span><span id="loginState">Not connected</span></div>
+      </div>
 
-        <div class="actions">
-          <div class="tokenWrap">
-            <input id="token" placeholder="Paste ADMIN_TOKEN here" />
-            <button class="btn" id="loadBtn" title="Load latest">Load</button>
-            <button class="btn primary" id="saveBtn" title="Save changes">
-              <span class="spinner" id="sp"></span>
-              <span class="tick" id="tk">✓</span>
-              <span id="saveText">Save</span>
-            </button>
-          </div>
+      <p>Paste your <b>ADMIN_TOKEN</b> to access the editor. This token is stored only in this browser tab (session).</p>
+
+      <label>ADMIN_TOKEN</label>
+      <input id="tokenInput" placeholder="Paste ADMIN_TOKEN here" autocomplete="off" />
+
+      <div class="row" style="margin-top:12px;justify-content:flex-end">
+        <button class="btn primary" id="loginBtn">Enter Admin</button>
+      </div>
+
+      <div class="smallWarn">Keep this page private. Token = full control.</div>
+    </div>
+  </div>
+
+  <!-- TOP -->
+  <div class="top">
+    <div class="topInner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 18v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4.93 4.93l2.83 2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16.24 16.24l2.83 2.83" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M2 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M18 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/>
+          </svg>
         </div>
+        <div>
+          <h1>ApkaJyotish Admin</h1>
+          <p>Mobile-first editor → Save → website updates</p>
+        </div>
+      </div>
 
+      <div class="row right">
+        <div class="chip"><span class="dot" id="connDot"></span><span id="connText">Loading…</span></div>
+        <button class="btn" id="reloadBtn">Reload</button>
+        <button class="btn danger" id="logoutBtn" title="Forget token and lock">Logout</button>
       </div>
     </div>
   </div>
 
   <div class="wrap">
 
+    <!-- BANNERS -->
     <div class="card">
       <div class="cardHead">
         <div>
-          <h2>Banners</h2>
-          <div class="hint">Hero banner URLs + headline + kicker + WhatsApp</div>
+          <div class="title">Banners</div>
+          <div class="hint">Upload + hero headline + WhatsApp number</div>
+        </div>
+        <div class="row">
+          <button class="btn" id="uploadDesktopBtn" type="button">Upload Desktop</button>
+          <button class="btn" id="uploadMobileBtn" type="button">Upload Mobile</button>
         </div>
       </div>
 
-      <div class="grid">
-        <div>
-          <label>Upload Desktop Banner</label>
-          <input type="file" id="heroDesktopFile" accept="image/*" />
-          <button class="btn" id="uploadDesktopBtn" type="button">Upload Desktop</button>
-        </div>
+      <div class="divider"></div>
 
+      <div class="grid2">
         <div>
-          <label>Upload Mobile Banner</label>
+          <label>Desktop Banner File</label>
+          <input type="file" id="heroDesktopFile" accept="image/*" />
+        </div>
+        <div>
+          <label>Mobile Banner File</label>
           <input type="file" id="heroMobileFile" accept="image/*" />
-          <button class="btn" id="uploadMobileBtn" type="button">Upload Mobile</button>
         </div>
 
         <div>
@@ -324,79 +433,93 @@
 
         <div>
           <label>Hero Headline</label>
-          <input id="heroHeadline" />
+          <input id="heroHeadline" placeholder="e.g., Get Clarity, Calm & a Plan" />
         </div>
         <div>
           <label>Hero Kicker</label>
-          <input id="heroKicker" />
+          <input id="heroKicker" placeholder="e.g., Vedic Guidance" />
         </div>
+
         <div>
           <label>Hero Sub</label>
-          <input id="heroSub" />
+          <textarea id="heroSub" placeholder="Short 1 line subtext"></textarea>
         </div>
         <div>
           <label>WhatsApp Number (with country code)</label>
-          <input id="whatsappNumber" placeholder="91XXXXXXXXXX" />
+          <input id="whatsappNumber" placeholder="91XXXXXXXXXX" inputmode="numeric" />
         </div>
       </div>
     </div>
 
+    <!-- SERVICES -->
     <div class="card">
       <div class="cardHead">
         <div>
-          <h2>Services (Pricing)</h2>
-          <div class="hint">id, name, price, badge, subtitle, bullets, cta, gst_note, active, sort</div>
+          <div class="title">Services (Pricing)</div>
+          <div class="hint">Tap a service to expand and edit</div>
         </div>
         <button class="btn" id="addService">+ Add Service</button>
       </div>
+
       <div class="divider"></div>
-      <div class="tableWrap">
-        <table id="servicesTable"></table>
-      </div>
+      <div id="servicesList"></div>
     </div>
 
+    <!-- FAQ -->
     <div class="card">
       <div class="cardHead">
         <div>
-          <h2>FAQ</h2>
+          <div class="title">FAQ</div>
           <div class="hint">Quick answers shown on site</div>
         </div>
         <button class="btn" id="addFaq">+ Add FAQ</button>
       </div>
+
       <div class="divider"></div>
-      <div class="tableWrap">
-        <table id="faqTable"></table>
+      <div id="faqList"></div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="card">
+      <div class="cardHead">
+        <div>
+          <div class="title">Testimonials</div>
+          <div class="hint">Tap a review to expand and edit</div>
+        </div>
+        <button class="btn" id="addTestimonial">+ Add Review</button>
       </div>
+
+      <div class="divider"></div>
+      <div id="testimonialsList"></div>
     </div>
 
     <div class="card">
       <div class="cardHead">
         <div>
-          <h2>Testimonials</h2>
-          <div class="hint">name, city, text, active, sort</div>
+          <div class="title">Status</div>
+          <div class="hint" id="statusText">Locked. Please login.</div>
+          <div class="dangerNote">Keep /admin.html private. Token = full control.</div>
         </div>
-        <button class="btn" id="addTestimonial">+ Add Review</button>
-      </div>
-      <div class="divider"></div>
-      <div class="tableWrap">
-        <table id="tTable"></table>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="statusRow">
-        <div>
-          <h2 style="margin:0 0 6px">Status</h2>
-          <div id="status" class="hint">Not loaded yet.</div>
-        </div>
-        <div class="hint dangerText">
-          Keep /admin.html private. Token = full control.
+        <div class="row">
+          <button class="btn" id="saveTopBtn">Save Now</button>
         </div>
       </div>
     </div>
 
   </div>
 
+  <!-- Bottom Bar -->
+  <div class="bottomBar">
+    <div class="bottomInner">
+      <div class="statusText" id="bottomStatus">Locked.</div>
+      <div class="row" style="gap:8px">
+        <button class="btn" id="bottomLoad">Reload</button>
+        <button class="btn primary" id="bottomSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
   <div class="toast" id="toast" role="status" aria-live="polite">
     <div class="toastDot"></div>
     <div>
@@ -406,17 +529,34 @@
   </div>
 
 <script>
-  let state = null;
+  // ========= Helpers =========
   const $ = (id) => document.getElementById(id);
-  const setStatus = (msg) => $("status").textContent = msg;
+
+  const LS_KEY = "apk_admin_token_v1"; // sessionStorage key
+  let state = null;
+  let token = "";
 
   function toast(title, msg, ok=true){
     $("toastTitle").textContent = title;
     $("toastMsg").textContent = msg;
-    $("toast").querySelector(".toastDot").style.background = ok ? "var(--ok)" : "var(--bad)";
+    $("toast").querySelector(".toastDot").style.background = ok ? "var(--good)" : "var(--bad)";
     $("toast").classList.add("show");
     clearTimeout(window.__t);
     window.__t = setTimeout(()=> $("toast").classList.remove("show"), 2200);
+  }
+
+  function setConn(ok, text){
+    $("connDot").className = "dot " + (ok ? "ok" : "bad");
+    $("connText").textContent = text;
+  }
+  function setLoginState(ok, text){
+    $("loginDot").className = "dot " + (ok ? "ok" : "bad");
+    $("loginState").textContent = text;
+  }
+
+  function setStatus(msg){
+    $("statusText").textContent = msg;
+    $("bottomStatus").textContent = msg;
   }
 
   function escapeHtml(str){
@@ -432,171 +572,312 @@
     if(Array.isArray(b)) return b.join("\n");
     return String(b || "");
   }
-
-  function renderTables(){
-    if(!state) return;
-
-    // SERVICES
-    const s = state.services || [];
-    $("servicesTable").innerHTML = `
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>price</th>
-          <th>badge</th>
-          <th>subtitle</th>
-          <th>bullets (one per line)</th>
-          <th>cta</th>
-          <th>gst_note</th>
-          <th>active</th>
-          <th>sort</th>
-          <th class="cellBtn"></th>
-        </tr>
-      </thead>
-      <tbody>
-        ${s.map((x,i)=>`
-          <tr>
-            <td class="cellInput"><input value="${escapeHtml(x.id||"")}" oninput="state.services[${i}].id=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.name||"")}" oninput="state.services[${i}].name=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.price??"")}" inputmode="numeric" oninput="state.services[${i}].price=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.badge||"")}" oninput="state.services[${i}].badge=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.subtitle||"")}" oninput="state.services[${i}].subtitle=this.value"></td>
-
-            <td class="cellInput">
-              <textarea rows="4" oninput="state.services[${i}].bullets=this.value">${escapeHtml(bulletsToText(x.bullets))}</textarea>
-            </td>
-
-            <td class="cellInput"><input value="${escapeHtml(x.cta||"")}" oninput="state.services[${i}].cta=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.gst_note||"")}" oninput="state.services[${i}].gst_note=this.value"></td>
-            <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.services[${i}].active=this.checked"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.services[${i}].sort=this.value"></td>
-            <td><button class="btn" type="button" onclick="state.services.splice(${i},1); renderTables()">Delete</button></td>
-          </tr>
-        `).join("")}
-      </tbody>
-    `;
-
-    // FAQ
-    const f = state.faq || [];
-    $("faqTable").innerHTML = `
-      <thead>
-        <tr>
-          <th>q</th>
-          <th>a</th>
-          <th>active</th>
-          <th>sort</th>
-          <th class="cellBtn"></th>
-        </tr>
-      </thead>
-      <tbody>
-        ${f.map((x,i)=>`
-          <tr>
-            <td class="cellInput"><input value="${escapeHtml(x.q||"")}" oninput="state.faq[${i}].q=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.a||"")}" oninput="state.faq[${i}].a=this.value"></td>
-            <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.faq[${i}].active=this.checked"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.faq[${i}].sort=this.value"></td>
-            <td><button class="btn" type="button" onclick="state.faq.splice(${i},1); renderTables()">Delete</button></td>
-          </tr>
-        `).join("")}
-      </tbody>
-    `;
-
-    // TESTIMONIALS
-    const t = state.testimonials || [];
-    $("tTable").innerHTML = `
-      <thead>
-        <tr>
-          <th>name</th>
-          <th>city</th>
-          <th>text</th>
-          <th>active</th>
-          <th>sort</th>
-          <th class="cellBtn"></th>
-        </tr>
-      </thead>
-      <tbody>
-        ${t.map((x,i)=>`
-          <tr>
-            <td class="cellInput"><input value="${escapeHtml(x.name||"")}" oninput="state.testimonials[${i}].name=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.city||"")}" oninput="state.testimonials[${i}].city=this.value"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.text||"")}" oninput="state.testimonials[${i}].text=this.value"></td>
-            <td><input class="check" type="checkbox" ${x.active? "checked":""} onchange="state.testimonials[${i}].active=this.checked"></td>
-            <td class="cellInput"><input value="${escapeHtml(x.sort??"")}" inputmode="numeric" oninput="state.testimonials[${i}].sort=this.value"></td>
-            <td><button class="btn" type="button" onclick="state.testimonials.splice(${i},1); renderTables()">Delete</button></td>
-          </tr>
-        `).join("")}
-      </tbody>
-    `;
+  function textToBullets(v){
+    const txt = String(v || "").trim();
+    if(!txt) return [];
+    return txt.split(/\r?\n/g).map(x=>x.trim()).filter(Boolean);
   }
 
+  function ensureState(){
+    state = state || {};
+    state.banners = state.banners || {};
+    state.services = Array.isArray(state.services) ? state.services : [];
+    state.faq = Array.isArray(state.faq) ? state.faq : [];
+    state.testimonials = Array.isArray(state.testimonials) ? state.testimonials : [];
+  }
+
+  // ========= Login / Lock =========
+  function lock(){
+    token = "";
+    sessionStorage.removeItem(LS_KEY);
+    $("overlay").classList.add("show");
+    setStatus("Locked. Please login.");
+    setConn(false, "Locked");
+    setLoginState(false, "Not connected");
+  }
+
+  async function unlockWithToken(t){
+    token = (t || "").trim();
+    if(!token){
+      toast("Token missing", "Paste ADMIN_TOKEN first.", false);
+      return;
+    }
+    sessionStorage.setItem(LS_KEY, token);
+    $("overlay").classList.remove("show");
+    setLoginState(true, "Token set");
+    await load(); // load immediately
+  }
+
+  // ========= Renderers =========
+  function renderBanners(){
+    ensureState();
+    $("heroBannerDesktopUrl").value = state.banners.heroBannerDesktopUrl || "";
+    $("heroBannerMobileUrl").value  = state.banners.heroBannerMobileUrl  || "";
+    $("heroHeadline").value = state.banners.heroHeadline || "";
+    $("heroKicker").value   = state.banners.heroKicker || "";
+    $("heroSub").value      = state.banners.heroSub || "";
+    $("whatsappNumber").value = state.banners.whatsappNumber || "";
+  }
+
+  function renderServices(){
+    ensureState();
+    const s = state.services;
+
+    if(!s.length){
+      $("servicesList").innerHTML = `<div class="hint">No services yet. Tap “Add Service”.</div>`;
+      return;
+    }
+
+    $("servicesList").innerHTML = s.map((x,i)=>{
+      const label = `${escapeHtml(x.name || "Service")} • ₹${escapeHtml(x.price ?? "")}`;
+      const active = !!x.active;
+      return `
+        <details ${i===0 ? "open" : ""}>
+          <summary>
+            <span>${label}</span>
+            <span class="sumRight">
+              <span class="badge">${active ? "Active" : "Hidden"}</span>
+              <span class="chev"></span>
+            </span>
+          </summary>
+
+          <div class="mini">
+            <div>
+              <label>id</label>
+              <input value="${escapeHtml(x.id||"")}" oninput="state.services[${i}].id=this.value">
+            </div>
+            <div>
+              <label>sort</label>
+              <input inputmode="numeric" value="${escapeHtml(x.sort??"")}" oninput="state.services[${i}].sort=this.value">
+            </div>
+            <div>
+              <label>price</label>
+              <input inputmode="numeric" value="${escapeHtml(x.price??"")}" oninput="state.services[${i}].price=this.value">
+            </div>
+          </div>
+
+          <label>name</label>
+          <input value="${escapeHtml(x.name||"")}" oninput="state.services[${i}].name=this.value">
+
+          <label>badge</label>
+          <input value="${escapeHtml(x.badge||"")}" oninput="state.services[${i}].badge=this.value">
+
+          <label>subtitle</label>
+          <input value="${escapeHtml(x.subtitle||"")}" oninput="state.services[${i}].subtitle=this.value">
+
+          <label>bullets (one per line)</label>
+          <textarea oninput="state.services[${i}].bullets=this.value">${escapeHtml(bulletsToText(x.bullets))}</textarea>
+
+          <div class="grid2">
+            <div>
+              <label>cta</label>
+              <input value="${escapeHtml(x.cta||"")}" oninput="state.services[${i}].cta=this.value">
+            </div>
+            <div>
+              <label>gst_note</label>
+              <input value="${escapeHtml(x.gst_note||"")}" oninput="state.services[${i}].gst_note=this.value">
+            </div>
+          </div>
+
+          <div class="toggle">
+            <input type="checkbox" ${x.active ? "checked":""} onchange="state.services[${i}].active=this.checked">
+            <span>Active (show on website)</span>
+          </div>
+
+          <div class="row" style="justify-content:flex-end;margin-top:12px">
+            <button class="btn danger" type="button" onclick="deleteService(${i})">Delete</button>
+          </div>
+        </details>
+      `;
+    }).join("");
+  }
+
+  function renderFaq(){
+    ensureState();
+    const f = state.faq;
+
+    if(!f.length){
+      $("faqList").innerHTML = `<div class="hint">No FAQ yet. Tap “Add FAQ”.</div>`;
+      return;
+    }
+
+    $("faqList").innerHTML = f.map((x,i)=>{
+      const label = escapeHtml(x.q || "Question");
+      const active = !!x.active;
+      return `
+        <details>
+          <summary>
+            <span>${label}</span>
+            <span class="sumRight">
+              <span class="badge">${active ? "Active" : "Hidden"}</span>
+              <span class="chev"></span>
+            </span>
+          </summary>
+
+          <label>q</label>
+          <input value="${escapeHtml(x.q||"")}" oninput="state.faq[${i}].q=this.value">
+
+          <label>a</label>
+          <textarea oninput="state.faq[${i}].a=this.value">${escapeHtml(x.a||"")}</textarea>
+
+          <div class="mini">
+            <div>
+              <label>sort</label>
+              <input inputmode="numeric" value="${escapeHtml(x.sort??"")}" oninput="state.faq[${i}].sort=this.value">
+            </div>
+            <div class="toggle" style="margin-top:22px">
+              <input type="checkbox" ${x.active ? "checked":""} onchange="state.faq[${i}].active=this.checked">
+              <span>Active</span>
+            </div>
+          </div>
+
+          <div class="row" style="justify-content:flex-end;margin-top:12px">
+            <button class="btn danger" type="button" onclick="deleteFaq(${i})">Delete</button>
+          </div>
+        </details>
+      `;
+    }).join("");
+  }
+
+  function renderTestimonials(){
+    ensureState();
+    const t = state.testimonials;
+
+    if(!t.length){
+      $("testimonialsList").innerHTML = `<div class="hint">No testimonials yet. Tap “Add Review”.</div>`;
+      return;
+    }
+
+    $("testimonialsList").innerHTML = t.map((x,i)=>{
+      const label = `${escapeHtml(x.name||"Name")} • ${escapeHtml(x.city||"City")}`;
+      const active = !!x.active;
+      return `
+        <details>
+          <summary>
+            <span>${label}</span>
+            <span class="sumRight">
+              <span class="badge">${active ? "Active" : "Hidden"}</span>
+              <span class="chev"></span>
+            </span>
+          </summary>
+
+          <div class="grid2">
+            <div>
+              <label>name</label>
+              <input value="${escapeHtml(x.name||"")}" oninput="state.testimonials[${i}].name=this.value">
+            </div>
+            <div>
+              <label>city</label>
+              <input value="${escapeHtml(x.city||"")}" oninput="state.testimonials[${i}].city=this.value">
+            </div>
+          </div>
+
+          <label>text</label>
+          <textarea oninput="state.testimonials[${i}].text=this.value">${escapeHtml(x.text||"")}</textarea>
+
+          <div class="mini">
+            <div>
+              <label>sort</label>
+              <input inputmode="numeric" value="${escapeHtml(x.sort??"")}" oninput="state.testimonials[${i}].sort=this.value">
+            </div>
+            <div class="toggle" style="margin-top:22px">
+              <input type="checkbox" ${x.active ? "checked":""} onchange="state.testimonials[${i}].active=this.checked">
+              <span>Active</span>
+            </div>
+          </div>
+
+          <div class="row" style="justify-content:flex-end;margin-top:12px">
+            <button class="btn danger" type="button" onclick="deleteTestimonial(${i})">Delete</button>
+          </div>
+        </details>
+      `;
+    }).join("");
+  }
+
+  function renderAll(){
+    renderBanners();
+    renderServices();
+    renderFaq();
+    renderTestimonials();
+  }
+
+  // delete functions exposed for inline onclick
+  window.deleteService = (i)=>{ state.services.splice(i,1); renderServices(); toast("Deleted","Service removed."); };
+  window.deleteFaq = (i)=>{ state.faq.splice(i,1); renderFaq(); toast("Deleted","FAQ removed."); };
+  window.deleteTestimonial = (i)=>{ state.testimonials.splice(i,1); renderTestimonials(); toast("Deleted","Testimonial removed."); };
+
+  // ========= API =========
   async function load(){
-    setStatus("Loading from /api/config ...");
+    if(!token){
+      setStatus("Locked. Please login.");
+      setConn(false, "Locked");
+      return;
+    }
+
+    setStatus("Loading from /api/config …");
+    setConn(false, "Connecting…");
+
     try{
       const res = await fetch("/api/config?nocache=1", { cache:"no-store" });
-      const cfg = await res.json();
+      const cfg = await res.json().catch(()=> ({}));
       if(!res.ok) throw new Error(cfg?.error || "Load failed");
 
       state = cfg || {};
-      state.banners = state.banners || {};
-      state.services = Array.isArray(state.services) ? state.services : [];
-      state.faq = Array.isArray(state.faq) ? state.faq : [];
-      state.testimonials = Array.isArray(state.testimonials) ? state.testimonials : [];
+      ensureState();
 
-      $("heroBannerDesktopUrl").value = state.banners.heroBannerDesktopUrl || "";
-      $("heroBannerMobileUrl").value  = state.banners.heroBannerMobileUrl  || "";
-      $("heroHeadline").value = state.banners.heroHeadline || "";
-      $("heroSub").value      = state.banners.heroSub || "";
-      $("heroKicker").value   = state.banners.heroKicker || "";
-      $("whatsappNumber").value = state.banners.whatsappNumber || "";
+      // normalize bullets: keep as textarea-friendly string while editing
+      state.services = state.services.map(s=>{
+        if(Array.isArray(s.bullets)) return { ...s, bullets: s.bullets.join("\n") };
+        return s;
+      });
 
-      renderTables();
-      setStatus("Loaded ✅");
+      renderAll();
+      setConn(true, "Loaded");
+      setStatus("Loaded ✅ Make changes and tap Save.");
       toast("Loaded", "Latest data loaded.");
     }catch(e){
+      setConn(false, "Load failed");
       setStatus("Load failed: " + e.message);
       toast("Load failed", e.message, false);
     }
   }
 
-  function setSaveState(st){
-    const btn = $("saveBtn");
-    btn.dataset.state = st || "";
-    $("sp").style.display = (st==="saving") ? "inline-block" : "none";
-    $("tk").style.display = (st==="saved") ? "inline-block" : "none";
-    $("saveText").textContent = (st==="saving") ? "Saving..." : "Save";
-    if(st==="saved"){
-      $("saveText").textContent = "Saved";
-      setTimeout(()=> {
-        btn.dataset.state="";
-        $("tk").style.display="none";
-        $("saveText").textContent="Save";
-      }, 1200);
-    }
-  }
+  function readFormIntoState(){
+    ensureState();
 
-  async function save(){
-    if(!state) return;
-
-    const token = $("token").value.trim();
-    if(!token){
-      setStatus("Paste ADMIN_TOKEN first.");
-      toast("Token missing", "Paste ADMIN_TOKEN first.", false);
-      return;
-    }
-
-    state.banners = state.banners || {};
     state.banners.heroBannerDesktopUrl = $("heroBannerDesktopUrl").value.trim();
     state.banners.heroBannerMobileUrl  = $("heroBannerMobileUrl").value.trim();
     state.banners.heroHeadline = $("heroHeadline").value.trim();
-    state.banners.heroSub      = $("heroSub").value.trim();
     state.banners.heroKicker   = $("heroKicker").value.trim();
+    state.banners.heroSub      = $("heroSub").value.trim();
     state.banners.whatsappNumber = $("whatsappNumber").value.trim();
 
-    setSaveState("saving");
-    setStatus("Saving...");
+    // Convert bullets text => array (so site stays clean)
+    state.services = (state.services || []).map(s=>{
+      const bullets = Array.isArray(s.bullets) ? s.bullets : textToBullets(s.bullets);
+      return { ...s, bullets };
+    });
+  }
+
+  async function save(){
+    if(!token){
+      toast("Locked", "Please login first.", false);
+      setStatus("Locked. Please login.");
+      return;
+    }
+    if(!state){
+      toast("Nothing loaded", "Tap Reload first.", false);
+      return;
+    }
+
+    setStatus("Saving…");
+    $("bottomSave").textContent = "Saving…";
+    $("bottomSave").disabled = true;
+    $("saveTopBtn").disabled = true;
 
     try{
+      readFormIntoState();
+
       const res = await fetch("/api/admin/save", {
         method:"POST",
         headers:{
@@ -609,47 +890,44 @@
       const out = await res.json().catch(()=> ({}));
       if(!res.ok) throw new Error(out?.error || ("HTTP " + res.status));
 
-      setSaveState("saved");
-      setStatus("Saved ✅ Website updated. Refresh main site.");
+      // After save, reload to ensure backend-normalized data comes back
+      await load();
+      setStatus("Saved ✅ Website updated. Refresh home page.");
       toast("Saved ✅", "Website updated. Refresh main site.");
     }catch(e){
-      setSaveState("");
       setStatus("Save failed: " + e.message);
       toast("Save failed", e.message, false);
+    }finally{
+      $("bottomSave").textContent = "Save";
+      $("bottomSave").disabled = false;
+      $("saveTopBtn").disabled = false;
     }
   }
 
   async function uploadBanner(variant){
-    const token = $("token").value.trim();
     if(!token){
-      setStatus("Paste ADMIN_TOKEN first.");
-      toast("Token missing", "Paste ADMIN_TOKEN first.", false);
+      toast("Locked", "Please login first.", false);
       return;
     }
-
     if(!state){
       await load();
-      if(!state){
-        toast("Load required", "Could not load config. Try again.", false);
-        return;
-      }
+      if(!state) return;
     }
 
     const fileInput = (variant === "desktop") ? $("heroDesktopFile") : $("heroMobileFile");
     const file = fileInput?.files?.[0];
-
     if(!file){
       toast("No file selected", "Choose an image first.", false);
       return;
     }
 
-    const form = new FormData();
-    form.append("variant", variant);
-    form.append("file", file);
-
-    setStatus(`Uploading ${variant} banner...`);
+    setStatus(`Uploading ${variant} banner…`);
 
     try{
+      const form = new FormData();
+      form.append("variant", variant);
+      form.append("file", file);
+
       const res = await fetch("/api/admin/upload-banner", {
         method: "POST",
         headers: { "x-admin-token": token },
@@ -662,55 +940,74 @@
       if(variant === "desktop") $("heroBannerDesktopUrl").value = out.url || "";
       if(variant === "mobile")  $("heroBannerMobileUrl").value  = out.url || "";
 
-      setStatus(`Uploaded ✅ (${variant}) — saving config...`);
+      toast("Uploaded", "Banner uploaded. Saving…");
       await save();
-
-      toast("Uploaded + Saved ✅", "Banner uploaded and applied on website.");
     }catch(e){
       setStatus("Upload failed: " + e.message);
       toast("Upload failed", e.message, false);
     }
   }
 
-  $("loadBtn").addEventListener("click", load);
-  $("saveBtn").addEventListener("click", save);
+  // ========= Events =========
+  $("loginBtn").addEventListener("click", ()=> unlockWithToken($("tokenInput").value));
+  $("logoutBtn").addEventListener("click", lock);
+
+  $("reloadBtn").addEventListener("click", load);
+  $("bottomLoad").addEventListener("click", load);
+
+  $("saveTopBtn").addEventListener("click", save);
+  $("bottomSave").addEventListener("click", save);
 
   $("uploadDesktopBtn").addEventListener("click", ()=> uploadBanner("desktop"));
   $("uploadMobileBtn").addEventListener("click", ()=> uploadBanner("mobile"));
 
   $("addService").addEventListener("click", ()=>{
-    state.services = state.services || [];
+    ensureState();
     state.services.push({
-      id:"new",
-      name:"New Service",
-      price:0,
-      badge:"",
-      subtitle:"",
-      bullets:"",
-      cta:"Start now",
-      gst_note:"incl. GST",
-      active:true,
-      sort:999
+      id: String(Date.now()),
+      name: "New Service",
+      price: 0,
+      badge: "",
+      subtitle: "",
+      bullets: "",
+      cta: "Start on WhatsApp",
+      gst_note: "",
+      active: true,
+      sort: 999
     });
-    renderTables();
-    toast("Added", "New service row added.");
+    renderServices();
+    toast("Added", "New service created.");
   });
 
   $("addFaq").addEventListener("click", ()=>{
-    state.faq = state.faq || [];
-    state.faq.push({ q:"Question?", a:"Answer.", active:true, sort:999 });
-    renderTables();
-    toast("Added", "New FAQ row added.");
+    ensureState();
+    state.faq.push({ q: "Question?", a: "Answer.", active: true, sort: 999 });
+    renderFaq();
+    toast("Added", "New FAQ created.");
   });
 
   $("addTestimonial").addEventListener("click", ()=>{
-    state.testimonials = state.testimonials || [];
-    state.testimonials.push({ name:"Name", city:"City", text:"Review text", active:true, sort:999 });
-    renderTables();
-    toast("Added", "New testimonial row added.");
+    ensureState();
+    state.testimonials.push({ name: "Name", city: "City", text: "Review text", active: true, sort: 999 });
+    renderTestimonials();
+    toast("Added", "New testimonial created.");
   });
 
-  load();
+  // ========= Boot =========
+  (function init(){
+    const t = sessionStorage.getItem(LS_KEY) || "";
+    if(t){
+      $("overlay").classList.remove("show");
+      setLoginState(true, "Token set");
+      token = t;
+      load();
+    }else{
+      $("overlay").classList.add("show");
+      setLoginState(false, "Not connected");
+      setConn(false, "Locked");
+      setStatus("Locked. Please login.");
+    }
+  })();
 </script>
 </body>
 </html>
