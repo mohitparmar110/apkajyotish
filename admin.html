@@ -736,12 +736,31 @@
 <script>
   const $ = (id) => document.getElementById(id);
 
-  // ✅ FIX: token persists after login (until Logout) + ALWAYS read from storage when saving/uploading
-  const TOKEN_KEY = "apk_admin_token_dashboard_v2";
+  /**
+   * ✅ Token storage FIX:
+   * Support both keys so old + new admin pages never fight each other.
+   */
+  const TOKEN_KEYS = [
+    "ADMIN_TOKEN",                 // preferred
+    "apk_admin_token_dashboard_v2", // legacy
+  ];
 
-  function getToken(){ return (localStorage.getItem(TOKEN_KEY) || "").trim(); }
-  function setToken(t){ localStorage.setItem(TOKEN_KEY, String(t||"").trim()); }
-  function clearToken(){ localStorage.removeItem(TOKEN_KEY); }
+  function getToken(){
+    for (const k of TOKEN_KEYS){
+      const v = (localStorage.getItem(k) || "").trim();
+      if (v) return v;
+    }
+    return "";
+  }
+  function setToken(t){
+    const v = String(t || "").trim();
+    for (const k of TOKEN_KEYS) localStorage.setItem(k, v);
+  }
+  function clearToken(){
+    for (const k of TOKEN_KEYS) localStorage.removeItem(k);
+  }
+
+  // optional: show/hide password text? keep simple.
 
   let state = null;
 
@@ -1058,7 +1077,7 @@
   }
 
   async function save(){
-    const t = getToken(); // ✅ ALWAYS read latest token
+    const t = getToken();
     if(!t){
       toast("Unauthorized","Please login again.",false);
       $("overlay").classList.add("show");
@@ -1088,7 +1107,6 @@
       setStatus("Saved ✅ Website updated. Refresh main site.");
       toast("Saved ✅","Website updated. Refresh main site.");
     }catch(e){
-      // if token is wrong, you’ll get Unauthorized here:
       if(String(e.message || "").toLowerCase().includes("unauthorized")){
         toast("Save failed","Unauthorized — wrong token. Login again.",false);
         $("overlay").classList.add("show");
@@ -1101,7 +1119,7 @@
   }
 
   async function uploadBanner(variant){
-    const t = getToken(); // ✅ ALWAYS read latest token
+    const t = getToken();
     if(!t){
       toast("Unauthorized","Please login again.",false);
       $("overlay").classList.add("show");
@@ -1130,8 +1148,12 @@
       const out = await res.json().catch(()=> ({}));
       if(!res.ok) throw new Error(out?.error || ("HTTP " + res.status));
 
-      if(variant === "desktop") $("heroBannerDesktopUrl").value = out.url || "";
-      if(variant === "mobile")  $("heroBannerMobileUrl").value  = out.url || "";
+      // ✅ cache bust so you see new image immediately
+      const v = Date.now();
+      const url = (out.url || "") ? `${out.url}?v=${v}` : "";
+
+      if(variant === "desktop") $("heroBannerDesktopUrl").value = url;
+      if(variant === "mobile")  $("heroBannerMobileUrl").value  = url;
 
       toast("Uploaded", "Saving…");
       await save();
@@ -1317,4 +1339,3 @@
 </script>
 </body>
 </html>
-
