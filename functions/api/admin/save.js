@@ -45,6 +45,7 @@ export async function onRequestOptions() {
 
 export async function onRequestPost({ request, env }) {
   try {
+    // ✅ Auth (unchanged, correct)
     const token = request.headers.get("x-admin-token");
     if (!token || token !== env.ADMIN_TOKEN) {
       return json({ error: "Unauthorized" }, 401);
@@ -53,7 +54,7 @@ export async function onRequestPost({ request, env }) {
     const body = await request.json();
     if (!body || typeof body !== "object") return json({ error: "Invalid JSON" }, 400);
 
-    // Read existing config so we can preserve whatsappNumber
+    // Read existing config so we can preserve values when fields are omitted
     let existing = {};
     try {
       const raw = await env.APK_KV.get("config");
@@ -68,6 +69,9 @@ export async function onRequestPost({ request, env }) {
 
     const legacyHero = body.hero || body.banners?.hero || {};
 
+    // ✅ FIX #1: WhatsApp precedence so ADMIN PANEL updates actually save
+    // before: existing first (blocked updates)
+    // now: body first (admin wins), then legacy, then existing
     const normalizedBanners = {
       heroBannerDesktopUrl: asString(
         body.banners.heroBannerDesktopUrl ||
@@ -103,11 +107,11 @@ export async function onRequestPost({ request, env }) {
         ""
       ),
 
-      // preserve whatsappNumber
+      // ✅ FIXED ORDER (admin can change it now)
       whatsappNumber: asString(
-        existing?.banners?.whatsappNumber ||
         body.banners.whatsappNumber ||
         legacyHero.whatsapp ||
+        existing?.banners?.whatsappNumber ||
         ""
       ),
     };
@@ -162,7 +166,7 @@ export async function onRequestPost({ request, env }) {
       {
         ok: true,
         savedAt: new Date().toISOString(),
-        preservedWhatsappNumber: finalConfig.banners.whatsappNumber,
+        whatsappNumber: finalConfig.banners.whatsappNumber, // ✅ message reflects actual saved value
       },
       200
     );
@@ -170,4 +174,3 @@ export async function onRequestPost({ request, env }) {
     return json({ error: err?.message || "Save failed" }, 500);
   }
 }
-
