@@ -1,7 +1,5 @@
 // functions/api/admin/save.js
 
-_toggleHeaders: undefined;
-
 function json(res, status = 200) {
   return new Response(JSON.stringify(res), {
     status,
@@ -23,7 +21,12 @@ function asNumber(v, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 function asBool(v) {
-  return Boolean(v);
+  // ✅ FIX: avoid Boolean("false") === true
+  if (v === true || v === false) return v;
+  const s = String(v ?? "").trim().toLowerCase();
+  if (["true", "1", "yes", "y", "on"].includes(s)) return true;
+  if (["false", "0", "no", "n", "off", ""].includes(s)) return false;
+  return false;
 }
 
 function normalizeBullets(v){
@@ -32,7 +35,6 @@ function normalizeBullets(v){
   }
   const txt = asString(v);
   if (!txt) return [];
-  // allow newline OR comma
   return txt
     .split(/\r?\n|,/g)
     .map(s => s.trim())
@@ -45,7 +47,6 @@ export async function onRequestOptions() {
 
 export async function onRequestPost({ request, env }) {
   try {
-    // ✅ Auth (unchanged, correct)
     const token = request.headers.get("x-admin-token");
     if (!token || token !== env.ADMIN_TOKEN) {
       return json({ error: "Unauthorized" }, 401);
@@ -54,7 +55,7 @@ export async function onRequestPost({ request, env }) {
     const body = await request.json();
     if (!body || typeof body !== "object") return json({ error: "Invalid JSON" }, 400);
 
-    // Read existing config so we can preserve values when fields are omitted
+    // Read existing config to preserve values when fields are omitted
     let existing = {};
     try {
       const raw = await env.APK_KV.get("config");
@@ -69,9 +70,7 @@ export async function onRequestPost({ request, env }) {
 
     const legacyHero = body.hero || body.banners?.hero || {};
 
-    // ✅ FIX #1: WhatsApp precedence so ADMIN PANEL updates actually save
-    // before: existing first (blocked updates)
-    // now: body first (admin wins), then legacy, then existing
+    // ✅ WhatsApp precedence fix preserved
     const normalizedBanners = {
       heroBannerDesktopUrl: asString(
         body.banners.heroBannerDesktopUrl ||
@@ -106,8 +105,6 @@ export async function onRequestPost({ request, env }) {
         existing?.banners?.heroKicker ||
         ""
       ),
-
-      // ✅ FIXED ORDER (admin can change it now)
       whatsappNumber: asString(
         body.banners.whatsappNumber ||
         legacyHero.whatsapp ||
@@ -166,7 +163,7 @@ export async function onRequestPost({ request, env }) {
       {
         ok: true,
         savedAt: new Date().toISOString(),
-        whatsappNumber: finalConfig.banners.whatsappNumber, // ✅ message reflects actual saved value
+        whatsappNumber: finalConfig.banners.whatsappNumber,
       },
       200
     );
