@@ -1193,7 +1193,7 @@
   // ---------- Login / Logout ----------
   function lock(){
     token = "";
-    sessionStorage.removeItem(SS_KEY);
+    localStorage.removeItem(SS_KEY);
     $("overlay").classList.add("show");
     setConn(false,"Locked");
     setStatus("Locked. Paste token to login.");
@@ -1202,7 +1202,7 @@
   async function unlockWithToken(t){
     token = (t || "").trim();
     if(!token){ toast("Token missing","Paste ADMIN_TOKEN.",false); return; }
-    sessionStorage.setItem(SS_KEY, token);
+    localStorage.setItem(SS_KEY, token);
     $("overlay").classList.remove("show");
     await load();
   }
@@ -1311,7 +1311,7 @@
   // ---------- Boot ----------
   (function init(){
     showTab("dashboard");
-    const t = sessionStorage.getItem(SS_KEY) || "";
+    const t = localStorage.getItem(SS_KEY) || "";
     if(t){
       token = t;
       $("overlay").classList.remove("show");
