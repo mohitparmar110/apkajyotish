@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>ApkaJyotish Admin</title>
+
   <style>
     :root{
       --bg:#f3f5fb;
@@ -56,11 +57,8 @@
       grid-template-columns: 280px 1fr;
       gap:14px;
     }
-
     @media (max-width: 980px){
-      .shell{
-        grid-template-columns: 1fr;
-      }
+      .shell{grid-template-columns: 1fr; padding:12px 12px 18px;}
     }
 
     /* Sidebar */
@@ -97,11 +95,7 @@
     .brand h1{margin:0;font-size:16px;font-weight:900;line-height:1.05;color: rgba(255,255,255,.95)}
     .brand p{margin:4px 0 0;font-size:12px;color: rgba(255,255,255,.80);font-weight:700}
 
-    .nav{
-      margin-top:12px;
-      display:grid;
-      gap:8px;
-    }
+    .nav{margin-top:12px;display:grid;gap:8px;}
     .nav button{
       width:100%;
       display:flex;align-items:center;gap:10px;
@@ -183,6 +177,9 @@
       background: rgba(255,255,255,.66);
       border-bottom: 1px solid var(--line2);
       backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
     .hamburger{
       width:42px;height:42px;border-radius:14px;
@@ -204,7 +201,7 @@
       display:flex;align-items:center;gap:10px;
       padding:0 12px;
       box-shadow: 0 8px 18px rgba(15,23,42,.06);
-      min-width: 220px;
+      min-width: 200px;
     }
     .search input{
       border:0;outline:none;background:transparent;
@@ -218,6 +215,9 @@
       background: rgba(15,23,42,.02);
       font-weight:800;
       white-space:nowrap;
+    }
+    @media (max-width:520px){
+      .search .kbd{display:none}
     }
 
     .topActions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -234,9 +234,7 @@
     .dot.bad{background:var(--red)}
 
     /* Content */
-    .content{
-      padding:14px;
-    }
+    .content{padding:14px}
 
     /* Stat cards row */
     .stats{
@@ -260,9 +258,7 @@
       padding:12px;
       display:flex;align-items:center;justify-content:space-between;gap:12px;
     }
-    .stat .l{
-      display:flex;flex-direction:column;gap:6px;
-    }
+    .stat .l{display:flex;flex-direction:column;gap:6px;}
     .stat .k{font-size:12px;color:var(--muted);font-weight:800}
     .stat .v{font-size:18px;font-weight:1000}
     .stat .b{
@@ -328,10 +324,9 @@
       border-color: rgba(109,91,208,.40);
       box-shadow: 0 0 0 4px rgba(109,91,208,.14);
     }
-
     input[type="file"]{height:auto;padding:10px}
 
-    /* Accordion list like modern dashboard */
+    /* Accordion list */
     details{
       border:1px solid var(--line2);
       border-radius: 16px;
@@ -372,9 +367,7 @@
       gap:10px;
       margin-top:10px;
     }
-    @media (min-width:900px){
-      .mini{grid-template-columns: 1fr 1fr 1fr}
-    }
+    @media (min-width:900px){ .mini{grid-template-columns: 1fr 1fr 1fr} }
 
     .toggle{
       display:flex;align-items:center;gap:10px;margin-top:12px;
@@ -383,9 +376,7 @@
     .toggle input{width:18px;height:18px;accent-color: var(--violet)}
 
     /* Mobile sidebar drawer */
-    .drawer{
-      display:none;
-    }
+    .drawer{display:none;}
     @media (max-width:980px){
       .drawer{
         display:block;
@@ -471,13 +462,13 @@
   <div class="overlay" id="overlay">
     <div class="login">
       <h3>Admin Login</h3>
-      <p>Paste your <b>ADMIN_TOKEN</b>. Stored only in this tab (session).</p>
+      <p>Paste your <b>ADMIN_TOKEN</b>. It will stay saved on this device until you press <b>Logout</b>.</p>
 
       <label>ADMIN_TOKEN</label>
       <input id="tokenInput" placeholder="Paste ADMIN_TOKEN here" autocomplete="off" />
 
       <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px;flex-wrap:wrap">
-        <button class="btn" id="loginLoadBtn">Load</button>
+        <button class="btn" id="loginLoadBtn">Enter & Load</button>
         <button class="btn primary" id="loginBtn">Enter Admin</button>
       </div>
 
@@ -487,9 +478,7 @@
 
   <!-- Drawer for mobile -->
   <div class="drawer" id="drawer">
-    <div class="panel side" style="display:block">
-      <!-- cloned sidebar will be injected -->
-    </div>
+    <div class="panel side" style="display:block"></div>
   </div>
 
   <div class="shell">
@@ -514,29 +503,19 @@
 
       <div class="nav">
         <button class="navBtn" data-tab="dashboard" data-active="true">
-          <span class="ico">🏠</span>
-          Dashboard
-          <small>Home</small>
+          <span class="ico">🏠</span> Dashboard <small>Home</small>
         </button>
         <button class="navBtn" data-tab="banners" data-active="false">
-          <span class="ico">🖼️</span>
-          Banners
-          <small>Hero</small>
+          <span class="ico">🖼️</span> Banners <small>Hero</small>
         </button>
         <button class="navBtn" data-tab="services" data-active="false">
-          <span class="ico">💎</span>
-          Services
-          <small>Pricing</small>
+          <span class="ico">💎</span> Services <small>Pricing</small>
         </button>
         <button class="navBtn" data-tab="faq" data-active="false">
-          <span class="ico">❓</span>
-          FAQ
-          <small>Q/A</small>
+          <span class="ico">❓</span> FAQ <small>Q/A</small>
         </button>
         <button class="navBtn" data-tab="testimonials" data-active="false">
-          <span class="ico">⭐</span>
-          Testimonials
-          <small>Reviews</small>
+          <span class="ico">⭐</span> Testimonials <small>Reviews</small>
         </button>
       </div>
 
@@ -570,31 +549,19 @@
         <!-- Stats -->
         <div class="stats">
           <div class="stat">
-            <div class="l">
-              <div class="k">Services</div>
-              <div class="v" id="stServices">0</div>
-            </div>
+            <div class="l"><div class="k">Services</div><div class="v" id="stServices">0</div></div>
             <div class="b violet">💎</div>
           </div>
           <div class="stat">
-            <div class="l">
-              <div class="k">Active Services</div>
-              <div class="v" id="stActive">0</div>
-            </div>
+            <div class="l"><div class="k">Active Services</div><div class="v" id="stActive">0</div></div>
             <div class="b green">✅</div>
           </div>
           <div class="stat">
-            <div class="l">
-              <div class="k">FAQ</div>
-              <div class="v" id="stFaq">0</div>
-            </div>
+            <div class="l"><div class="k">FAQ</div><div class="v" id="stFaq">0</div></div>
             <div class="b blue">❓</div>
           </div>
           <div class="stat">
-            <div class="l">
-              <div class="k">Testimonials</div>
-              <div class="v" id="stTest">0</div>
-            </div>
+            <div class="l"><div class="k">Testimonials</div><div class="v" id="stTest">0</div></div>
             <div class="b amber">⭐</div>
           </div>
         </div>
@@ -769,8 +736,13 @@
 <script>
   const $ = (id) => document.getElementById(id);
 
-  const SS_KEY = "apk_admin_token_dashboard_v1";
-  let token = "";
+  // ✅ FIX: token persists after login (until Logout) + ALWAYS read from storage when saving/uploading
+  const TOKEN_KEY = "apk_admin_token_dashboard_v2";
+
+  function getToken(){ return (localStorage.getItem(TOKEN_KEY) || "").trim(); }
+  function setToken(t){ localStorage.setItem(TOKEN_KEY, String(t||"").trim()); }
+  function clearToken(){ localStorage.removeItem(TOKEN_KEY); }
+
   let state = null;
 
   // ---------- UI helpers ----------
@@ -789,9 +761,7 @@
     $("connText").textContent = text;
   }
 
-  function setStatus(msg){
-    $("statusText").textContent = msg;
-  }
+  function setStatus(msg){ $("statusText").textContent = msg; }
 
   function escapeHtml(str){
     return String(str ?? "")
@@ -833,7 +803,6 @@
   document.querySelectorAll(".navBtn").forEach(b=>{
     b.addEventListener("click", ()=>{
       showTab(b.dataset.tab);
-      // close drawer if open
       $("drawer").classList.remove("show");
     });
   });
@@ -858,13 +827,11 @@
     ensureState();
     const b = state.banners;
 
-    // dashboard quick edit fields
     $("heroHeadline").value = b.heroHeadline || "";
     $("heroKicker").value = b.heroKicker || "";
     $("heroSub").value = b.heroSub || "";
     $("whatsappNumber").value = b.whatsappNumber || "";
 
-    // banners section fields
     $("heroBannerDesktopUrl").value = b.heroBannerDesktopUrl || "";
     $("heroBannerMobileUrl").value = b.heroBannerMobileUrl || "";
     $("heroHeadline2").value = b.heroHeadline || "";
@@ -1034,7 +1001,6 @@
   // ---------- Read form into state ----------
   function readHeroFromInputs(){
     ensureState();
-    // prefer banners page inputs when available (keep them in sync)
     const headline = ($("heroHeadline2").value || $("heroHeadline").value).trim();
     const kicker   = ($("heroKicker2").value || $("heroKicker").value).trim();
     const sub      = ($("heroSub2").value || $("heroSub").value).trim();
@@ -1050,7 +1016,6 @@
   }
 
   function normalizeBeforeSave(){
-    // convert service bullets to array
     state.services = (state.services || []).map(s=>{
       const bullets = Array.isArray(s.bullets) ? s.bullets : textToBullets(s.bullets);
       return { ...s, bullets };
@@ -1059,7 +1024,8 @@
 
   // ---------- API ----------
   async function load(){
-    if(!token){
+    const t = getToken();
+    if(!t){
       $("overlay").classList.add("show");
       setConn(false,"Locked");
       setStatus("Locked. Paste token to login.");
@@ -1075,7 +1041,6 @@
       state = cfg || {};
       ensureState();
 
-      // keep bullets as textarea text while editing
       state.services = state.services.map(s=>{
         if(Array.isArray(s.bullets)) return { ...s, bullets: s.bullets.join("\\n") };
         return s;
@@ -1093,7 +1058,13 @@
   }
 
   async function save(){
-    if(!token){ toast("Locked","Please login first.",false); return; }
+    const t = getToken(); // ✅ ALWAYS read latest token
+    if(!t){
+      toast("Unauthorized","Please login again.",false);
+      $("overlay").classList.add("show");
+      setConn(false,"Locked");
+      return;
+    }
     if(!state){ toast("Nothing loaded","Press Load first.",false); return; }
 
     setStatus("Saving…");
@@ -1105,7 +1076,7 @@
         method:"POST",
         headers:{
           "content-type":"application/json",
-          "x-admin-token": token
+          "x-admin-token": t
         },
         body: JSON.stringify(state)
       });
@@ -1117,13 +1088,26 @@
       setStatus("Saved ✅ Website updated. Refresh main site.");
       toast("Saved ✅","Website updated. Refresh main site.");
     }catch(e){
+      // if token is wrong, you’ll get Unauthorized here:
+      if(String(e.message || "").toLowerCase().includes("unauthorized")){
+        toast("Save failed","Unauthorized — wrong token. Login again.",false);
+        $("overlay").classList.add("show");
+        setConn(false,"Locked");
+        return;
+      }
       setStatus("Save failed: " + e.message);
       toast("Save failed", e.message, false);
     }
   }
 
   async function uploadBanner(variant){
-    if(!token){ toast("Locked","Please login first.",false); return; }
+    const t = getToken(); // ✅ ALWAYS read latest token
+    if(!t){
+      toast("Unauthorized","Please login again.",false);
+      $("overlay").classList.add("show");
+      setConn(false,"Locked");
+      return;
+    }
     if(!state){ await load(); if(!state) return; }
 
     const fileInput = (variant === "desktop") ? $("heroDesktopFile") : $("heroMobileFile");
@@ -1139,7 +1123,7 @@
 
       const res = await fetch("/api/admin/upload-banner", {
         method:"POST",
-        headers:{ "x-admin-token": token },
+        headers:{ "x-admin-token": t },
         body: form
       });
 
@@ -1152,6 +1136,12 @@
       toast("Uploaded", "Saving…");
       await save();
     }catch(e){
+      if(String(e.message || "").toLowerCase().includes("unauthorized")){
+        toast("Upload failed","Unauthorized — wrong token. Login again.",false);
+        $("overlay").classList.add("show");
+        setConn(false,"Locked");
+        return;
+      }
       setStatus("Upload failed: " + e.message);
       toast("Upload failed", e.message, false);
     }
@@ -1192,34 +1182,32 @@
 
   // ---------- Login / Logout ----------
   function lock(){
-    token = "";
-    localStorage.removeItem(SS_KEY);
+    clearToken();
+    state = null;
     $("overlay").classList.add("show");
     setConn(false,"Locked");
     setStatus("Locked. Paste token to login.");
   }
 
-  async function unlockWithToken(t){
-    token = (t || "").trim();
-    if(!token){ toast("Token missing","Paste ADMIN_TOKEN.",false); return; }
-    localStorage.setItem(SS_KEY, token);
+  async function unlockWithToken(v){
+    const t = String(v || "").trim();
+    if(!t){ toast("Token missing","Paste ADMIN_TOKEN.",false); return; }
+    setToken(t);
     $("overlay").classList.remove("show");
+    setConn(true,"Logged in");
     await load();
   }
 
   $("loginBtn").addEventListener("click", ()=> unlockWithToken($("tokenInput").value));
   $("loginLoadBtn").addEventListener("click", ()=> unlockWithToken($("tokenInput").value));
-
   $("sideLogout").addEventListener("click", lock);
 
   // ---------- Wire actions ----------
   $("topLoad").addEventListener("click", load);
   $("sideLoad").addEventListener("click", load);
-
   $("topSave").addEventListener("click", save);
   $("sideSave").addEventListener("click", save);
   $("dashSave").addEventListener("click", save);
-
   $("uploadDesktopBtn").addEventListener("click", ()=> uploadBanner("desktop"));
   $("uploadMobileBtn").addEventListener("click", ()=> uploadBanner("mobile"));
 
@@ -1246,7 +1234,6 @@
     const q = $("searchBox").value.trim().toLowerCase();
     if(!state){ return; }
 
-    // If user types, open best matching area
     const hasServices = state.services.some(s=> JSON.stringify(s).toLowerCase().includes(q));
     const hasFaq = state.faq.some(f=> JSON.stringify(f).toLowerCase().includes(q));
     const hasTest = state.testimonials.some(t=> JSON.stringify(t).toLowerCase().includes(q));
@@ -1261,7 +1248,6 @@
     else if(hasFaq){ showTab("faq"); }
     else if(hasTest){ showTab("testimonials"); }
 
-    // Filter lists (simple)
     if(hasServices){
       const filtered = state.services.filter(s=> JSON.stringify(s).toLowerCase().includes(q));
       const backup = state.services;
@@ -1285,13 +1271,20 @@
     }
   });
 
+  // CTRL+K focus search
+  window.addEventListener("keydown", (e)=>{
+    if((e.ctrlKey || e.metaKey) && (e.key || "").toLowerCase() === "k"){
+      e.preventDefault();
+      $("searchBox").focus();
+    }
+  });
+
   // Mobile drawer menu
   $("hamburger").addEventListener("click", ()=>{
-    // clone sidebar into drawer
     const drawer = $("drawer");
     const panel = drawer.querySelector(".panel");
     panel.innerHTML = $("sidebar").innerHTML;
-    // re-wire buttons inside cloned panel
+
     panel.querySelectorAll(".navBtn").forEach(b=>{
       b.addEventListener("click", ()=>{
         showTab(b.dataset.tab);
@@ -1311,10 +1304,9 @@
   // ---------- Boot ----------
   (function init(){
     showTab("dashboard");
-    const t = localStorage.getItem(SS_KEY) || "";
-    if(t){
-      token = t;
+    if(getToken()){
       $("overlay").classList.remove("show");
+      setConn(true,"Logged in");
       load();
     }else{
       $("overlay").classList.add("show");
@@ -1325,3 +1317,4 @@
 </script>
 </body>
 </html>
+
