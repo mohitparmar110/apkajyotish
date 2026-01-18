@@ -1,5 +1,22 @@
 // functions/api/config.js
 
+function json(obj, status = 200) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "no-store",
+      "access-control-allow-origin": "*",
+      "access-control-allow-methods": "GET, OPTIONS",
+      "access-control-allow-headers": "content-type, x-admin-token",
+    },
+  });
+}
+
+export async function onRequestOptions() {
+  return json({ ok: true }, 200);
+}
+
 export async function onRequestGet({ env }) {
   try {
     const raw = await env.APK_KV.get("config");
@@ -15,7 +32,6 @@ export async function onRequestGet({ env }) {
 
     const fallback = {
       currency: "INR",
-
       banners: {
         heroBannerDesktopUrl: "https://pub-c1f56b2e5a0a43aabe3aac3dcb2f27db.r2.dev/banners/hero-desktop.jpg",
         heroBannerMobileUrl: "https://pub-c1f56b2e5a0a43aabe3aac3dcb2f27db.r2.dev/banners/hero-mobile.jpg",
@@ -24,7 +40,6 @@ export async function onRequestGet({ env }) {
         heroKicker: "20+ Years Experience",
         whatsappNumber: "919999999999",
       },
-
       services: [
         {
           id: "love",
@@ -51,31 +66,16 @@ export async function onRequestGet({ env }) {
           sort: 20
         },
       ],
-
       faq: [
         { q: "What do I need to send?", a: "Date, time, place of birth.", active: true, sort: 10 },
       ],
-
       testimonials: [
         { name: "Rahul", city: "Delhi", text: "Accurate & practical guidance.", active: true, sort: 10 },
       ],
     };
 
-    return new Response(JSON.stringify(fallback), {
-      headers: {
-        "content-type": "application/json; charset=utf-8",
-        "cache-control": "no-store",
-        "access-control-allow-origin": "*",
-      },
-    });
+    return json(fallback, 200);
   } catch (err) {
-    return new Response(JSON.stringify({ error: err.message }), {
-      status: 500,
-      headers: {
-        "content-type": "application/json; charset=utf-8",
-        "access-control-allow-origin": "*",
-      },
-    });
+    return json({ error: err?.message || "Config failed" }, 500);
   }
 }
-
