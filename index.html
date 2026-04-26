@@ -709,9 +709,9 @@
             </button>
           </div>
 
-          <div id="kn-result" style="display:none;" class="kundali-result-box">
+         <div id="kn-result" style="display:none;" class="kundali-result-box">
             </div>
-        </div>
+<div id="kn-predictions" style="display:none;"></div>
 
         <div class="mt-8 card p-5 flex flex-col sm:flex-row items-center gap-4">
           <div class="text-3xl">🔮</div>
@@ -1699,6 +1699,7 @@
 
           btn.innerHTML = '✨ Generate Kundali';
           document.getElementById('kn-result').scrollIntoView({ behavior:'smooth', block:'start' });
+          generateKundaliPredictions(window.__KD__);
 
           // Store globally for PDF use
           window.__KD__ = { name, day, mon, year, hr, min, sec, place, tz, ayanamsa, positions, lagnaRashi, moonRashi, moonNak, dasha };
@@ -2368,4 +2369,260 @@
     document.addEventListener("DOMContentLoaded", loadSiteConfig);
   </script>
 </body>
+  <script>
+// ═══════════════════════════════════════════════════════════════
+// APKA JYOTISH — AI Kundali Predictions Engine
+// Drop this block just before </body> in index.html
+// Also: add <div id="kn-predictions" style="display:none;"></div>
+//   inside the #kn-result innerHTML, before the PDF download block.
+// Also: call generateKundaliPredictions(window.__KD__) at the end
+//   of the generateKundali() try block, after scrollIntoView().
+// ═══════════════════════════════════════════════════════════════
+
+async function generateKundaliPredictions(kd) {
+  const RASHI     = ['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+  const NAKSHATRA = ['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha',
+                     'Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha',
+                     'Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha',
+                     'Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+  const PLANETS   = ['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+  const DASHA_FULL = {
+    Su:'Sun', Mo:'Moon', Ma:'Mars', Me:'Mercury', Ju:'Jupiter',
+    Ve:'Venus', Sa:'Saturn', Ra:'Rahu', Ke:'Ketu'
+  };
+
+  function rashiOf(l) { return Math.floor(l / 30) % 12; }
+  function nakOf(l)   { return Math.floor((l / 360) * 27) % 27; }
+
+  // Build planet detail string for the prompt
+  const planetDetails = kd.positions.map((lon, i) => {
+    const r = rashiOf(lon);
+    const n = nakOf(lon);
+    const houseIdx = (r - kd.lagnaRashi + 12) % 12;
+    return `${PLANETS[i]}: ${RASHI[r]}, House ${houseIdx + 1}, Nakshatra ${NAKSHATRA[n]}, ${(lon % 30).toFixed(1)}°`;
+  }).join('\n');
+
+  const dashaFull = DASHA_FULL[kd.dasha.lord] || kd.dasha.lord;
+
+  const prompt = `You are a classical Vedic astrologer. Based on the Kundali below, write concise, specific, empowering predictions for this person. No fear-based language. No generic statements — be chart-specific. Use warm but professional tone.
+
+KUNDALI DATA:
+Name: ${kd.name}
+Date of Birth: ${kd.day}/${kd.mon}/${kd.year}
+Time: ${kd.hr}:${String(kd.min).padStart(2, '0')}
+Place: ${kd.place}
+Lagna (Ascendant): ${RASHI[kd.lagnaRashi]}
+Moon Sign (Rashi): ${RASHI[kd.moonRashi]}
+Birth Nakshatra: ${NAKSHATRA[kd.moonNak]}
+Current Mahadasha: ${dashaFull} (${kd.dasha.yearsLeft} years remaining)
+
+Planet Positions:
+${planetDetails}
+
+Respond ONLY with a valid JSON object. No markdown, no explanation, no preamble. Exactly this structure:
+{
+  "personality": "2-3 sentences. Core character traits, natural strengths and life approach based on Lagna sign and Moon sign combination.",
+  "career": "2-3 sentences. Professional strengths, best career fields, and what the current ${dashaFull} Mahadasha means for career growth.",
+  "love_marriage": "2-3 sentences. Relationship nature, partner compatibility traits, and any marriage timing indicators from the 7th house and Venus placement.",
+  "finance": "2-3 sentences. Financial instincts, wealth-building approach, and near-term financial outlook under current planetary period.",
+  "health": "2-3 sentences. Physical constitution from Lagna, natural strengths and vulnerabilities, and one key health focus area.",
+  "current_period": "2-3 sentences. What the ${dashaFull} Mahadasha specifically activates for this person — themes, opportunities and the most important shift in next 1-2 years.",
+  "lucky_factors": "One sentence naming 2 lucky numbers, 1 lucky colour, and 1 lucky day based on the chart.",
+  "remedy": "One specific, affordable remedy. Name the planet to strengthen, the day to do it, and the exact simple action (mantra, donation, colour to wear, food to offer). Keep it realistic and doable."
+}`;
+
+  // ── Render skeleton UI ────────────────────────────────────────────────────
+  const container = document.getElementById('kn-predictions');
+  if (!container) return;
+
+  const categories = [
+    { key: 'personality',    icon: '🪷', label: 'Personality & Soul',      span: false },
+    { key: 'career',         icon: '💼', label: 'Career & Profession',     span: false },
+    { key: 'love_marriage',  icon: '💍', label: 'Love & Marriage',         span: false },
+    { key: 'finance',        icon: '💰', label: 'Wealth & Finance',        span: false },
+    { key: 'health',         icon: '🌿', label: 'Health & Vitality',       span: false },
+    { key: 'current_period', icon: '⏳', label: `${dashaFull} Mahadasha`,  span: false },
+    { key: 'lucky_factors',  icon: '🍀', label: 'Lucky Factors',           span: false },
+    { key: 'remedy',         icon: '🪬', label: 'Your Personal Remedy',    span: true  },
+  ];
+
+  container.style.display = 'block';
+  container.innerHTML = `
+    <style>
+      @keyframes pred-pulse  { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.65)} }
+      @keyframes pred-fadein { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+      @keyframes pred-shimmer{ 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+      .pred-skeleton {
+        background: linear-gradient(90deg,#fde8d0 25%,#fff7ed 50%,#fde8d0 75%);
+        background-size: 200% 100%;
+        animation: pred-shimmer 1.5s infinite;
+        border-radius: .35rem;
+        height: 12px;
+        margin: .45rem 0;
+      }
+      .pred-card-in { animation: pred-fadein .4s ease forwards; }
+      .pred-dot { display:inline-block;width:7px;height:7px;border-radius:50%;background:#f97316;animation:pred-pulse 1s ease-in-out infinite; }
+    </style>
+
+    <div style="border-top:2.5px solid #fed7aa;margin-top:2rem;padding-top:1.75rem;">
+
+      <!-- Section Header -->
+      <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;">
+        <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#7c2d12,#c2410c);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.15rem;flex-shrink:0;box-shadow:0 4px 12px rgba(124,45,18,.3);">🔮</div>
+        <div>
+          <div style="font-family:Poppins,sans-serif;font-weight:800;font-size:1rem;color:#7c2d12;">Vedic Predictions for ${escPred(kd.name)}</div>
+          <div style="font-size:.72rem;color:#c2410c;margin-top:.1rem;">AI analysis of your birth chart using classical Jyotish principles</div>
+        </div>
+        <div id="pred-status" style="margin-left:auto;font-size:.72rem;font-weight:600;color:#f97316;display:flex;align-items:center;gap:.4rem;white-space:nowrap;">
+          <span class="pred-dot"></span> Analysing planets…
+        </div>
+      </div>
+
+      <!-- Prediction Cards Grid -->
+      <div id="pred-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:.9rem;margin-bottom:1.1rem;">
+        ${categories.map((c, i) => `
+          <div id="pred-${c.key}" style="
+            background:#fff;
+            border:1.5px solid #fdba74;
+            border-radius:1rem;
+            padding:1rem 1.1rem;
+            opacity:0;
+            transition:opacity .3s ease;
+            ${c.span ? 'grid-column:1/-1;' : ''}
+          ">
+            <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.75rem;">
+              <span style="font-size:1.1rem;line-height:1;">${c.icon}</span>
+              <span style="font-family:Poppins,sans-serif;font-weight:700;font-size:.76rem;color:#7c2d12;text-transform:uppercase;letter-spacing:.05em;">${c.label}</span>
+            </div>
+            <div class="pred-skeleton" style="width:92%;"></div>
+            <div class="pred-skeleton" style="width:78%;"></div>
+            <div class="pred-skeleton" style="width:86%;"></div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Disclaimer -->
+      <div id="pred-disclaimer" style="padding:.75rem 1rem;background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1px solid #fdba74;border-radius:.75rem;font-size:.72rem;color:#92400e;line-height:1.65;display:flex;align-items:flex-start;gap:.5rem;">
+        <span style="flex-shrink:0;font-size:.9rem;">⚠️</span>
+        <span><strong>Disclaimer:</strong> These predictions are AI-generated from simplified Vedic calculations — for general guidance only. Exact degrees, sub-dashas and life-specific nuances require a personal session. <a href="#" onclick="openLeadForm('Kundali Reading')" style="color:#f97316;font-weight:600;text-decoration:underline;">Book a reading with Dheeraj ji →</a></span>
+      </div>
+
+      <!-- CTA strip -->
+      <div style="margin-top:1rem;background:linear-gradient(135deg,#7c2d12,#c2410c);border-radius:.9rem;padding:.9rem 1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;">
+        <div style="color:#fff;">
+          <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:.88rem;">Want the full picture with remedies tailored to your life?</div>
+          <div style="font-size:.72rem;color:rgba(255,255,255,.8);margin-top:.15rem;">Dheeraj ji reads sub-periods, divisional charts & gives specific timelines — all in one session.</div>
+        </div>
+        <button onclick="openLeadForm('Janam Kundali Reading')" style="background:#f97316;color:#fff;border:none;border-radius:9999px;padding:.65rem 1.35rem;font-weight:700;font-size:.82rem;cursor:pointer;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.2);flex-shrink:0;">Book Deep Reading →</button>
+      </div>
+    </div>
+  `;
+
+  // Stagger skeleton fade-in
+  categories.forEach((c, i) => {
+    setTimeout(() => {
+      const el = document.getElementById(`pred-${c.key}`);
+      if (el) el.style.opacity = '1';
+    }, i * 70);
+  });
+
+  // ── Call Anthropic API ────────────────────────────────────────────────────
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`API ${response.status}: ${errText}`);
+    }
+
+    const data = await response.json();
+    const rawText = data.content
+      .filter(b => b.type === 'text')
+      .map(b => b.text)
+      .join('');
+
+    // Strip markdown fences if present
+    const clean = rawText.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+    const preds = JSON.parse(clean);
+
+    // ── Update status ───────────────────────────────────────────────────────
+    const statusEl = document.getElementById('pred-status');
+    if (statusEl) {
+      statusEl.innerHTML = '<span style="color:#16a34a;font-size:.75rem;font-weight:700;">✔ Predictions ready</span>';
+    }
+
+    // ── Populate each card ──────────────────────────────────────────────────
+    categories.forEach((c, i) => {
+      const el = document.getElementById(`pred-${c.key}`);
+      if (!el || !preds[c.key]) return;
+
+      const isRemedy  = c.key === 'remedy';
+      const isLucky   = c.key === 'lucky_factors';
+      const isCurrent = c.key === 'current_period';
+
+      const bg     = isRemedy  ? 'linear-gradient(135deg,#fff7ed,#fef3c7)' :
+                     isCurrent ? 'linear-gradient(135deg,#fdf4ff,#f5f3ff)' :
+                     '#fff';
+      const border = isRemedy  ? '2px solid #f97316' :
+                     isCurrent ? '2px solid #c084fc' :
+                     '1.5px solid #fdba74';
+      const labelColor = isCurrent ? '#7e22ce' : '#7c2d12';
+
+      setTimeout(() => {
+        el.style.background = bg;
+        el.style.border = border;
+        el.style.animation = 'pred-fadein .4s ease forwards';
+        el.innerHTML = `
+          <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;">
+            <span style="font-size:1.15rem;line-height:1;">${c.icon}</span>
+            <span style="font-family:Poppins,sans-serif;font-weight:700;font-size:.76rem;color:${labelColor};text-transform:uppercase;letter-spacing:.05em;">${c.label}</span>
+            ${isRemedy  ? '<span style="margin-left:auto;background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;font-size:.6rem;font-weight:700;border-radius:9999px;padding:.12rem .5rem;letter-spacing:.04em;">PERSONALISED</span>' : ''}
+            ${isCurrent ? '<span style="margin-left:auto;background:linear-gradient(135deg,#7e22ce,#9333ea);color:#fff;font-size:.6rem;font-weight:700;border-radius:9999px;padding:.12rem .5rem;letter-spacing:.04em;">NOW</span>' : ''}
+          </div>
+          <p style="font-size:.825rem;color:#3d2a1a;line-height:1.7;margin:0;">${escPred(preds[c.key])}</p>
+        `;
+      }, i * 100);
+    });
+
+  } catch (err) {
+    console.error('Kundali prediction error:', err);
+
+    const statusEl = document.getElementById('pred-status');
+    if (statusEl) {
+      statusEl.innerHTML = '<span style="color:#dc2626;font-size:.72rem;">⚠ Could not load predictions</span>';
+    }
+
+    // Show fallback message in all cards
+    categories.forEach(c => {
+      const el = document.getElementById(`pred-${c.key}`);
+      if (!el) return;
+      el.innerHTML = `
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;">
+          <span>${c.icon}</span>
+          <span style="font-family:Poppins,sans-serif;font-weight:700;font-size:.76rem;color:#7c2d12;text-transform:uppercase;">${c.label}</span>
+        </div>
+        <p style="font-size:.78rem;color:#9a3412;line-height:1.6;margin:0;">
+          Could not generate prediction automatically. 
+          <a href="#" onclick="openLeadForm('Kundali Reading')" style="color:#f97316;font-weight:600;">Book a personal reading</a> for a full chart analysis by Dheeraj ji.
+        </p>
+      `;
+    });
+  }
+}
+
+// Utility — escape for innerHTML
+function escPred(s) {
+  return String(s || '').replace(/[<>&"']/g, c => ({
+    '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#039;'
+  }[c]));
+}
+</script>
 </html>
