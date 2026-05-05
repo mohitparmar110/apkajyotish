@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-35ELF7ZQDX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-35ELF7ZQDX');</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>Free Kundali Generator Online | Vedic Birth Chart – Apka Jyotish</title>
+  <meta name="description" content="Generate your free Janam Kundali online instantly. Enter birth details and get your Vedic birth chart — Lagna, Rashi, Nakshatra, planet positions and Mahadasha. Powered by Apka Jyotish." />
+  <meta name="keywords" content="free kundali generator, janam kundali online, vedic birth chart, lagna calculator, rashi calculator, nakshatra, kundali online free" />
+  <link rel="canonical" href="https://www.apkajyotish.com/kundali-generator" />
+  <meta property="og:title" content="Free Kundali Generator – Apka Jyotish" />
+  <meta property="og:description" content="Get your free Vedic Janam Kundali online. Instant birth chart with planets, Dasha and AI predictions." />
+  <meta property="og:url" content="https://www.apkajyotish.com/kundali-generator" />
+  <meta property="og:image" content="https://pub-c1f56b2e5a0a43aabe3aac3dcb2f27db.r2.dev/banners/hero-desktop.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    :root{--brand:#f97316;--brand-2:#fb923c;}
+    *{box-sizing:border-box;}
+    body{font-family:Inter,sans-serif;background:#fff8f0;color:#1c1c1e;margin:0;padding:0;}
+
+    /* ── BUTTONS ── */
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;font-weight:600;padding:.875rem 1.5rem;transition:.2s;min-height:48px;cursor:pointer;border:none;font-family:inherit;font-size:.95rem;}
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;box-shadow:0 4px 14px rgba(249,115,22,.3);}
+    .btn-primary:hover{filter:brightness(1.06);box-shadow:0 6px 20px rgba(249,115,22,.4);}
+    .btn-primary:active{transform:scale(.97);}
+    .btn-outline{border:2px solid var(--brand)!important;color:var(--brand);background:transparent;}
+    .btn-outline:hover{background:rgba(249,115,22,.06);}
+    .btn-sm{padding:.6rem 1.1rem;font-size:.82rem;min-height:40px;}
+
+    /* ── CARDS ── */
+    .card{background:#fff;border:1px solid #eef0f3;border-radius:1rem;box-shadow:0 6px 18px rgba(16,24,40,.06);}
+
+    /* ── KUNDALI FORM ── */
+    .kundali-wrap{background:linear-gradient(135deg,#fff8f0 0%,#fff3e6 100%);border:2px solid #fed7aa;border-radius:1.5rem;padding:1.5rem;}
+    @media(min-width:640px){.kundali-wrap{padding:2rem;}}
+    .field-label{font-size:.78rem;font-weight:700;color:#9a3412;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.4rem;display:block;}
+    .field-input{background:#fff;border:1.5px solid #fdba74;border-radius:.65rem;padding:.7rem .9rem;font-size:16px;color:#1c1c1e;width:100%;font-family:inherit;transition:.2s;}
+    .field-input:focus{outline:none;border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.18);}
+    .field-select{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23f97316' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right .85rem center;border:1.5px solid #fdba74;border-radius:.65rem;padding:.7rem 2.4rem .7rem .9rem;font-size:16px;color:#1c1c1e;width:100%;cursor:pointer;font-family:inherit;min-height:48px;transition:.2s;}
+    .field-select:focus{outline:none;border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.18);}
+    .section-title{font-family:Poppins,sans-serif;font-weight:700;font-size:1rem;color:#7c2d12;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1.5px solid #fed7aa;display:flex;align-items:center;gap:.5rem;}
+    .submit-btn{background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;border:none;border-radius:9999px;padding:.9rem 2rem;font-weight:700;font-size:1rem;cursor:pointer;width:100%;min-height:52px;box-shadow:0 4px 14px rgba(249,115,22,.35);transition:.2s;font-family:inherit;}
+    .submit-btn:hover{filter:brightness(1.07);}
+    .submit-btn:active{transform:scale(.98);}
+    .toggle-btn{background:transparent;border:1.5px solid #fdba74;color:#c2410c;border-radius:.5rem;padding:.5rem .9rem;font-size:.78rem;font-weight:600;cursor:pointer;min-height:40px;font-family:inherit;}
+    .toggle-btn:hover{background:#fff7ed;}
+    .result-box{background:#fff;border:1.5px solid #fed7aa;border-radius:1rem;padding:1.25rem;margin-top:1.5rem;}
+
+    /* ── MOBILE STICKY BAR ── */
+    #mobile-sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#fff;border-top:2px solid #fed7aa;padding:.6rem .75rem;padding-bottom:calc(.6rem + env(safe-area-inset-bottom));display:flex;gap:.5rem;box-shadow:0 -4px 20px rgba(249,115,22,.15);}
+    @media(min-width:768px){#mobile-sticky-bar{display:none!important;}}
+    #mobile-sticky-bar .btn{flex:1;font-size:.85rem;padding:.75rem .5rem;min-height:50px;border-radius:.875rem;}
+    body{padding-bottom:80px;}
+    @media(min-width:768px){body{padding-bottom:0;}}
+
+    /* ── HEADER ── */
+    header{background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid #f0e8dc;position:sticky;top:0;z-index:40;}
+    .header-inner{max-width:1100px;margin:0 auto;padding:0 1rem;height:56px;display:flex;align-items:center;justify-content:space-between;}
+    @media(min-width:768px){.header-inner{height:64px;padding:0 2rem;}}
+
+    /* ── HERO BANNER ── */
+    .page-hero{background:linear-gradient(135deg,#7c2d12 0%,#c2410c 40%,#f97316 100%);position:relative;overflow:hidden;padding:2.5rem 1rem 3rem;}
+    @media(min-width:768px){.page-hero{padding:3.5rem 2rem 4rem;}}
+    .page-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:280px;height:280px;background:radial-gradient(circle,rgba(255,255,255,.08),transparent 70%);border-radius:50%;pointer-events:none;}
+    .page-hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(251,191,36,.12),transparent 70%);border-radius:50%;pointer-events:none;}
+
+    /* ── TICKER ── */
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes kundali-spin{to{transform:rotate(360deg)}}
+    .spin{animation:kundali-spin .8s linear infinite;}
+
+    /* ── PREDICTION CARDS ── */
+    @keyframes pred-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.65)}}
+    @keyframes pred-fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes pred-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .pred-skeleton{background:linear-gradient(90deg,#fde8d0 25%,#fff7ed 50%,#fde8d0 75%);background-size:200% 100%;animation:pred-shimmer 1.5s infinite;border-radius:.35rem;height:12px;margin:.45rem 0;}
+    .pred-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#f97316;animation:pred-pulse 1s ease-in-out infinite;}
+
+    /* ── BENEFIT CHIPS ── */
+    .benefit-chip{display:inline-flex;align-items:center;gap:.35rem;background:#fff;border:1px solid #fdba74;border-radius:9999px;padding:.3rem .75rem;font-size:.72rem;font-weight:600;color:#7c2d12;}
+
+    /* ── PDF BUTTONS ── */
+    .pdf-btn{display:inline-flex;align-items:center;gap:.5rem;border:none;border-radius:9999px;padding:.7rem 1.3rem;font-weight:700;font-size:.84rem;cursor:pointer;transition:.2s;box-shadow:0 4px 12px rgba(0,0,0,.1);min-height:48px;width:100%;justify-content:center;}
+    .pdf-btn-basic{background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;}
+    .pdf-btn-full{background:linear-gradient(135deg,#7c2d12,#b45309);color:#fff;}
+
+    /* ── PLACE DROPDOWN ── */
+    #kn-place-list li{min-height:44px;display:flex;align-items:center;}
+
+    /* ── RESPONSIVE GRID HELPERS ── */
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;}
+    @media(max-width:400px){.grid-3{grid-template-columns:1fr 1fr 1fr;gap:.4rem;}}
+
+    /* ── FLOATING WA ── */
+    #wa-float{display:none;}
+    @media(max-width:767px){
+      #wa-float{display:flex;align-items:center;justify-content:center;position:fixed;bottom:76px;right:14px;z-index:49;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-size:1.35rem;box-shadow:0 4px 16px rgba(37,211,102,.4);border:none;cursor:pointer;}
+    }
+
+    /* ── CHART TABLE RESPONSIVE ── */
+    .chart-table-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;align-items:start;}
+    @media(max-width:560px){.chart-table-grid{grid-template-columns:1fr;}}
+
+    /* ── PRED GRID ── */
+    .pred-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.85rem;}
+    @media(max-width:560px){.pred-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+
+<body>
+
+  <!-- ── MOBILE STICKY BAR ── -->
+  <div id="mobile-sticky-bar">
+    <button class="btn btn-primary" onclick="openLeadForm('Free 5-min Chat')">💬 Free Chat</button>
+    <a href="index.html" class="btn btn-outline" style="text-decoration:none;">🏠 Home</a>
+    <a href="tel:+919326139609" class="btn btn-outline" style="text-decoration:none;flex:0 0 auto;padding:.75rem .8rem;">📞</a>
+  </div>
+
+  <!-- ── FLOATING WA ── -->
+  <button id="wa-float" onclick="openLeadForm('Free 5-min Chat')" aria-label="WhatsApp">💬</button>
+
+  <!-- ── TICKER ── -->
+  <div style="background:linear-gradient(90deg,#7c2d12,#c2410c,#f97316,#c2410c,#7c2d12);color:#fff;font-size:.74rem;font-weight:600;padding:.38rem 0;overflow:hidden;position:relative;z-index:39;">
+    <div style="display:inline-flex;gap:3rem;white-space:nowrap;animation:ticker 28s linear infinite;">
+      <span>🎉 WELCOME55 — 55% OFF for New Clients Today!</span>
+      <span>⭐ 4.9/5 from 12,000+ clients</span>
+      <span>🪐 Free Kundali Generator — Enter your details below</span>
+      <span>💬 Free 5-min WhatsApp Chat — No payment needed</span>
+      <span>🔒 100% Confidential • Trusted by 12,000+ clients</span>
+      <span>🎉 WELCOME55 — 55% OFF for New Clients Today!</span>
+      <span>⭐ 4.9/5 from 12,000+ clients</span>
+    </div>
+  </div>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="header-inner">
+      <a href="index.html" style="display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit;">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#f97316);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;">✨</div>
+        <div>
+          <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:.95rem;line-height:1.1;color:#1c1c1e;">Apka Jyotish</div>
+          <div style="font-size:.65rem;color:#f97316;margin-top:1px;">Your Astrology Companion</div>
+        </div>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav style="display:none;align-items:center;gap:1.5rem;font-size:.875rem;" class="desktop-nav">
+        <a href="index.html" style="color:#374151;text-decoration:none;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#374151'">Home</a>
+        <a href="index.html#services" style="color:#374151;text-decoration:none;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#374151'">Services</a>
+        <a href="kundali-generator.html" style="color:#f97316;font-weight:700;text-decoration:none;">🪐 Free Kundali</a>
+        <a href="index.html#reviews" style="color:#374151;text-decoration:none;" onmouseover="this.style.color='#f97316'" onmouseout="this.style.color='#374151'">Reviews</a>
+        <button class="btn btn-primary btn-sm" onclick="openLeadForm()">Free WhatsApp Chat</button>
+      </nav>
+
+      <!-- Mobile nav -->
+      <div style="display:flex;align-items:center;gap:.5rem;">
+        <a href="index.html" style="font-size:.72rem;font-weight:600;background:#fff3e0;color:#c2410c;border:1px solid #fdba74;border-radius:9999px;padding:.3rem .7rem;text-decoration:none;">← Home</a>
+        <button onclick="openLeadForm()" style="background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;border:none;border-radius:9999px;padding:.45rem .85rem;font-weight:700;font-size:.8rem;cursor:pointer;min-height:38px;">Chat</button>
+      </div>
+    </div>
+  </header>
+
+  <style>@media(min-width:768px){.desktop-nav{display:flex!important;}}</style>
+
+  <!-- ── PAGE HERO ── -->
+  <div class="page-hero">
+    <div style="max-width:760px;margin:0 auto;text-align:center;position:relative;z-index:1;">
+      <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:9999px;padding:.3rem .9rem;font-size:.72rem;font-weight:700;color:#fef3c7;text-transform:uppercase;letter-spacing:.06em;margin-bottom:1rem;">
+        🪐 Free Tool • No Login Required • Instant Results
+      </div>
+      <h1 style="font-family:Poppins,sans-serif;font-weight:800;font-size:clamp(1.6rem,5vw,2.6rem);color:#fff;margin:0 0 .75rem;line-height:1.15;">
+        Free Kundali Generator
+      </h1>
+      <p style="color:rgba(255,255,255,.88);font-size:clamp(.9rem,2.5vw,1.05rem);margin:0 0 1.5rem;line-height:1.6;max-width:520px;margin-left:auto;margin-right:auto;">
+        Enter your birth details and instantly generate your Vedic birth chart — Lagna, Rashi, Nakshatra, planet positions, Mahadasha and AI predictions.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;">
+        <span class="benefit-chip">✅ 100% Free</span>
+        <span class="benefit-chip">⚡ Instant Results</span>
+        <span class="benefit-chip">🔒 Private & Secure</span>
+        <span class="benefit-chip">🤖 AI Predictions</span>
+        <span class="benefit-chip">📄 PDF Download</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main style="max-width:860px;margin:0 auto;padding:1.5rem 1rem 2rem;">
+
+    <!-- ── KUNDALI FORM ── -->
+    <div class="kundali-wrap">
+
+      <div class="section-title"><span>👤</span> Your Birth Details</div>
+
+      <!-- Name + Sex -->
+      <div class="grid-2" style="margin-bottom:1.1rem;">
+        <div>
+          <label class="field-label">Full Name</label>
+          <input id="kn-name" class="field-input" type="text" placeholder="Your full name" autocomplete="name" />
+        </div>
+        <div>
+          <label class="field-label">Sex</label>
+          <select id="kn-sex" class="field-select">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Date of Birth -->
+      <div style="margin-bottom:1.1rem;">
+        <label class="field-label">Date of Birth <span style="color:#f97316;font-weight:400;">(DD / MM / YYYY)</span></label>
+        <div class="grid-3">
+          <input id="kn-day"  class="field-input" type="number" inputmode="numeric" min="1" max="31" placeholder="DD" />
+          <input id="kn-mon"  class="field-input" type="number" inputmode="numeric" min="1" max="12" placeholder="MM" />
+          <input id="kn-year" class="field-input" type="number" inputmode="numeric" min="1900" max="2099" placeholder="YYYY" />
+        </div>
+      </div>
+
+      <!-- Time of Birth -->
+      <div style="margin-bottom:1.1rem;">
+        <label class="field-label">Time of Birth <span style="color:#f97316;font-weight:400;">(24-hour format)</span></label>
+        <div class="grid-3">
+          <input id="kn-hr"  class="field-input" type="number" inputmode="numeric" min="0" max="23" placeholder="HH" />
+          <input id="kn-min" class="field-input" type="number" inputmode="numeric" min="0" max="59" placeholder="MM" />
+          <input id="kn-sec" class="field-input" type="number" inputmode="numeric" min="0" max="59" placeholder="SS" value="0" />
+        </div>
+        <p style="font-size:.7rem;color:#9a3412;margin:.35rem 0 0;"><span style="opacity:.7;">⏱</span> Don't know exact time? Enter an approximate time and mention it's approximate.</p>
+      </div>
+
+      <!-- Place of Birth -->
+      <div style="margin-bottom:1.1rem;position:relative;">
+        <label class="field-label">Place of Birth <span style="color:#f97316;font-weight:400;">(min. 3 characters)</span></label>
+        <input id="kn-place" class="field-input" type="text" placeholder="Type city name and wait for suggestions…" autocomplete="off" autocorrect="off" spellcheck="false" />
+        <ul id="kn-place-list" style="display:none;position:absolute;z-index:50;left:0;right:0;background:#fff;border:1.5px solid #fdba74;border-radius:.65rem;margin-top:.25rem;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(249,115,22,.15);list-style:none;padding:0;margin-top:.25rem;"></ul>
+      </div>
+
+      <!-- Advanced Toggle -->
+      <div style="margin-bottom:1rem;">
+        <button class="toggle-btn" onclick="toggleAdvanced()" id="kn-adv-btn">[+] Coordinates & Advanced Settings</button>
+      </div>
+
+      <div id="kn-advanced" style="display:none;margin-bottom:1.25rem;">
+        <div class="section-title" style="margin-top:.5rem;"><span>⚙️</span> Advanced Settings</div>
+        <div style="margin-bottom:1rem;">
+          <label class="field-label">Longitude</label>
+          <div class="grid-3">
+            <input id="kn-long-deg" class="field-input" type="number" inputmode="numeric" placeholder="Degrees" />
+            <input id="kn-long-min" class="field-input" type="number" inputmode="numeric" placeholder="Minutes" />
+            <select id="kn-long-dir" class="field-select"><option value="E">E</option><option value="W">W</option></select>
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label class="field-label">Latitude</label>
+          <div class="grid-3">
+            <input id="kn-lat-deg" class="field-input" type="number" inputmode="numeric" placeholder="Degrees" />
+            <input id="kn-lat-min" class="field-input" type="number" inputmode="numeric" placeholder="Minutes" />
+            <select id="kn-lat-dir" class="field-select"><option value="N">N</option><option value="S">S</option></select>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-bottom:1rem;">
+          <div>
+            <label class="field-label">Time Zone (e.g. 5.5 for IST)</label>
+            <input id="kn-tz" class="field-input" type="number" inputmode="decimal" step="0.5" placeholder="5.5" value="5.5" />
+          </div>
+          <div>
+            <label class="field-label">DST Correction</label>
+            <select id="kn-dst" class="field-select"><option value="0">0</option><option value="1">1</option></select>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-bottom:1rem;">
+          <div>
+            <label class="field-label">Ayanamsa</label>
+            <select id="kn-ayanamsa" class="field-select">
+              <option value="lahiri">N.C. Lahiri</option>
+              <option value="raman">B.V. Raman</option>
+              <option value="krishnamurti">Krishnamurti</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label">Chart Style</label>
+            <select id="kn-chart-style" class="field-select">
+              <option value="north_indian">North Indian</option>
+              <option value="south_indian">South Indian</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="field-label">KP Horary Number (1-249, 0 = disabled)</label>
+          <input id="kn-kp" class="field-input" type="number" inputmode="numeric" min="1" max="249" placeholder="0" value="0" />
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button class="submit-btn" onclick="generateKundali()">
+        <span id="kn-btn-text">✨ Generate My Free Kundali</span>
+      </button>
+
+      <!-- Result -->
+      <div id="kn-result" style="display:none;" class="result-box"></div>
+      <div id="kn-predictions" style="display:none;"></div>
+    </div>
+
+    <!-- ── CTA CARD below form ── -->
+    <div class="card" style="margin-top:1.5rem;padding:1.25rem;display:flex;flex-direction:column;gap:1rem;align-items:flex-start;">
+      <div style="display:flex;gap:.75rem;align-items:flex-start;">
+        <div style="font-size:2rem;flex-shrink:0;">🔮</div>
+        <div>
+          <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:.95rem;color:#1c1c1e;">Want a personal interpretation?</div>
+          <div style="font-size:.82rem;color:#6b7280;margin-top:.25rem;line-height:1.5;">An automated chart is just the start. Dheeraj ji reads the full picture — timing, sub-periods, remedies tailored to your life. 20+ years • 12,000+ clients • Reply in 2 hrs.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:.6rem;width:100%;">
+        <button class="btn btn-primary" style="flex:1;min-width:160px;" onclick="openLeadForm('Janam Kundali Reading')">📖 Book a Deep Reading</button>
+        <button class="btn btn-outline" style="flex:1;min-width:140px;" onclick="openLeadForm('Free 5-min Chat')">💬 Free Chat First</button>
+      </div>
+    </div>
+
+    <!-- ── HOW IT WORKS ── -->
+    <div style="margin-top:2rem;">
+      <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:1.1rem;color:#7c2d12;margin-bottom:1rem;text-align:center;">How the Kundali Generator Works</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.875rem;">
+        <div class="card" style="padding:1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:.5rem;">1️⃣</div>
+          <div style="font-family:Poppins,sans-serif;font-weight:600;font-size:.85rem;margin-bottom:.3rem;">Enter Details</div>
+          <div style="font-size:.78rem;color:#6b7280;line-height:1.5;">Fill your name, date, time and place of birth. Place auto-completes from a global database.</div>
+        </div>
+        <div class="card" style="padding:1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:.5rem;">2️⃣</div>
+          <div style="font-family:Poppins,sans-serif;font-weight:600;font-size:.85rem;margin-bottom:.3rem;">Instant Chart</div>
+          <div style="font-size:.78rem;color:#6b7280;line-height:1.5;">Your North Indian birth chart, planet table, Lagna, Rashi, Nakshatra and Mahadasha are calculated instantly.</div>
+        </div>
+        <div class="card" style="padding:1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:.5rem;">3️⃣</div>
+          <div style="font-family:Poppins,sans-serif;font-weight:600;font-size:.85rem;margin-bottom:.3rem;">AI Predictions</div>
+          <div style="font-size:.78rem;color:#6b7280;line-height:1.5;">Our AI analyzes your chart using classical Jyotish and gives you predictions across 8 life areas.</div>
+        </div>
+        <div class="card" style="padding:1rem;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:.5rem;">4️⃣</div>
+          <div style="font-family:Poppins,sans-serif;font-weight:600;font-size:.85rem;margin-bottom:.3rem;">Download PDF</div>
+          <div style="font-size:.78rem;color:#6b7280;line-height:1.5;">Download a basic or full Kundali PDF report. Full version includes Lal Kitab analysis and remedies.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── FAQ ── -->
+    <div style="margin-top:2rem;">
+      <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:1.1rem;color:#7c2d12;margin-bottom:1rem;">Common Questions</div>
+      <div style="border-top:1px solid #fed7aa;">
+        <details style="padding:.875rem 0;border-bottom:1px solid #fed7aa;">
+          <summary style="cursor:pointer;font-weight:600;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;list-style:none;min-height:44px;">Is this Kundali generator really free?<span>⌄</span></summary>
+          <p style="margin:.5rem 0 0;font-size:.82rem;color:#4b5563;line-height:1.6;">Yes, completely free. No login, no email, no payment required. Enter your details and get your full Vedic birth chart instantly.</p>
+        </details>
+        <details style="padding:.875rem 0;border-bottom:1px solid #fed7aa;">
+          <summary style="cursor:pointer;font-weight:600;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;list-style:none;min-height:44px;">How accurate is the automated chart?<span>⌄</span></summary>
+          <p style="margin:.5rem 0 0;font-size:.82rem;color:#4b5563;line-height:1.6;">The chart uses simplified astronomical calculations following classical Vedic principles. It is accurate for most purposes, though exact degree calculations may vary slightly. For precise results, book a personal consultation with Dheeraj ji.</p>
+        </details>
+        <details style="padding:.875rem 0;border-bottom:1px solid #fed7aa;">
+          <summary style="cursor:pointer;font-weight:600;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;list-style:none;min-height:44px;">I don't know my exact birth time. What should I enter?<span>⌄</span></summary>
+          <p style="margin:.5rem 0 0;font-size:.82rem;color:#4b5563;line-height:1.6;">Enter the closest approximate time you know. The Rashi and Nakshatra readings will still be meaningful. The Lagna (ascendant) changes every ~2 hours, so for accurate Lagna you need the exact time. Dheeraj ji can help with birth time rectification.</p>
+        </details>
+        <details style="padding:.875rem 0;">
+          <summary style="cursor:pointer;font-weight:600;font-size:.9rem;display:flex;justify-content:space-between;align-items:center;list-style:none;min-height:44px;">What is the difference between this and a paid consultation?<span>⌄</span></summary>
+          <p style="margin:.5rem 0 0;font-size:.82rem;color:#4b5563;line-height:1.6;">This tool generates an automated chart. A personal consultation with Dheeraj ji includes sub-period (Antardasha) analysis, divisional chart readings (D-9, D-10), specific life event timings, personalized remedies and a 7-30 day follow-up window.</p>
+        </details>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer style="background:#1c1c1e;color:#9ca3af;padding:2rem 1rem;text-align:center;margin-bottom:0;">
+    <div style="max-width:860px;margin:0 auto;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:.75rem;">
+        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#f97316);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;">✨</div>
+        <span style="font-family:Poppins,sans-serif;font-weight:700;color:#fff;font-size:.95rem;">Apka Jyotish</span>
+      </div>
+      <p style="font-size:.75rem;line-height:1.6;margin:0 0 .75rem;">Free Kundali Generator by Apka Jyotish • Powered by Vedic astrology • <a href="https://wa.me/919326139609" style="color:#f97316;text-decoration:none;">WhatsApp: +91 93261 39609</a></p>
+      <p style="font-size:.68rem;color:#6b7280;margin:0;">Disclaimer: Results are automated and for guidance only. For personalised analysis, book a consultation with Dheeraj Parmar ji. © <span id="footer-year"></span> Apka Jyotish.</p>
+      <div style="margin-top:1rem;display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;">
+        <a href="index.html" style="font-size:.75rem;color:#9ca3af;text-decoration:none;">Home</a>
+        <a href="index.html#services" style="font-size:.75rem;color:#9ca3af;text-decoration:none;">Services</a>
+        <a href="index.html#faq" style="font-size:.75rem;color:#9ca3af;text-decoration:none;">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── LEAD MODAL ── -->
+  <div id="lead-modal" style="display:none;position:fixed;inset:0;z-index:100;">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,.55);" onclick="closeLeadForm()"></div>
+    <div style="position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:1.25rem 1.25rem 0 0;padding:1.25rem;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(1.5rem + env(safe-area-inset-bottom));">
+      <div style="width:40px;height:4px;background:#e5e7eb;border-radius:9999px;margin:0 auto .75rem;"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+        <h3 style="font-family:Poppins,sans-serif;font-weight:700;font-size:1.05rem;margin:0;">Tell me a bit & we'll start</h3>
+        <button onclick="closeLeadForm()" style="background:none;border:none;font-size:1.1rem;cursor:pointer;color:#6b7280;width:32px;height:32px;">✕</button>
+      </div>
+      <form id="lead-form" onsubmit="sendToWhatsApp(event)" style="display:grid;gap:.75rem;">
+        <input style="border:1px solid #e5e7eb;border-radius:.75rem;padding:.75rem .9rem;width:100%;font-size:16px;font-family:inherit;" type="text" name="name" placeholder="Your name" required autocomplete="name" />
+        <input style="border:1px solid #e5e7eb;border-radius:.75rem;padding:.75rem .9rem;width:100%;font-size:16px;font-family:inherit;" type="text" name="service" placeholder="Service interested in" />
+        <textarea style="border:1px solid #e5e7eb;border-radius:.75rem;padding:.75rem .9rem;width:100%;font-size:16px;font-family:inherit;resize:vertical;" name="concern" rows="3" placeholder="What do you want clarity on?" required></textarea>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;">
+          <input style="border:1px solid #e5e7eb;border-radius:.75rem;padding:.75rem .9rem;font-size:16px;font-family:inherit;" type="text" name="dob" placeholder="DOB (dd-mm-yyyy)" />
+          <input style="border:1px solid #e5e7eb;border-radius:.75rem;padding:.75rem .9rem;font-size:16px;font-family:inherit;" type="text" name="tob" placeholder="Time (e.g. 14:35)" />
+        </div>
+        <input style="border:1px solid #e5e7eb;border-radius:.75rem;padding:.75rem .9rem;width:100%;font-size:16px;font-family:inherit;" type="text" name="pob" placeholder="Place of birth" />
+        <button class="btn btn-primary" type="submit" style="width:100%;font-size:.95rem;">💬 Start on WhatsApp</button>
+        <p style="font-size:.7rem;color:#9ca3af;text-align:center;margin:0;">100% confidential • Reply within 2 hours</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════
+       ALL SCRIPTS
+  ═══════════════════════ -->
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+    const WHATSAPP_NUMBER = "9326139609";
+    let presetService = "";
+
+    function openLeadForm(service=""){
+      presetService=service;
+      document.getElementById('lead-modal').style.display='block';
+      const sf=document.querySelector('#lead-form [name="service"]');
+      if(sf) sf.value=service||"Free 5-min Chat";
+    }
+    function closeLeadForm(){ document.getElementById('lead-modal').style.display='none'; }
+    function sendToWhatsApp(e){
+      e.preventDefault();
+      const data=new FormData(e.target);
+      const name=(data.get('name')||'').trim(),service=(data.get('service')||presetService||'Consultation').trim(),concern=(data.get('concern')||'').trim(),dob=(data.get('dob')||'').trim(),tob=(data.get('tob')||'').trim(),pob=(data.get('pob')||'').trim();
+      const msg=`Hi Dheeraj ji, I am ${name}. I want *${service}*.\n\nConcern: ${concern}\nDOB: ${dob||'-'}\nTime: ${tob||'-'}\nPlace: ${pob||'-'}\n\nPlease guide me on next steps.`;
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,'_blank','noopener');
+      closeLeadForm();
+    }
+  </script>
+
+  <script>
+    // ── PLACE AUTOCOMPLETE ──
+    let placeDebounce; let selectedPlace=null;
+    document.getElementById('kn-place').addEventListener('input',function(){
+      clearTimeout(placeDebounce); const q=this.value.trim();
+      if(q.length<3){hidePlaceList();return;}
+      placeDebounce=setTimeout(()=>fetchPlaces(q),400);
+    });
+    async function fetchPlaces(q){
+      try{
+        const res=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=6&addressdetails=1`,{headers:{'Accept-Language':'en'}});
+        const data=await res.json(); showPlaceList(data);
+      }catch(e){hidePlaceList();}
+    }
+    function showPlaceList(items){
+      const ul=document.getElementById('kn-place-list');
+      if(!items||!items.length){hidePlaceList();return;}
+      ul.innerHTML=items.map(it=>`<li style="padding:.65rem .85rem;cursor:pointer;font-size:.82rem;border-bottom:1px solid #fde8d0;color:#7c2d12;transition:.15s;min-height:44px;display:flex;align-items:center;" onmouseover="this.style.background='#fff7ed'" onmouseout="this.style.background='#fff'" onclick="selectPlace(${it.lat},${it.lon},'${escJs(it.display_name)}')">📍 ${esc(it.display_name)}</li>`).join('');
+      ul.style.display='block';
+    }
+    function hidePlaceList(){document.getElementById('kn-place-list').style.display='none';}
+    function selectPlace(lat,lon,name){
+      selectedPlace={lat:parseFloat(lat),lon:parseFloat(lon),name};
+      document.getElementById('kn-place').value=name; hidePlaceList();
+      const latDeg=Math.abs(Math.trunc(lat)),latMin=Math.round((Math.abs(lat)-latDeg)*60);
+      const lonDeg=Math.abs(Math.trunc(lon)),lonMin=Math.round((Math.abs(lon)-lonDeg)*60);
+      document.getElementById('kn-lat-deg').value=latDeg; document.getElementById('kn-lat-min').value=latMin;
+      document.getElementById('kn-lat-dir').value=lat>=0?'N':'S';
+      document.getElementById('kn-long-deg').value=lonDeg; document.getElementById('kn-long-min').value=lonMin;
+      document.getElementById('kn-long-dir').value=lon>=0?'E':'W';
+    }
+    document.addEventListener('click',function(e){if(!document.getElementById('kn-place').contains(e.target))hidePlaceList();});
+    function esc(s){return String(s||'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#039;'}[c]));}
+    function escJs(s){return String(s||'').replace(/'/g,"\\'");}
+    function toggleAdvanced(){
+      const el=document.getElementById('kn-advanced'),btn=document.getElementById('kn-adv-btn');
+      const open=el.style.display!=='none'; el.style.display=open?'none':'block';
+      btn.textContent=open?'[+] Coordinates & Advanced Settings':'[–] Coordinates & Advanced Settings';
+    }
+
+    // ── VEDIC CALCULATIONS ──
+    const RASHI=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+    const PLANETS=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+    const PLANET_ABBR=['Su','Mo','Ma','Me','Ju','Ve','Sa','Ra','Ke'];
+    const NAKSHATRA=['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+    const DASHA_LORDS=['Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me'];
+    const DASHA_YEARS=[7,20,6,10,7,18,16,19,17];
+
+    function julianDay(y,m,d,h){if(m<=2){y--;m+=12;}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+h/24+B-1524.5;}
+    function sunLongitude(jd){const n=jd-2451545.0,L=(280.460+0.9856474*n)%360,g=((357.528+0.9856003*n)%360)*Math.PI/180;return(L+1.915*Math.sin(g)+0.020*Math.sin(2*g)+360)%360;}
+    function moonLongitude(jd){const n=jd-2451545.0,L=(218.316+13.176396*n)%360,M=((134.963+13.064993*n)%360)*Math.PI/180,F=((93.272+13.229350*n)%360)*Math.PI/180;return(L+6.289*Math.sin(M)-1.274*Math.sin(2*F-M)-0.658*Math.sin(2*F)+360)%360;}
+    function applyAyanamsa(lon,ayanamsa){const offsets={lahiri:23.85,raman:22.46,krishnamurti:23.85};return(lon-(offsets[ayanamsa]||23.85)+360)%360;}
+    function lagnaLongitude(jd,lat,lon,tz){const T=(jd-2451545.0)/36525;let GMST=280.46061837+360.98564736629*(jd-2451545)+0.000387933*T*T;GMST=(GMST+lon+360)%360;return GMST;}
+    function planetPositions(jd,ayanamsa){
+      const sun=applyAyanamsa(sunLongitude(jd),ayanamsa),moon=applyAyanamsa(moonLongitude(jd),ayanamsa);
+      const n=jd-2451545.0;
+      const mars=applyAyanamsa((355.45+0.524039*n)%360,ayanamsa),merc=applyAyanamsa((252.25+4.092338*n)%360,ayanamsa);
+      const jup=applyAyanamsa((34.40+0.083091*n)%360,ayanamsa),ven=applyAyanamsa((181.98+1.602136*n)%360,ayanamsa);
+      const sat=applyAyanamsa((50.08+0.033460*n)%360,ayanamsa),rahu=applyAyanamsa((125.04-0.052954*n+360)%360,ayanamsa);
+      const ketu=(rahu+180)%360;
+      return[sun,moon,mars,merc,jup,ven,sat,rahu,ketu];
+    }
+    function rashiOf(lon){return Math.floor(lon/30)%12;}
+    function degInRashi(lon){return(lon%30).toFixed(2);}
+    function nakshatraOf(lon){return Math.floor((lon/360)*27)%27;}
+    function dashaAt(moonLon,birthJD,nowJD){
+      const nak=nakshatraOf(moonLon),lordIdx=nak%9,frac=(moonLon%(360/27))/(360/27);
+      const firstRemaining=DASHA_YEARS[lordIdx]*(1-frac);
+      let elapsed=(nowJD-birthJD)/365.25,idx=lordIdx,rem=firstRemaining;
+      while(elapsed>rem){elapsed-=rem;idx=(idx+1)%9;rem=DASHA_YEARS[idx];}
+      return{lord:DASHA_LORDS[idx],years:DASHA_YEARS[idx],yearsLeft:(rem-elapsed).toFixed(1)};
+    }
+    function buildNIChart(lagna,planetPos){
+      const houses=Array.from({length:12},(_,i)=>(lagna+i)%12);
+      const housePlanets=Array.from({length:12},()=>[]);
+      planetPos.forEach((lon,pi)=>{const rashi=rashiOf(lon),houseIdx=(rashi-lagna+12)%12;housePlanets[houseIdx].push(PLANET_ABBR[pi]);});
+      const hPos=[[0,1],[0,2],[0,3],[1,3],[2,3],[3,3],[3,2],[3,1],[3,0],[2,0],[1,0],[0,0]];
+      const SIZE=260,CELL=SIZE/4;
+      const cells=Array.from({length:4},()=>Array(4).fill(''));
+      hPos.forEach(([r,c],houseNum)=>{
+        const rashi=houses[houseNum],planets=housePlanets[houseNum].join(' ');
+        cells[r][c]=`<text x="${c*CELL+CELL/2}" y="${r*CELL+CELL*0.38}" text-anchor="middle" font-size="8" fill="#9a3412" font-weight="700">${rashi+1}</text><text x="${c*CELL+CELL/2}" y="${r*CELL+CELL*0.60}" text-anchor="middle" font-size="7" fill="#c2410c">${RASHI[rashi].slice(0,3)}</text><text x="${c*CELL+CELL/2}" y="${r*CELL+CELL*0.82}" text-anchor="middle" font-size="7.5" fill="#92400e" font-weight="600">${planets}</text>`;
+      });
+      const cx=SIZE/2,cy=SIZE/2,r=CELL*0.72;
+      const diamond=`<polygon points="${cx},${cy-r} ${cx+r},${cy} ${cx},${cy+r} ${cx-r},${cy}" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5"/><text x="${cx}" y="${cy-8}" text-anchor="middle" font-size="13" fill="#f97316">ॐ</text><text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="6.5" fill="#9a3412" font-weight="600">LAGNA: ${RASHI[lagna].slice(0,3)}</text>`;
+      const gridLines=`<line x1="0" y1="${CELL}" x2="${SIZE}" y2="${CELL}" stroke="#fdba74" stroke-width="1"/><line x1="0" y1="${CELL*2}" x2="${SIZE}" y2="${CELL*2}" stroke="#fdba74" stroke-width="1"/><line x1="0" y1="${CELL*3}" x2="${SIZE}" y2="${CELL*3}" stroke="#fdba74" stroke-width="1"/><line x1="${CELL}" y1="0" x2="${CELL}" y2="${SIZE}" stroke="#fdba74" stroke-width="1"/><line x1="${CELL*2}" y1="0" x2="${CELL*2}" y2="${SIZE}" stroke="#fdba74" stroke-width="1"/><line x1="${CELL*3}" y1="0" x2="${CELL*3}" y2="${SIZE}" stroke="#fdba74" stroke-width="1"/><line x1="${CELL}" y1="0" x2="0" y2="${CELL}" stroke="#fdba74" stroke-width="1"/><line x1="${CELL*3}" y1="0" x2="${SIZE}" y2="${CELL}" stroke="#fdba74" stroke-width="1"/><line x1="0" y1="${CELL*3}" x2="${CELL}" y2="${SIZE}" stroke="#fdba74" stroke-width="1"/><line x1="${SIZE}" y1="${CELL*3}" x2="${CELL*3}" y2="${SIZE}" stroke="#fdba74" stroke-width="1"/>`;
+      const allCells=cells.map(row=>row.join('')).join('');
+      return`<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" style="border:2px solid #f97316;border-radius:8px;background:#fff7ed;display:block;margin:0 auto;max-width:100%;"><rect width="${SIZE}" height="${SIZE}" fill="#fff7ed"/>${gridLines}${diamond}${allCells}</svg>`;
+    }
+
+    function generateKundali(){
+      const name=document.getElementById('kn-name').value.trim()||'Native';
+      const day=parseInt(document.getElementById('kn-day').value)||1;
+      const mon=parseInt(document.getElementById('kn-mon').value)||1;
+      const year=parseInt(document.getElementById('kn-year').value)||2000;
+      const hr=parseInt(document.getElementById('kn-hr').value)||0;
+      const min=parseInt(document.getElementById('kn-min').value)||0;
+      const sec=parseInt(document.getElementById('kn-sec').value)||0;
+      const place=document.getElementById('kn-place').value.trim()||'Unknown';
+      const tz=parseFloat(document.getElementById('kn-tz').value)||5.5;
+      const ayanamsa=document.getElementById('kn-ayanamsa').value||'lahiri';
+      const btn=document.getElementById('kn-btn-text');
+      btn.innerHTML='<span class="spin" style="display:inline-block">⏳</span> Calculating…';
+      setTimeout(()=>{
+        try{
+          const utcHr=hr+min/60+sec/3600-tz;
+          const jd=julianDay(year,mon,day,utcHr);
+          const nowJD=julianDay(...(()=>{const n=new Date();return[n.getFullYear(),n.getMonth()+1,n.getDate(),n.getHours()+n.getMinutes()/60]})());
+          const lat=selectedPlace?selectedPlace.lat:20.59;
+          const lon=selectedPlace?selectedPlace.lon:78.96;
+          const positions=planetPositions(jd,ayanamsa);
+          const lagnaLon=applyAyanamsa(lagnaLongitude(jd,lat,lon,tz),ayanamsa);
+          const lagnaRashi=rashiOf(lagnaLon);
+          const moonRashi=rashiOf(positions[1]);
+          const moonNak=nakshatraOf(positions[1]);
+          const dasha=dashaAt(positions[1],jd,nowJD);
+          const chartSVG=buildNIChart(lagnaRashi,positions);
+          const planetRows=PLANETS.map((p,i)=>{
+            const r=rashiOf(positions[i]),deg=degInRashi(positions[i]);
+            return`<tr style="border-bottom:1px solid #fde8d0;"><td style="padding:.4rem .5rem;font-weight:600;color:#9a3412;font-size:.75rem;">${p}</td><td style="padding:.4rem .5rem;font-size:.75rem;">${RASHI[r]}</td><td style="padding:.4rem .5rem;color:#c2410c;font-size:.75rem;">${deg}°</td><td style="padding:.4rem .5rem;font-size:.7rem;color:#78350f;">${NAKSHATRA[nakshatraOf(positions[i])]}</td></tr>`;
+          }).join('');
+
+          document.getElementById('kn-result').style.display='block';
+          document.getElementById('kn-result').innerHTML=`
+            <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;">
+              <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#f97316,#fb923c);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;flex-shrink:0;">🪐</div>
+              <div>
+                <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:1rem;color:#7c2d12;">${esc(name)}'s Kundali</div>
+                <div style="font-size:.7rem;color:#c2410c;">${day}/${mon}/${year} • ${hr}:${String(min).padStart(2,'0')} • ${esc(place)} • ${ayanamsa} ayanamsa</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:1.25rem;">
+              <div style="background:#fff7ed;border:1px solid #fdba74;border-radius:.75rem;padding:.7rem;text-align:center;"><div style="font-size:.62rem;font-weight:700;color:#9a3412;text-transform:uppercase;">Lagna</div><div style="font-size:1rem;font-weight:800;color:#c2410c;margin:.2rem 0;">${RASHI[lagnaRashi]}</div><div style="font-size:.62rem;color:#78350f;">Ascendant</div></div>
+              <div style="background:#fff7ed;border:1px solid #fdba74;border-radius:.75rem;padding:.7rem;text-align:center;"><div style="font-size:.62rem;font-weight:700;color:#9a3412;text-transform:uppercase;">Rashi</div><div style="font-size:1rem;font-weight:800;color:#c2410c;margin:.2rem 0;">${RASHI[moonRashi]}</div><div style="font-size:.62rem;color:#78350f;">Moon Sign</div></div>
+              <div style="background:#fff7ed;border:1px solid #fdba74;border-radius:.75rem;padding:.7rem;text-align:center;"><div style="font-size:.62rem;font-weight:700;color:#9a3412;text-transform:uppercase;">Nakshatra</div><div style="font-size:.85rem;font-weight:800;color:#c2410c;margin:.2rem 0;">${NAKSHATRA[moonNak]}</div><div style="font-size:.62rem;color:#78350f;">Birth Star</div></div>
+              <div style="background:#fff7ed;border:1px solid #fdba74;border-radius:.75rem;padding:.7rem;text-align:center;"><div style="font-size:.62rem;font-weight:700;color:#9a3412;text-transform:uppercase;">Mahadasha</div><div style="font-size:1rem;font-weight:800;color:#c2410c;margin:.2rem 0;">${dasha.lord}</div><div style="font-size:.62rem;color:#78350f;">${dasha.yearsLeft} yrs left</div></div>
+            </div>
+            <div class="chart-table-grid">
+              <div>
+                <div style="font-size:.72rem;font-weight:700;color:#9a3412;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem;text-align:center;">North Indian Chart</div>
+                ${chartSVG}
+              </div>
+              <div>
+                <div style="font-size:.72rem;font-weight:700;color:#9a3412;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.6rem;">Planet Positions</div>
+                <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+                  <table style="width:100%;border-collapse:collapse;font-size:.75rem;background:#fff7ed;border-radius:.6rem;overflow:hidden;border:1px solid #fdba74;min-width:240px;">
+                    <thead><tr style="background:#fed7aa;"><th style="padding:.4rem .5rem;text-align:left;color:#7c2d12;font-size:.68rem;">Planet</th><th style="padding:.4rem .5rem;text-align:left;color:#7c2d12;font-size:.68rem;">Rashi</th><th style="padding:.4rem .5rem;text-align:left;color:#7c2d12;font-size:.68rem;">Deg</th><th style="padding:.4rem .5rem;text-align:left;color:#7c2d12;font-size:.68rem;">Nakshatra</th></tr></thead>
+                    <tbody>${planetRows}</tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:1rem;padding:.7rem 1rem;background:linear-gradient(135deg,#fff7ed,#ffebd6);border:1px solid #fdba74;border-radius:.75rem;font-size:.75rem;color:#78350f;line-height:1.6;">
+              ⚠️ <strong>Note:</strong> Automated chart — exact degrees may vary slightly. For precise reading with sub-periods and remedies, <a href="#" onclick="openLeadForm('Janam Kundali Reading')" style="color:#f97316;font-weight:600;">book a consultation</a> with Dheeraj ji.
+            </div>
+            <div style="margin-top:1.25rem;background:linear-gradient(135deg,#fff7ed,#fef3c7);border:2px solid #fdba74;border-radius:1rem;padding:1.1rem;">
+              <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:.9rem;color:#7c2d12;margin-bottom:.4rem;">📄 Download Your Kundali PDF</div>
+              <div style="font-size:.78rem;color:#92400e;margin-bottom:.9rem;">Get a beautifully formatted PDF report to save & share.</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;margin-bottom:.9rem;">
+                <div style="background:#fff;border:2px solid #f97316;border-radius:.85rem;padding:.85rem;text-align:center;"><div style="font-size:1.3rem;">🪐</div><div style="font-family:Poppins,sans-serif;font-weight:700;font-size:.82rem;color:#7c2d12;margin:.25rem 0 .1rem;">Basic Kundali</div><div style="font-size:.65rem;color:#92400e;margin-bottom:.4rem;">Chart • Planets • Lagna • Dasha</div><div style="font-size:1.2rem;font-weight:800;color:#f97316;">₹50</div></div>
+                <div style="background:#fff;border:2px solid #7c2d12;border-radius:.85rem;padding:.85rem;text-align:center;position:relative;"><div style="position:absolute;top:.4rem;right:.4rem;background:#7c2d12;color:#fef3c7;font-size:.58rem;font-weight:700;border-radius:9999px;padding:.1rem .4rem;">BEST</div><div style="font-size:1.3rem;">📖</div><div style="font-family:Poppins,sans-serif;font-weight:700;font-size:.82rem;color:#7c2d12;margin:.25rem 0 .1rem;">Full + Lal Kitab</div><div style="font-size:.65rem;color:#92400e;margin-bottom:.4rem;">All + Lal Kitab + Remedies</div><div style="font-size:1.2rem;font-weight:800;color:#7c2d12;">₹100</div></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:.6rem;">
+                <button class="pdf-btn pdf-btn-basic" onclick="initPdfPayment('basic')">📄 Download Basic PDF — ₹50</button>
+                <button class="pdf-btn pdf-btn-full" onclick="initPdfPayment('full')">📖 Download Full PDF + Lal Kitab — ₹100</button>
+              </div>
+              <div style="font-size:.66rem;color:#c2410c;text-align:center;margin-top:.5rem;">🔒 Secure Razorpay • Instant download</div>
+            </div>
+          `;
+
+          btn.innerHTML='✨ Generate My Free Kundali';
+          window.__KD__={name,day,mon,year,hr,min,sec,place,tz,ayanamsa,positions,lagnaRashi,moonRashi,moonNak,dasha};
+          document.getElementById('kn-result').scrollIntoView({behavior:'smooth',block:'start'});
+          generateKundaliPredictions(window.__KD__);
+
+        }catch(err){
+          btn.innerHTML='✨ Generate My Free Kundali';
+          alert('Could not calculate. Please check your birth details and try again.');
+          console.error(err);
+        }
+      },800);
+    }
+  </script>
+
+  <script>
+    // ── PDF PAYMENT & DOWNLOAD ──
+    (function loadRZP(){const s=document.createElement('script');s.src="https://checkout.razorpay.com/v1/checkout.js";s.async=true;document.head.appendChild(s);})();
+    const AJ_RAZORPAY_KEY_ID="rzp_live_ReQS6kBC1MMpAK";
+    const AJ_CREATE_ORDER_URL="https://apkajyotish-pay.mohit-parmar110.workers.dev";
+    const AJ_LOGO_URL="https://dummyimage.com/200x200/ffa733/ffffff.png&text=Apka+Jyotish";
+
+    async function initPdfPayment(plan){
+      const kd=window.__KD__;
+      if(!kd){alert('Please generate your Kundali first.');return;}
+      const amount=plan==='basic'?5000:10000;
+      const label=plan==='basic'?'Basic Kundali PDF (₹50)':'Full Kundali + Lal Kitab PDF (₹100)';
+      function ready(){return window.Razorpay;}
+      if(!ready()){await new Promise(res=>{const c=setInterval(()=>{if(ready()){clearInterval(c);res();}},50);});}
+      try{
+        const order=await fetch(AJ_CREATE_ORDER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount,currency:'INR',notes:{plan,name:kd.name}})}).then(r=>r.json());
+        if(!order||!order.id){alert('Order creation failed. Please try again.');return;}
+        new Razorpay({key:AJ_RAZORPAY_KEY_ID,amount,currency:'INR',name:'Apka Jyotish',description:label,image:AJ_LOGO_URL,order_id:order.id,prefill:{name:kd.name},notes:{plan,name:kd.name,dob:`${kd.day}/${kd.mon}/${kd.year}`},theme:{color:'#F97316'},handler:function(){generateAndDownloadPdf(plan);}}).open();
+      }catch(e){console.error(e);alert('Could not reach payment server. Please try again.');}
+    }
+
+    function generateAndDownloadPdf(plan){
+      const kd=window.__KD__;if(!kd)return;
+      const {jsPDF}=window.jspdf;
+      const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+      const W=210,H=297,ORANGE=[249,115,22],DARK=[124,45,18],CREAM=[255,247,237],AMBER=[253,186,116],WHITE=[255,255,255],GRAY=[107,114,128];
+      const RASHI_=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+      const PLANETS_=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+      const ABBR_=['Su','Mo','Ma','Me','Ju','Ve','Sa','Ra','Ke'];
+      const NAKSH_=['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+      function rashiOf_(l){return Math.floor(l/30)%12;}
+      function degInR_(l){return(l%30).toFixed(1);}
+      function nakOf_(l){return Math.floor((l/360)*27)%27;}
+      function setFont(size,style='normal',color=DARK){doc.setFontSize(size);doc.setFont('helvetica',style);doc.setTextColor(...color);}
+      function rect(x,y,w,h,color,radius=0){doc.setFillColor(...color);if(radius)doc.roundedRect(x,y,w,h,radius,radius,'F');else doc.rect(x,y,w,h,'F');}
+      function line_(x1,y1,x2,y2,color=[253,186,116],lw=0.4){doc.setDrawColor(...color);doc.setLineWidth(lw);doc.line(x1,y1,x2,y2);}
+      function hdr(pageNum){rect(0,0,W,18,ORANGE);setFont(13,'bold',WHITE);doc.text('Apka Jyotish  |  Vedic Kundali Report',14,12);setFont(8,'normal',WHITE);doc.text(`Page ${pageNum}`,W-14,12,{align:'right'});rect(0,18,W,H-18,CREAM);}
+      function footer(){rect(0,H-10,W,10,[254,215,170]);setFont(7,'normal',DARK);doc.text('Apka Jyotish • www.apkajyotish.com • WhatsApp: +91 93261 39609 • 100% Confidential',W/2,H-3.5,{align:'center'});}
+      function sectionHead(y,title){rect(14,y,W-28,8,[249,115,22]);setFont(10,'bold',WHITE);doc.text(title,18,y+5.8);return y+12;}
+
+      // Cover page
+      rect(0,0,W,H,[255,248,240]);rect(0,0,W,55,ORANGE);setFont(48,'bold',WHITE);doc.text('Om',W/2,35,{align:'center'});setFont(9,'normal',WHITE);doc.text('Apka Jyotish  |  Vedic Kundali Report',W/2,47,{align:'center'});
+      rect(30,65,W-60,28,[255,255,255],4);doc.setDrawColor(...AMBER);doc.setLineWidth(1);doc.roundedRect(30,65,W-60,28,4,4,'S');setFont(18,'bold',ORANGE);doc.text(kd.name,W/2,78,{align:'center'});setFont(9,'normal',DARK);doc.text("Vedic Birth Chart",W/2,87,{align:'center'});
+      const details=[['Date of Birth',`${kd.day}/${kd.mon}/${kd.year}`],['Time of Birth',`${kd.hr}:${String(kd.min).padStart(2,'0')}`],['Place of Birth',kd.place],['Ayanamsa',kd.ayanamsa.charAt(0).toUpperCase()+kd.ayanamsa.slice(1)],['Lagna (Ascendant)',RASHI_[kd.lagnaRashi]],['Rashi (Moon Sign)',RASHI_[kd.moonRashi]],['Nakshatra',NAKSH_[kd.moonNak]],['Current Mahadasha',`${kd.dasha.lord} (${kd.dasha.yearsLeft} yrs left)`]];
+      let dy=102;
+      details.forEach(([k,v],i)=>{rect(14,dy,W-28,9,i%2===0?[255,247,237]:[255,255,255]);setFont(8,'bold',DARK);doc.text(k+':',20,dy+6.2);setFont(8,'normal',GRAY);doc.text(v,90,dy+6.2);dy+=9;});
+      rect(14,dy+4,W-28,14,[253,186,116,180],3);setFont(7,'normal',DARK);doc.text('Generated by Apka Jyotish. For personalised interpretation, book a consultation.',W/2,dy+11,{align:'center'});
+      footer();
+
+      // Page 2: Chart + Planets
+      doc.addPage();hdr(2);let y=26;y=sectionHead(y,'North Indian Birth Chart');
+      const cx=W/2,cy_=y+45,sz=80,cell=sz/4;
+      const housePlanets_=Array.from({length:12},()=>[]);
+      kd.positions.forEach((lon,pi)=>{const rashi=rashiOf_(lon),hIdx=(rashi-kd.lagnaRashi+12)%12;housePlanets_[hIdx].push(ABBR_[pi]);});
+      const houses_=Array.from({length:12},(_,i)=>(kd.lagnaRashi+i)%12);
+      const hPos_=[[0,1],[0,2],[0,3],[1,3],[2,3],[3,3],[3,2],[3,1],[3,0],[2,0],[1,0],[0,0]];
+      const originX=cx-sz/2,originY=cy_-sz/2;
+      rect(originX,originY,sz,sz,WHITE);doc.setDrawColor(...ORANGE);doc.setLineWidth(0.5);doc.rect(originX,originY,sz,sz,'S');
+      for(let i=1;i<4;i++){line_(originX+i*cell,originY,originX+i*cell,originY+sz);line_(originX,originY+i*cell,originX+sz,originY+i*cell);}
+      line_(originX+cell,originY,originX,originY+cell);line_(originX+3*cell,originY,originX+sz,originY+cell);line_(originX,originY+3*cell,originX+cell,originY+sz);line_(originX+sz,originY+3*cell,originX+3*cell,originY+sz);
+      const dCx=originX+sz/2,dCy=originY+sz/2,dR=cell*0.65;doc.setFillColor(...CREAM);doc.setDrawColor(...ORANGE);doc.lines([[dR,dR],[-dR,dR],[-dR,-dR],[dR,-dR]],dCx,dCy-dR,null,'FD',true);setFont(9,'bold',ORANGE);doc.text('Om',dCx,dCy-1,{align:'center'});setFont(5,'bold',DARK);doc.text(RASHI_[kd.lagnaRashi].slice(0,3),dCx,dCy+4,{align:'center'});
+      hPos_.forEach(([r,c],hNum)=>{const hx=originX+c*cell+cell/2,hy=originY+r*cell,rashi=houses_[hNum],pls=housePlanets_[hNum].join(' ');setFont(5,'bold',DARK);doc.text(String(hNum+1),hx,hy+4.5,{align:'center'});setFont(4.5,'normal',[194,65,12]);doc.text(RASHI_[rashi].slice(0,3),hx,hy+8,{align:'center'});setFont(5,'bold',[146,64,14]);doc.text(pls,hx,hy+12,{align:'center'});});
+      y=cy_+sz/2+8;y=sectionHead(y,'Planet Positions');
+      const cols=[20,60,95,125,170],heads=['Planet','Rashi','Degree','Nakshatra','Significance'];
+      const sigs=['Soul, self & authority','Mind, emotions & mother','Energy, courage & siblings','Intellect & communication','Wisdom, luck & children','Relationships & wealth','Karma, discipline & longevity','Karma node (past life)','Karma node (liberation)'];
+      rect(14,y,W-28,8,[253,186,116]);heads.forEach((h,i)=>{setFont(7,'bold',DARK);doc.text(h,cols[i]+1,y+5.5);});y+=8;
+      kd.positions.forEach((lon,pi)=>{const bg=pi%2===0?CREAM:WHITE;rect(14,y,W-28,7,bg);const rowData=[PLANETS_[pi],RASHI_[rashiOf_(lon)],degInR_(lon)+'°',NAKSH_[nakOf_(lon)].slice(0,14),sigs[pi]];rowData.forEach((v,i)=>{setFont(6.5,i===0?'bold':'normal',DARK);doc.text(v,cols[i]+1,y+4.8);});y+=7;});
+      footer();
+
+      if(plan==='basic'){doc.save(`Kundali_${kd.name.replace(/\s+/g,'_')}_Basic.pdf`);return;}
+
+      // Pages 3-5 for full version
+      doc.addPage();hdr(3);y=26;y=sectionHead(y,'Vimshottari Dasha Timeline');
+      const DASHA_LORDS_=['Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me'],DASHA_YRS_=[7,20,6,10,7,18,16,19,17],DASHA_FULL_=['Ketu','Venus','Sun','Moon','Mars','Rahu','Jupiter','Saturn','Mercury'];
+      const moonNak_=kd.moonNak,startIdx=moonNak_%9,frac=(kd.positions[1]%(360/27))/(360/27);
+      rect(14,y,W-28,8,[253,186,116]);['Lord','Duration','Status'].forEach((h,i)=>{setFont(7,'bold',DARK);doc.text(h,[20,80,120][i],y+5.5);});y+=8;
+      for(let i=0;i<9;i++){const idx=(startIdx+i)%9,dur=i===0?DASHA_YRS_[idx]*(1-frac):DASHA_YRS_[idx],isCurrent=DASHA_LORDS_[idx]===kd.dasha.lord,bg=isCurrent?[255,240,220]:i%2===0?CREAM:WHITE;rect(14,y,W-28,8,bg);if(isCurrent){doc.setDrawColor(...ORANGE);doc.setLineWidth(0.6);doc.rect(14,y,W-28,8,'S');}setFont(7,isCurrent?'bold':'normal',DARK);doc.text(`${DASHA_FULL_[idx]} (${DASHA_LORDS_[idx]})`,20,y+5.5);doc.text(`${dur.toFixed(1)} years`,80,y+5.5);setFont(7,isCurrent?'bold':'normal',isCurrent?ORANGE:GRAY);doc.text(isCurrent?'▶ CURRENT':'',120,y+5.5);y+=8;}
+      footer();
+
+      doc.addPage();hdr(4);y=26;y=sectionHead(y,'Personalised Vedic Remedies');
+      const remedies=[{title:'Daily Surya Namaskar',desc:'Offer water to the rising sun every morning reciting "Om Suryaya Namaha" 7 times between 6–7 AM.'},{title:'Moon Remedy',desc:'On every Monday donate white rice or milk to a temple. Chant "Om Som Somaya Namaha" 108 times.'},{title:'Water Offering',desc:'Pour water with red flowers at root of a Peepal tree on Sunday mornings.'},{title:'Saturday Lamp',desc:'Light mustard-oil lamp at Peepal tree on Saturdays. Donate iron or black sesame to the needy.'},{title:'Hanuman Chalisa',desc:'Recite Hanuman Chalisa on Tuesday and Saturday to ward off Rahu-Ketu afflictions.'},{title:'Tulsi Puja',desc:'Water Tulsi plant every morning. Light ghee lamp near it in the evening.'}];
+      remedies.forEach((rem,i)=>{if(y>H-32){doc.addPage();hdr(4);y=26;}rect(14,y,W-28,18,i%2===0?CREAM:WHITE,2);setFont(8,'bold',ORANGE);doc.text(rem.title,20,y+6);setFont(6.5,'normal',DARK);const lines=doc.splitTextToSize(rem.desc,W-46);doc.text(lines.slice(0,2),20,y+12);y+=20;});
+      footer();
+
+      doc.addPage();hdr(5);y=26;y=sectionHead(y,'Personal Summary & Next Steps');
+      setFont(8,'normal',DARK);
+      [`Dear ${kd.name},`,'',`Your Lagna is ${RASHI_[kd.lagnaRashi]}, your Moon Sign is ${RASHI_[kd.moonRashi]}, and your birth Nakshatra is ${NAKSH_[kd.moonNak]}.`,'',`Currently you are running the ${kd.dasha.lord} Mahadasha with ${kd.dasha.yearsLeft} years remaining. This period activates specific themes and opportunities unique to your chart.`,'','This report was generated by Apka Jyotish automated Vedic engine. A personal reading by Dheeraj Parmar ji will add nuance, sub-periods and life-specific guidance.'].forEach(line=>{if(line===''){y+=4;return;}const wrapped=doc.splitTextToSize(line,W-34);doc.text(wrapped,18,y);y+=wrapped.length*5+1;});
+      y=Math.max(y+6,H-50);rect(14,y,W-28,40,ORANGE,4);setFont(11,'bold',WHITE);doc.text('Ready for a Personal Reading?',W/2,y+10,{align:'center'});setFont(8,'normal',WHITE);doc.text('WhatsApp: +91 93261 39609  •  www.apkajyotish.com',W/2,y+20,{align:'center'});doc.text('Starting at ₹599  •  Reply within 2 hours  •  100% Confidential',W/2,y+28,{align:'center'});
+      footer();
+      doc.save(`Kundali_${kd.name.replace(/\s+/g,'_')}_Full_LalKitab.pdf`);
+    }
+  </script>
+
+  <script>
+    // ── AI KUNDALI PREDICTIONS ──
+    async function generateKundaliPredictions(kd){
+      const RASHI=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+      const NAKSHATRA=['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+      const PLANETS=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+      const DASHA_FULL={Su:'Sun',Mo:'Moon',Ma:'Mars',Me:'Mercury',Ju:'Jupiter',Ve:'Venus',Sa:'Saturn',Ra:'Rahu',Ke:'Ketu'};
+      function rashiOf(l){return Math.floor(l/30)%12;}
+      function nakOf(l){return Math.floor((l/360)*27)%27;}
+      const planetDetails=kd.positions.map((lon,i)=>{const r=rashiOf(lon),n=nakOf(lon),h=(r-kd.lagnaRashi+12)%12;return`${PLANETS[i]}: ${RASHI[r]}, House ${h+1}, ${NAKSHATRA[n]}, ${(lon%30).toFixed(1)}°`;}).join('\n');
+      const dashaFull=DASHA_FULL[kd.dasha.lord]||kd.dasha.lord;
+      const prompt=`You are a classical Vedic astrologer. Based on the Kundali below, write concise, specific, empowering predictions. No fear-based language. Be chart-specific. Warm but professional tone.\n\nKUNDALI:\nName: ${kd.name}\nDOB: ${kd.day}/${kd.mon}/${kd.year}\nTime: ${kd.hr}:${String(kd.min).padStart(2,'0')}\nPlace: ${kd.place}\nLagna: ${RASHI[kd.lagnaRashi]}\nMoon Sign: ${RASHI[kd.moonRashi]}\nNakshatra: ${NAKSHATRA[kd.moonNak]}\nMahadasha: ${dashaFull} (${kd.dasha.yearsLeft} yrs remaining)\n\nPlanets:\n${planetDetails}\n\nRespond ONLY with valid JSON, no markdown:\n{"personality":"2-3 sentences.","career":"2-3 sentences.","love_marriage":"2-3 sentences.","finance":"2-3 sentences.","health":"2-3 sentences.","current_period":"2-3 sentences about ${dashaFull} Mahadasha.","lucky_factors":"2 lucky numbers, 1 colour, 1 day.","remedy":"One specific affordable remedy."}`;
+
+      const container=document.getElementById('kn-predictions');
+      if(!container)return;
+      const categories=[
+        {key:'personality',icon:'🪷',label:'Personality & Soul'},
+        {key:'career',icon:'💼',label:'Career & Profession'},
+        {key:'love_marriage',icon:'💍',label:'Love & Marriage'},
+        {key:'finance',icon:'💰',label:'Wealth & Finance'},
+        {key:'health',icon:'🌿',label:'Health & Vitality'},
+        {key:'current_period',icon:'⏳',label:`${dashaFull} Mahadasha`},
+        {key:'lucky_factors',icon:'🍀',label:'Lucky Factors'},
+        {key:'remedy',icon:'🪬',label:'Your Personal Remedy'},
+      ];
+      container.style.display='block';
+      container.innerHTML=`
+        <div style="border-top:2.5px solid #fed7aa;margin-top:2rem;padding-top:1.5rem;">
+          <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;flex-wrap:wrap;">
+            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#7c2d12,#c2410c);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;flex-shrink:0;">🔮</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-family:Poppins,sans-serif;font-weight:800;font-size:.95rem;color:#7c2d12;">AI Vedic Predictions for ${escPred(kd.name)}</div>
+              <div style="font-size:.7rem;color:#c2410c;margin-top:.1rem;">Powered by Claude AI • Classical Jyotish analysis</div>
+            </div>
+            <div id="pred-status" style="font-size:.7rem;font-weight:600;color:#f97316;display:flex;align-items:center;gap:.4rem;flex-shrink:0;">
+              <span class="pred-dot"></span> Analysing…
+            </div>
+          </div>
+          <div class="pred-grid" id="pred-grid">
+            ${categories.map(c=>`
+              <div id="pred-${c.key}" style="background:#fff;border:1.5px solid #fdba74;border-radius:1rem;padding:.9rem 1rem;opacity:0;transition:opacity .3s ease;">
+                <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.65rem;">
+                  <span style="font-size:1.05rem;">${c.icon}</span>
+                  <span style="font-family:Poppins,sans-serif;font-weight:700;font-size:.72rem;color:#7c2d12;text-transform:uppercase;letter-spacing:.05em;">${c.label}</span>
+                </div>
+                <div class="pred-skeleton" style="width:92%;"></div>
+                <div class="pred-skeleton" style="width:78%;"></div>
+                <div class="pred-skeleton" style="width:85%;"></div>
+              </div>`).join('')}
+          </div>
+          <div style="margin-top:.75rem;padding:.65rem .9rem;background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1px solid #fdba74;border-radius:.75rem;font-size:.7rem;color:#92400e;line-height:1.6;display:flex;gap:.4rem;align-items:flex-start;">
+            <span>⚠️</span><span><strong>Disclaimer:</strong> AI-generated for guidance only. <a href="#" onclick="openLeadForm('Janam Kundali Reading')" style="color:#f97316;font-weight:600;">Book with Dheeraj ji →</a> for a full personalised reading.</span>
+          </div>
+          <div style="margin-top:.9rem;background:linear-gradient(135deg,#7c2d12,#c2410c);border-radius:.9rem;padding:.85rem 1.1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.65rem;">
+            <div style="color:#fff;">
+              <div style="font-family:Poppins,sans-serif;font-weight:700;font-size:.85rem;">Want deeper insights with remedies?</div>
+              <div style="font-size:.7rem;color:rgba(255,255,255,.8);margin-top:.1rem;">Sub-periods, divisional charts, exact timelines — one session with Dheeraj ji.</div>
+            </div>
+            <button onclick="openLeadForm('Janam Kundali Reading')" style="background:#f97316;color:#fff;border:none;border-radius:9999px;padding:.6rem 1.2rem;font-weight:700;font-size:.8rem;cursor:pointer;min-height:44px;flex-shrink:0;">Book Reading →</button>
+          </div>
+        </div>`;
+
+      categories.forEach((c,i)=>{setTimeout(()=>{const el=document.getElementById(`pred-${c.key}`);if(el)el.style.opacity='1';},i*70);});
+
+      try{
+        const response=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+        if(!response.ok)throw new Error(`API ${response.status}`);
+        const data=await response.json();
+        const rawText=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+        const clean=rawText.replace(/^```json\s*/i,'').replace(/```\s*$/i,'').trim();
+        const preds=JSON.parse(clean);
+        const statusEl=document.getElementById('pred-status');
+        if(statusEl)statusEl.innerHTML='<span style="color:#16a34a;font-size:.72rem;font-weight:700;">✔ Predictions ready</span>';
+        categories.forEach((c,i)=>{
+          const el=document.getElementById(`pred-${c.key}`);
+          if(!el||!preds[c.key])return;
+          const isRemedy=c.key==='remedy',isCurrent=c.key==='current_period';
+          setTimeout(()=>{
+            el.style.background=isRemedy?'linear-gradient(135deg,#fff7ed,#fef3c7)':isCurrent?'linear-gradient(135deg,#fdf4ff,#f5f3ff)':'#fff';
+            el.style.border=isRemedy?'2px solid #f97316':isCurrent?'2px solid #c084fc':'1.5px solid #fdba74';
+            el.style.animation='pred-fadein .4s ease forwards';
+            el.innerHTML=`
+              <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.65rem;flex-wrap:wrap;">
+                <span style="font-size:1.05rem;">${c.icon}</span>
+                <span style="font-family:Poppins,sans-serif;font-weight:700;font-size:.72rem;color:${isCurrent?'#7e22ce':'#7c2d12'};text-transform:uppercase;letter-spacing:.05em;">${c.label}</span>
+                ${isRemedy?'<span style="margin-left:auto;background:linear-gradient(135deg,#f97316,#fb923c);color:#fff;font-size:.58rem;font-weight:700;border-radius:9999px;padding:.1rem .45rem;">PERSONALISED</span>':''}
+                ${isCurrent?'<span style="margin-left:auto;background:linear-gradient(135deg,#7e22ce,#9333ea);color:#fff;font-size:.58rem;font-weight:700;border-radius:9999px;padding:.1rem .45rem;">NOW</span>':''}
+              </div>
+              <p style="font-size:.8rem;color:#3d2a1a;line-height:1.7;margin:0;">${escPred(preds[c.key])}</p>`;
+          },i*100);
+        });
+      }catch(err){
+        console.error('Prediction error:',err);
+        const statusEl=document.getElementById('pred-status');
+        if(statusEl)statusEl.innerHTML='<span style="color:#dc2626;font-size:.7rem;">⚠ Could not load</span>';
+        categories.forEach(c=>{
+          const el=document.getElementById(`pred-${c.key}`);if(!el)return;
+          el.innerHTML=`<div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;"><span>${c.icon}</span><span style="font-family:Poppins,sans-serif;font-weight:700;font-size:.72rem;color:#7c2d12;text-transform:uppercase;">${c.label}</span></div><p style="font-size:.75rem;color:#9a3412;line-height:1.6;margin:0;"><a href="#" onclick="openLeadForm('Kundali Reading')" style="color:#f97316;font-weight:600;">Book a personal reading →</a></p>`;
+        });
+      }
+    }
+
+    function escPred(s){return String(s||'').replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#039;'}[c]));}
+  </script>
+
+</body>
+</html>
