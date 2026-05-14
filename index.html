@@ -1186,7 +1186,7 @@
       const tob = (data.get('tob')||"").trim();
       const pob = (data.get('pob')||"").trim();
       const message = `Hi Dheeraj ji, I am ${name}. I want *${service}*.\n\nConcern: ${concern}\nDOB: ${dob || '-'}\nTime: ${tob || '-'}\nPlace: ${pob || '-'}\n\nPlease guide me on next steps.`;
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+      if(typeof gtag==='function'){gtag('event','whatsapp_lead',{event_category:'engagement',event_label:service});}window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
       closeLeadForm();
     }
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -1204,7 +1204,7 @@
     }
     function copyCodeSilent(){ navigator.clipboard.writeText('WELCOME55').catch(()=>{}); }
     function startPopupTimer(){
-      const end = new Date(); end.setHours(23,59,59,999);
+      const const _sk='aj_offer_dl';let _stored=localStorage.getItem(_sk);let end;if(_stored&&Number(_stored)>Date.now()){end=new Date(Number(_stored));}else{end=new Date();end.setHours(23,59,59,999);localStorage.setItem(_sk,end.getTime());}
       function tick(){
         const now = new Date(); let diff = Math.max(0, end - now) / 1000;
         const h = Math.floor(diff/3600), m = Math.floor((diff%3600)/60), s = Math.floor(diff%60);
@@ -1507,7 +1507,7 @@
     const AJ_DEMO_MODE=false, AJ_RAZORPAY_KEY_ID="rzp_live_ReQS6kBC1MMpAK";
     const AJ_CREATE_ORDER_URL="https://apkajyotish-pay.mohit-parmar110.workers.dev";
     const AJ_LOGO_URL="https://dummyimage.com/200x200/ffa733/ffffff.png&text=Apka+Jyotish";
-    window.ajAmountFor=function(){return 0;};
+    window.ajAmountFor=function(s){const p={'Free 5-Min WhatsApp Chat':0,'Janam Kundali Reading':799,'Career & Business Guidance':1199,'Marriage & Kundali Matching':999,'Love & Relationship Reading':899,'Shubh Muhurat Selection':699,'Annual Varshphal Reading':1499,'Gemstone & Remedy Consultation':599,'Full Life Comprehensive Reading':2499,'Combo Pack':2999,'Consultation':799};const k=Object.keys(p).find(n=>s&&s.toLowerCase().includes(n.toLowerCase().split(' ').slice(0,2).join(' ').toLowerCase()));return k?p[k]:(p[s]||0);};
     document.addEventListener('DOMContentLoaded',function(){
       const form=document.getElementById('lead-form'); if(!form)return;
       const submitBtn=form.querySelector('button[type="submit"]'); if(!submitBtn)return;
@@ -1519,7 +1519,7 @@
       function ajToggle(){
         const fd=new FormData(form),service=(fd.get('service')||presetService||'').trim(),amt=window.ajAmountFor?window.ajAmountFor(service):0,isFree=amt<=0;
         if(isFree){payBtn.classList.add('hidden');submitBtn.disabled=false;helper.textContent='Free service — start WhatsApp directly.';}
-        else{payBtn.classList.remove('hidden');submitBtn.disabled=!window.__ajPaidOK;helper.textContent='Payment required. WhatsApp unlocks after payment.';}
+        else{payBtn.classList.remove('hidden');payBtn.textContent='Pay \u20b9'+amt+' — Secure Razorpay';submitBtn.disabled=!window.__ajPaidOK;helper.textContent='\ud83d\udd12 100% Secure Payment (incl. GST) \u2022 WhatsApp unlocks after payment';}
       }
       window.__ajToggle=ajToggle;
       form.addEventListener('input',(e)=>{if(e.target&&e.target.name==='service')ajToggle();});
@@ -1527,11 +1527,11 @@
         const fd=new FormData(form),name=(fd.get('name')||'').trim(),service=(fd.get('service')||presetService||'Consultation').trim(),concern=(fd.get('concern')||'').trim(),dob=(fd.get('dob')||'').trim(),tob=(fd.get('tob')||'').trim(),pob=(fd.get('pob')||'').trim();
         if(!name||!concern){alert('Please fill your name and concern first.');return;}
         const amount=window.ajAmountFor?window.ajAmountFor(service):0;
-        if(amount<=0){window.__ajPaidOK=true;submitBtn.disabled=false;ajToggle();return;}
+        if(amount<=0&&isFree){window.__ajPaidOK=true;submitBtn.disabled=false;ajToggle();return;}
         function ready(){return window.Razorpay;}
         if(!ready()){await new Promise(res=>{const check=setInterval(()=>{if(ready()){clearInterval(check);res();}},50);});}
-        if(AJ_DEMO_MODE){new Razorpay({key:AJ_RAZORPAY_KEY_ID,amount,currency:"INR",name:"Apka Jyotish (Demo)",description:service,image:AJ_LOGO_URL,prefill:{name},notes:{service,dob,tob,pob},theme:{color:"#F97316"},handler:function(){window.__ajPaidOK=true;submitBtn.disabled=false;alert("Demo payment success! WhatsApp unlocked.");ajToggle();}}).open();}
-        else{try{const order=await fetch(AJ_CREATE_ORDER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount,currency:'INR',notes:{name,service,concern,dob,tob,pob}})}).then(r=>r.json());if(!order||!order.id){alert("Order error, try again.");return;}new Razorpay({key:AJ_RAZORPAY_KEY_ID,amount,currency:"INR",name:"Apka Jyotish",description:service,image:AJ_LOGO_URL,order_id:order.id,prefill:{name},notes:{service,dob,tob,pob},theme:{color:"#F97316"},handler:function(){window.__ajPaidOK=true;submitBtn.disabled=false;alert("Payment successful! You can start WhatsApp now.");ajToggle();}}).open();}catch(err){console.error(err);alert("Could not create order. Please try again.");}}
+        if(AJ_DEMO_MODE){new Razorpay({key:AJ_RAZORPAY_KEY_ID,amount,currency:"INR",name:"Apka Jyotish (Demo)",description:service,image:AJ_LOGO_URL,prefill:{name},notes:{service,dob,tob,pob},theme:{color:"#F97316"},handler:function(resp){window.__ajPaidOK=true;submitBtn.disabled=false;try{const _payId=resp&&resp.razorpay_payment_id?resp.razorpay_payment_id:'';fetch('https://apkajyotish-pay.mohit-parmar110.workers.dev/notify-dad',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,service:service,amount:amount/100,dob:dob,tob:tob,pob:pob,concern:concern,payId:_payId})}).catch(()=>{});if(typeof gtag==='function'){gtag('event','payment_success',{event_category:'revenue',event_label:service,value:amount/100});}}catch(e){}window.__ajPaidOK=true;submitBtn.disabled=false;alert("Demo payment success! WhatsApp unlocked.");ajToggle();}}).open();}
+        else{try{const order=await fetch(AJ_CREATE_ORDER_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount,currency:'INR',notes:{name,service,concern,dob,tob,pob}})}).then(r=>r.json());if(!order||!order.id){alert("Order error, try again.");return;}new Razorpay({key:AJ_RAZORPAY_KEY_ID,amount,currency:"INR",name:"Apka Jyotish",description:service,image:AJ_LOGO_URL,order_id:order.id,prefill:{name},notes:{service,dob,tob,pob},theme:{color:"#F97316"},handler:function(resp){window.__ajPaidOK=true;submitBtn.disabled=false;try{const _payId=resp&&resp.razorpay_payment_id?resp.razorpay_payment_id:'';fetch('https://apkajyotish-pay.mohit-parmar110.workers.dev/notify-dad',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,service:service,amount:amount/100,dob:dob,tob:tob,pob:pob,concern:concern,payId:_payId})}).catch(()=>{});if(typeof gtag==='function'){gtag('event','payment_success',{event_category:'revenue',event_label:service,value:amount/100});}}catch(e){}window.__ajPaidOK=true;submitBtn.disabled=false;alert("Payment successful! You can start WhatsApp now.");ajToggle();}}).open();}catch(err){console.error(err);alert("Could not create order. Please try again.");}}
       });
       ajToggle();
     });
