@@ -43,8 +43,8 @@ export async function onRequestGet({ env }) {
       services: [
         {
           id: "love",
-          name: "Love & Relationships",
-          price: 351,
+          name: "Love & Relationship Reading",
+          price: 899,
           badge: "Popular",
           subtitle: "Clarity on compatibility, marriage timing & next steps.",
           bullets: ["30-min consult", "Timing windows", "2 follow-ups free"],
@@ -55,8 +55,8 @@ export async function onRequestGet({ env }) {
         },
         {
           id: "career",
-          name: "Career & Money",
-          price: 451,
+          name: "Career & Business Guidance",
+          price: 1199,
           badge: "Best Value",
           subtitle: "Job change timing, business luck & wealth pathways.",
           bullets: ["40-min deep dive", "90-day plan", "PDF remedies"],
