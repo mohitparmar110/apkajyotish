@@ -1,0 +1,2 @@
+# Redirect non-www to www
+https://apkajyotish.com/* https://www.apkajyotish.com/:splat 301
